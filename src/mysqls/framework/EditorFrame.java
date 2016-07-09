@@ -128,7 +128,7 @@ public class EditorFrame extends JFrame
 		aAppResources = ResourceBundle.getBundle(appClassName + "Strings");
 		aAppFactory = new MenuFactory(aAppResources);
 		aVersionResources = ResourceBundle.getBundle(appClassName + "Version");
-		aEditorResources = ResourceBundle.getBundle("uestc.uml.sql.framework.EditorStrings");      
+		aEditorResources = ResourceBundle.getBundle("mysqls.framework.EditorStrings");      
 		MenuFactory factory = new MenuFactory(aEditorResources);
 		
 		aRecentFiles.deserialize(Preferences.userNodeForPackage(UMLEditor.class).get("recent", "").trim());
@@ -555,7 +555,7 @@ public class EditorFrame extends JFrame
    				Graph graphType = frame.getGraph();
    				if(graphType instanceof ClassDiagramGraph)
    				{
-   					diagramName = "Class Diagram";
+   					diagramName = "SQL数据建模图";
    					
    				}
 //   				else if(graphType instanceof ObjectDiagramGraph)

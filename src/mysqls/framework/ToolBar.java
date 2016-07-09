@@ -205,7 +205,7 @@ public class ToolBar extends JPanel
 	private void createSelectionTool(ButtonGroup pGroup, ButtonGroup pGroupEx)
 	{
 		installTool(createSelectionIcon(), 
-				ResourceBundle.getBundle("uestc.uml.sql.framework.EditorStrings").getString("grabber.tooltip"), 
+				ResourceBundle.getBundle("mysqls.framework.EditorStrings").getString("grabber.tooltip"), 
 				null, true, pGroup, pGroupEx);
 	}
 	
@@ -327,9 +327,9 @@ public class ToolBar extends JPanel
 	private void addCopyToClipboard()
 	{
 		URL imageLocation = getClass().getClassLoader().
-				getResource(ResourceBundle.getBundle("uestc.uml.sql.framework.EditorStrings").
+				getResource(ResourceBundle.getBundle("mysqls.framework.EditorStrings").
 						getString("toolbar.copyToClipBoard"));
-		String toolTip = ResourceBundle.getBundle("uestc.uml.sql.framework.EditorStrings").getString("file.copy_to_clipboard.text");
+		String toolTip = ResourceBundle.getBundle("mysqls.framework.EditorStrings").getString("file.copy_to_clipboard.text");
 		
 		final JButton button = new JButton(new ImageIcon(imageLocation));
 		button.setToolTipText(toolTip);
@@ -382,8 +382,8 @@ public class ToolBar extends JPanel
 	{
 		final JButton expandButton = new JButton(EXPAND);
 		expandButton.setAlignmentX(CENTER_ALIGNMENT);
-		final String expandString = ResourceBundle.getBundle("uestc.uml.sql.framework.EditorStrings").getString("toolbar.expand");
-		final String collapseString = ResourceBundle.getBundle("uestc.uml.sql.framework.EditorStrings").getString("toolbar.collapse");
+		final String expandString = ResourceBundle.getBundle("mysqls.framework.EditorStrings").getString("toolbar.expand");
+		final String collapseString = ResourceBundle.getBundle("mysqls.framework.EditorStrings").getString("toolbar.collapse");
 		expandButton.setToolTipText(expandString);
 		expandButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
 		expandButton.addActionListener(new ActionListener()

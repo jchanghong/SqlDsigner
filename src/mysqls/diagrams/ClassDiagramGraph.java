@@ -63,12 +63,16 @@ public class ClassDiagramGraph extends Graph {
 
 	@Override
 	public String getFileExtension() {
-		return ResourceBundle.getBundle("uestc.uml.sql.UMLEditorStrings").getString("class.extension");
+		
+		return ".Er";
+		
 	}
 
 	@Override
 	public String getDescription() {
-		return ResourceBundle.getBundle("uestc.uml.sql.UMLEditorStrings").getString("class.name");
+//		return ResourceBundle.getBundle("uestc.uml.sql.UMLEditorStrings").getString("class.name");
+		return "实体关系图";
+		
 	}
 
 //	private static boolean canAddNodeAsChild(Node pPotentialChild) {

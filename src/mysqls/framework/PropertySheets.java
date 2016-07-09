@@ -68,11 +68,11 @@ import mysqls.graph.PropertyOrder;
  *  @author Eric Quinn - change listening
  */
 @SuppressWarnings("serial")
-public class PropertySheet extends JPanel
+public class PropertySheets extends JPanel
 {
 	private static final String INVISIBLE_PROPERTY_MARKER = "**INVISIBLE**";
 	private static Map<Class<?>, Class<?>> editors;
-	private static ResourceBundle aPropertyNames = ResourceBundle.getBundle("uestc.uml.sql.graph.GraphElementProperties");
+	private static ResourceBundle aPropertyNames = ResourceBundle.getBundle("mysqls.graph.GraphElementProperties");
 
 	private ArrayList<ChangeListener> aChangeListeners = new ArrayList<>();
 	
@@ -87,7 +87,7 @@ public class PropertySheet extends JPanel
      * properties of a given object.
      * @param pBean the object whose properties are being edited
 	 */
-	public PropertySheet(final Object pBean)
+	public PropertySheets(final Object pBean)
 	{
 		setLayout(new FormLayout());
 		try
@@ -265,7 +265,7 @@ public class PropertySheet extends JPanel
 	}
 
 	/**
-	 * @return aEmpty whether this PropertySheet has fields to edit or not.
+	 * @return aEmpty whether this PropertySheets has fields to edit or not.
 	 */
 	public boolean isEmpty()
 	{

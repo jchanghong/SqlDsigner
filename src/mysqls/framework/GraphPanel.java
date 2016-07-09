@@ -109,7 +109,7 @@ public class GraphPanel extends JPanel
 			return;
 		}
 		aPropertyChangeTracker.startTrackingPropertyChange(edited);
-		PropertySheet sheet = new PropertySheet(edited);
+		PropertySheets sheet = new PropertySheets(edited);
 		if(sheet.isEmpty())
 		{
 			return;
@@ -124,7 +124,7 @@ public class GraphPanel extends JPanel
 		});
 		 String[] options = {"OK"};
 		 JOptionPane.showOptionDialog(this, sheet, 
-		            ResourceBundle.getBundle("uestc.uml.sql.framework.EditorStrings").getString("dialog.properties"),
+		            ResourceBundle.getBundle("mysqls.framework.EditorStrings").getString("dialog.properties"),
 		            		JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
 		CompoundCommand command = aPropertyChangeTracker.stopTrackingPropertyChange(aGraph);
 		if(command.size() > 0)
