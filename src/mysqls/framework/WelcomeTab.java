@@ -73,7 +73,7 @@ public class WelcomeTab extends JInternalFrame
 	 */
 	public WelcomeTab(JMenu pNewFileMenu, JMenu pRecentFileMenu)
 	{
-		aWelcomeResources = ResourceBundle.getBundle("uestc.uml.sql.framework.EditorStrings");
+		aWelcomeResources = ResourceBundle.getBundle("mysqls.framework.EditorStrings");
 		aLeftPanelIcon = new ImageIcon(getClass().getClassLoader().getResource(aWelcomeResources.getString("welcome.create.icon")));
 		aRightPanelIcon = new ImageIcon(getClass().getClassLoader().getResource(aWelcomeResources.getString("welcome.open.icon"))); 
 	    setOpaque(false);

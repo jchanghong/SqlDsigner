@@ -109,7 +109,7 @@ public class GraphPanel extends JPanel
 			return;
 		}
 		aPropertyChangeTracker.startTrackingPropertyChange(edited);
-		PropertySheet sheet = new PropertySheet(edited);
+		PropertySheets sheet = new PropertySheets(edited);
 		if(sheet.isEmpty())
 		{
 			return;
