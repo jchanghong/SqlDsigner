@@ -30,6 +30,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 import mysqls.graph.Graph;
+import mysqls.sql.SQLEditPane;
+import mysqls.sql.SQLlogPane;
 
 /**
  *A frame for showing a graphical editor.
@@ -38,6 +40,7 @@ import mysqls.graph.Graph;
 public class GraphFrame extends JInternalFrame
 {
 	private JTabbedPane aTabbedPane;
+	private SQLlogPane sqLlogPane;
 	private GraphPanel aPanel;
 	private File aFile; // The file associated with this graph
 	
@@ -52,7 +55,10 @@ public class GraphFrame extends JInternalFrame
 		ToolBar sideBar = new ToolBar(pGraph);
 		aPanel = new GraphPanel(pGraph, sideBar);
 		Container contentPane = getContentPane();
-		contentPane.add(sideBar, BorderLayout.EAST);
+		contentPane.add(sideBar, BorderLayout.WEST);
+		sqLlogPane=new SQLlogPane();
+		contentPane.add(sqLlogPane,BorderLayout.SOUTH);
+		contentPane.add(new SQLEditPane(this),BorderLayout.EAST);
 		contentPane.add(new JScrollPane(aPanel), BorderLayout.CENTER);
 		setComponentPopupMenu( null ); // Removes the system pop-up menu full of disabled buttons.
 	}
@@ -85,6 +91,10 @@ public class GraphFrame extends JInternalFrame
 		return aTabbedPane;
 	}
 	
+	public SQLlogPane getSqLlogPane() {
+		return sqLlogPane;
+	}
+
 	/**
 	 * Sets the title of the frame as the file name if there
 	 * is a file name. 
