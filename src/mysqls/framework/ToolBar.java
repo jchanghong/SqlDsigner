@@ -251,13 +251,15 @@ public class ToolBar extends JPanel
 	 */
 	private JPanel createExpandedRowElement(JComponent pButton, String pToolTip)
 	{
-		JPanel linePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		JPanel linePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
 		linePanel.add(pButton);
+//		JPanel linePanel = new JPanel(new GridLayout(0, 2));
 		JLabel label = new JLabel(pToolTip);
 		Font font = new Font(label.getFont().getFontName(), Font.PLAIN, FONT_SIZE);
 		label.setFont(font);
 		label.setBorder(BorderFactory.createEmptyBorder(0, H_PADDING, 0, H_PADDING));
 		linePanel.add(label);
+		
 		return linePanel;
 	}
 	

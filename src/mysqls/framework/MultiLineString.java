@@ -24,16 +24,38 @@ package mysqls.framework;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import com.sun.corba.se.spi.orbutil.fsm.ActionBase;
+
 /**
  *  A string that can extend over multiple lines.
+ *  增加。得到每行的string
  */
 public class MultiLineString implements Cloneable
 {
+	
+	/**
+	 * @return
+	 * 一行一个值。以后可能还会变格式
+	 */
+	public List<String> getMuilineString() {
+		List<String> list=new ArrayList<>();
+		String string=toString();
+		for(String aString:string.split("\\|"))
+		{
+			
+			list.add(aString);
+		}
+		
+		return list;
+		
+	}
 	private enum Align
 	{ LEFT, CENTER, RIGHT }
 	
@@ -135,6 +157,7 @@ public class MultiLineString implements Cloneable
 	public String toString()
 	{
 		return aText.replace('\n', '|');
+		
 	}
 
 	private JLabel getLabel()

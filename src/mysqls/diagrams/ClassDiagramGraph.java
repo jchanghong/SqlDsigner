@@ -22,7 +22,6 @@
 package mysqls.diagrams;
 
 import java.awt.geom.Point2D;
-import java.util.ResourceBundle;
 
 import mysqls.graph.AssociationEdge;
 import mysqls.graph.ClassNode;
