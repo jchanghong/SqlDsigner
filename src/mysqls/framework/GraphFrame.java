@@ -63,7 +63,7 @@ public class GraphFrame extends JInternalFrame
 		aPanel = new GraphPanel(pGraph, sideBar);
 		Container contentPane = getContentPane();
 		contentPane.add(sideBar, BorderLayout.WEST);
-		sqLlogPane=new SQLlogPane();
+		sqLlogPane=new SQLlogPane(this);
 		contentPane.add(new SQLbutton(this),BorderLayout.NORTH);
 		contentPane.add(sqLlogPane,BorderLayout.SOUTH);
 		msSqlEditPane=new SQLEditPane(this);

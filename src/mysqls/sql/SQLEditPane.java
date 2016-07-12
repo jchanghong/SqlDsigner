@@ -24,6 +24,7 @@ import sun.net.www.content.image.jpeg;
 @SuppressWarnings("serial")
 public class SQLEditPane extends JPanel {
 
+	GraphFrame mFrame;
 	private boolean ison = false;
 	JButton toggle = null;
 	private static final String text_on = ">>>";
@@ -50,6 +51,7 @@ public class SQLEditPane extends JPanel {
 	DocumentListener documentListener;
 	JTextPane msqlpane = null;
 	JScrollPane mJScrollPane;
+	JPanel mempty;
 
 	private void seton() {
 		if (toggle != null) {
@@ -77,6 +79,7 @@ public class SQLEditPane extends JPanel {
 
 	public SQLEditPane(GraphFrame graphFrame) {
 
+		mFrame=graphFrame;
 		ison = false;
 		setLayout(new BorderLayout());
 		documentListener = new DocumentListener() {
@@ -127,9 +130,12 @@ public class SQLEditPane extends JPanel {
 			
 			document.addDocumentListener(documentListener);
 			
-			JPanel jPanel=new JPanel(new  BorderLayout());
+			JPanel jPanel=new JPanel(new BorderLayout());
 			jPanel.add(msqlpane);
 			 mJScrollPane=new JScrollPane(jPanel);
+			 mJScrollPane.setMinimumSize(new Dimension(300,
+					 (int) mJScrollPane.getPreferredSize().getHeight()));
+			 mempty=new JPanel(new BorderLayout());
 		}
 
 		// msqlpane.setText("");
@@ -148,16 +154,15 @@ public class SQLEditPane extends JPanel {
 
 					ison = false;
 					setoff();
-					// createempty();
-					
-					EventQueue.invokeLater(new Runnable() {
-						public void run() {
-							msqlpane.setText("");
-//							 remove(mJScrollPane);
-						}
-					});
-					
-//					remove(jScrollPane);
+//					EventQueue.invokeLater(new Runnable() {
+//						public void run() {
+//							msqlpane.setText("");
+////							 remove(mJScrollPane);
+//						}
+//					});
+//					
+					remove(mJScrollPane);
+					add(mempty,BorderLayout.CENTER);
 				} else {
 					ison=true;
 					
@@ -168,7 +173,12 @@ public class SQLEditPane extends JPanel {
 //							add(msqlpane, BorderLayout.CENTER);
 							setsqlstring();
 							SQLcolor.setcolor(msqlpane);
+							remove(mempty);
+							add(mJScrollPane,BorderLayout.CENTER);
 							seton();
+							mFrame.validate();
+							mFrame.invalidate();
+							
 						}
 					});
 					// add(new JScrollPane(emptypane), BorderLayout.CENTER);
@@ -178,7 +188,7 @@ public class SQLEditPane extends JPanel {
 
 		});
 
-		add(mJScrollPane, BorderLayout.CENTER);
+		add(mempty, BorderLayout.CENTER);
 		add(toggle, BorderLayout.SOUTH);
 	}
 

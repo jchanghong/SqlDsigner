@@ -14,6 +14,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import mysqls.framework.GraphFrame;
+
 /**
  * @author jiang sql日志面板
  */
@@ -21,6 +23,7 @@ import javax.swing.SwingUtilities;
 public class SQLlogPane extends JPanel {
 
 	JButton toggle = null;
+	GraphFrame mFrame;
 	JButton mclearlog;
 	private boolean logon=false;//日志显示
 	private static final String text_on = "显示日志";
@@ -76,7 +79,9 @@ public class SQLlogPane extends JPanel {
 
 	}
 
-	public SQLlogPane() {
+	public SQLlogPane(GraphFrame graphFrame) {
+	
+		mFrame=graphFrame;
 
 		setLayout(new BorderLayout());
 
@@ -104,9 +109,9 @@ public class SQLlogPane extends JPanel {
 					logstring="";
 //					if (logon) {
 						mlog.setText(logstring);
-					 remove(mlogpanel);
-					 mlogpanel.setBounds(mempty.getBounds());
-					 add(mempty,BorderLayout.CENTER);
+//					 remove(mlogpanel);
+//					 mlogpanel.setBounds(mempty.getBounds());
+//					 add(mempty,BorderLayout.CENTER);
 //					}
 				}
 			});
@@ -130,6 +135,9 @@ public class SQLlogPane extends JPanel {
 			mempty.add(jTextField,BorderLayout.CENTER);
 			
 			mJScrollPane=new JScrollPane(mlog);
+			mJScrollPane.setPreferredSize(new Dimension(mJScrollPane.getPreferredSize().width, 300));
+			mJScrollPane.setMaximumSize(new Dimension(getPreferredSize().width,600));
+			
 			mlogpanel=new JPanel(new BorderLayout());
 			mlogpanel.add(mJScrollPane,BorderLayout.CENTER);
 			
