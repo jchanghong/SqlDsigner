@@ -40,10 +40,15 @@ public class AssociationEdge extends ClassRelationshipEdge
 	/**
 	 * Possible directionalities for an association.
 	 */
-	public enum Directionality 
-	{None, Start, End, Both}
+	public static enum Directionality 
+	{
+//		None, 
+		Start,
+		End, 
+//		Both
+		}
 	
-	private Directionality aDirectionality = Directionality.None;
+	private Directionality aDirectionality = Directionality.Start;
 	
 	/**
 	 * Creates an association edge with no labels.
@@ -71,7 +76,7 @@ public class AssociationEdge extends ClassRelationshipEdge
 	@Override
 	protected ArrowHead obtainStartArrowHead()
 	{
-		if( aDirectionality == Directionality.Both || aDirectionality == Directionality.Start )
+		if(  aDirectionality == Directionality.Start )
 		{
 			return ArrowHead.V;
 		}
@@ -84,7 +89,7 @@ public class AssociationEdge extends ClassRelationshipEdge
 	@Override
 	protected ArrowHead obtainEndArrowHead()
 	{
-		if( aDirectionality == Directionality.Both || aDirectionality == Directionality.End )
+		if(  aDirectionality == Directionality.End )
 		{
 			return ArrowHead.V;
 		}

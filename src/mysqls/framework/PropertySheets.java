@@ -73,6 +73,7 @@ public class PropertySheets extends JPanel
 	private static final String INVISIBLE_PROPERTY_MARKER = "**INVISIBLE**";
 	private static Map<Class<?>, Class<?>> editors;
 
+
 	private static ResourceBundle aPropertyNames = ResourceBundle.getBundle("mysqls.graph.GraphElementProperties");
 
 	private ArrayList<ChangeListener> aChangeListeners = new ArrayList<>();

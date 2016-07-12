@@ -29,6 +29,7 @@ import java.beans.Encoder;
 import java.beans.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import mysqls.framework.GraphModificationListener;
 import mysqls.framework.Grid;
@@ -59,6 +60,27 @@ public abstract class Graph
 	protected transient ArrayList<Edge> aEdgesToBeRemoved;
 	private transient boolean aNeedsLayout;
 
+	public List<ClassNode> getClassNOdes() {
+		List<ClassNode> list=new ArrayList<>();
+		
+		for(Node node:aRootNodes)
+		{
+			if (node instanceof ClassNode) {
+				list.add((ClassNode)node);
+			}
+		}
+		return list;
+	}
+	public List<AssociationEdge> getClassEdge() {
+		List<AssociationEdge> list=new ArrayList<>();
+		for(Edge	 node:aEdges)
+		{
+			if (node instanceof AssociationEdge) {
+				list.add((AssociationEdge)node);
+			}
+		}
+		return list;
+	}
 	/**
 	 * Constructs a graph with no nodes or edges.
 	 */

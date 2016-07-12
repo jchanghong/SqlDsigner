@@ -31,6 +31,8 @@ import javax.swing.JTabbedPane;
 
 import mysqls.graph.Graph;
 import mysqls.sql.SQLEditPane;
+
+import mysqls.sql.SQLbutton;
 import mysqls.sql.SQLlogPane;
 
 /**
@@ -41,9 +43,14 @@ public class GraphFrame extends JInternalFrame
 {
 	private JTabbedPane aTabbedPane;
 	private SQLlogPane sqLlogPane;
+	private SQLEditPane msSqlEditPane;
 	private GraphPanel aPanel;
 	private File aFile; // The file associated with this graph
 	
+	public GraphPanel getaPanel() {
+		return aPanel;
+	}
+
 	/**
      * Constructs a graph frame with an empty tool bar.
      * @param pGraph the initial graph
@@ -57,8 +64,10 @@ public class GraphFrame extends JInternalFrame
 		Container contentPane = getContentPane();
 		contentPane.add(sideBar, BorderLayout.WEST);
 		sqLlogPane=new SQLlogPane();
+		contentPane.add(new SQLbutton(this),BorderLayout.NORTH);
 		contentPane.add(sqLlogPane,BorderLayout.SOUTH);
-		contentPane.add(new SQLEditPane(this),BorderLayout.EAST);
+		msSqlEditPane=new SQLEditPane(this);
+		contentPane.add(msSqlEditPane,BorderLayout.EAST);
 		contentPane.add(new JScrollPane(aPanel), BorderLayout.CENTER);
 		setComponentPopupMenu( null ); // Removes the system pop-up menu full of disabled buttons.
 	}
@@ -138,5 +147,13 @@ public class GraphFrame extends JInternalFrame
 	{
 		aFile = pFile;
 		setTitle(aFile.getName());
+	}
+
+	public SQLEditPane getMsSqlEditPane() {
+		return msSqlEditPane;
+	}
+
+	public void setMsSqlEditPane(SQLEditPane msSqlEditPane) {
+		this.msSqlEditPane = msSqlEditPane;
 	}
 }	        

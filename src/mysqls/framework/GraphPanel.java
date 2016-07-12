@@ -33,7 +33,9 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.Stack;
@@ -48,6 +50,8 @@ import mysqls.commands.AddNodeCommand;
 import mysqls.commands.CompoundCommand;
 import mysqls.commands.DeleteNodeCommand;
 import mysqls.commands.RemoveEdgeCommand;
+import mysqls.graph.AssociationEdge;
+import mysqls.graph.ClassNode;
 import mysqls.graph.Edge;
 import mysqls.graph.Graph;
 import mysqls.graph.GraphElement;
@@ -79,6 +83,14 @@ public class GraphPanel extends JPanel
 	private UndoManager aUndoManager = new UndoManager();
 	private final MoveTracker aMoveTracker = new MoveTracker();
 	private final PropertyChangeTracker aPropertyChangeTracker = new PropertyChangeTracker();
+	
+	public List<ClassNode> getClassNOdes() {
+
+	 return	aGraph.getClassNOdes();
+	}
+	public List<AssociationEdge> getClassEdge() {
+		return aGraph.getClassEdge();
+	}
 	
 	/**
 	 * Constructs the panel, assigns the graph to it, and registers

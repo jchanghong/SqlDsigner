@@ -6,49 +6,62 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.naming.NamingEnumeration;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.StyledDocument;
 
 import mysqls.framework.GraphFrame;
+import sun.net.www.content.image.jpeg;
 
 /**
- * @author jiang sql日志面板
+ * @author jiang sql edit面板
  */
 @SuppressWarnings("serial")
 public class SQLEditPane extends JPanel {
-	
- private 	GraphFrame graphFrame;
 
+	private boolean ison = false;
 	JButton toggle = null;
 	private static final String text_on = ">>>";
-	private static final String text_ontip = "隐藏sql";
+	private static final String text_ontip = "隐藏sql面板";
 	private static final String text_off = "<<<";
-	private static final String textofftip = "显示sql";
-	private static final String logend = "\r\n";
+	private static final String textofftip = "显示sql面板";
+	private static final String logend = "\n";
 
-	private String sqlstring = ""
-			+ "这只是测试内容，还在完善\n" + "create table user(id int,name char(20));\n"
+	private String sqlstring = "" + "这只是测试内容，还在完善\n" + "create table user(id int,name char(20));\n"
 			+ "create view user1(id int,name char(20));\n" + "drop fff fff\n" + "";
 	private static final int high = 25;
 
+	public void setsql(String sqlstring) {
+		this.sqlstring=sqlstring;
+		if (msqlpane!=null&&ison) {
+			EventQueue.invokeLater(new  Runnable() {
+				public void run() {
+					msqlpane.setText(sqlstring);
+					SQLcolor.setcolor(msqlpane);
+				}
+			});
+		}
+	}
 	DocumentListener documentListener;
 	JTextPane msqlpane = null;
+	JScrollPane mJScrollPane;
 
 	private void seton() {
 		if (toggle != null) {
 			toggle.setText(text_off);
-			toggle.setToolTipText(text_off);
+			toggle.setToolTipText(text_ontip);
 		}
 	}
 
 	private void setoff() {
 		if (toggle != null) {
 			toggle.setText(text_on);
-			toggle.setToolTipText(text_on);
+			toggle.setToolTipText(textofftip);
 		}
 	}
 
@@ -63,33 +76,33 @@ public class SQLEditPane extends JPanel {
 	}
 
 	public SQLEditPane(GraphFrame graphFrame) {
-		this.graphFrame=graphFrame;
 
+		ison = false;
 		setLayout(new BorderLayout());
-		documentListener=new DocumentListener() {
+		documentListener = new DocumentListener() {
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 				// TODO Auto-generated method stub
-				EventQueue.invokeLater(new  Runnable() {
+				EventQueue.invokeLater(new Runnable() {
 					public void run() {
-						 SQLcolor.setcolor(msqlpane);
+						SQLcolor.setcolor(msqlpane);
 					}
 				});
-//				
-				graphFrame.getSqLlogPane().appendA_log("remove :"+e.getDocument());
+				//
+				graphFrame.getSqLlogPane().appendA_log("remove :" + e.getDocument());
 			}
 
 			@Override
 			public void insertUpdate(DocumentEvent e) {
 				// TODO Auto-generated method stub
-				EventQueue.invokeLater(new  Runnable() {
+				EventQueue.invokeLater(new Runnable() {
 					public void run() {
-						 SQLcolor.setcolor(msqlpane);
+						SQLcolor.setcolor(msqlpane);
 					}
 				});
-				
-				graphFrame.getSqLlogPane().appendA_log("insert :"+e.getDocument());
+
+				graphFrame.getSqLlogPane().appendA_log("insert :" + e.getDocument());
 			}
 
 			@Override
@@ -97,7 +110,7 @@ public class SQLEditPane extends JPanel {
 				// TODO Auto-generated method stub
 
 			}
-		
+
 		};
 		createempty();
 
@@ -111,33 +124,53 @@ public class SQLEditPane extends JPanel {
 			msqlpane = new JTextPane();
 			msqlpane.setEditable(true);
 			StyledDocument document = msqlpane.getStyledDocument();
+			
 			document.addDocumentListener(documentListener);
+			
+			JPanel jPanel=new JPanel(new  BorderLayout());
+			jPanel.add(msqlpane);
+			 mJScrollPane=new JScrollPane(jPanel);
 		}
 
-//		msqlpane.setText("");
+		// msqlpane.setText("");
 	}
 
 	private void createtoggleButton() {
+	
 		toggle = new JButton();
 		toggle.setText("<<<");
-
 		toggle.setAlignmentX(CENTER_ALIGNMENT);
-		toggle.setToolTipText("显示sql");
-		 toggle.setPreferredSize(new Dimension(high, high));
-
+		toggle.setToolTipText("显示sql面板");
+		toggle.setPreferredSize(new Dimension(high, high));
 		toggle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent pEvent) {
-				if (istoggleON()) {
+				if (ison) {
 
+					ison = false;
 					setoff();
-					createempty();
-					remove(msqlpane);
+					// createempty();
+					
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							msqlpane.setText("");
+//							 remove(mJScrollPane);
+						}
+					});
+					
+//					remove(jScrollPane);
 				} else {
-					// add(new JScrollPane(msqlpane), BorderLayout.CENTER);
-					add(msqlpane, BorderLayout.CENTER);
-					setsqlstring();
-					SQLcolor.setcolor(msqlpane);
-					seton();
+					ison=true;
+					
+					EventQueue.invokeLater(new  Runnable() {
+						public void run() {
+//							add(mJScrollPane,BorderLayout.CENTER);
+							// add(new JScrollPane(msqlpane), BorderLayout.CENTER);
+//							add(msqlpane, BorderLayout.CENTER);
+							setsqlstring();
+							SQLcolor.setcolor(msqlpane);
+							seton();
+						}
+					});
 					// add(new JScrollPane(emptypane), BorderLayout.CENTER);
 					// add(new JButton("111111"),BorderLayout.CENTER);
 				}
@@ -145,6 +178,7 @@ public class SQLEditPane extends JPanel {
 
 		});
 
+		add(mJScrollPane, BorderLayout.CENTER);
 		add(toggle, BorderLayout.SOUTH);
 	}
 

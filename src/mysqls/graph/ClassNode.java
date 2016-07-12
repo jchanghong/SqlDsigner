@@ -25,6 +25,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import mysqls.framework.MultiLineString;
+import sun.net.www.content.image.png;
 
 
 /**
@@ -63,6 +64,7 @@ public class ClassNode extends InterfaceNode
 	public void setAttributes(MultiLineString pNewValue)
 	{
 		aAttributes = pNewValue;
+		pNewValue.toString();
 	}
 
 	/**
