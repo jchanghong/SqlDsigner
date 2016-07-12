@@ -31,7 +31,6 @@ import java.util.StringTokenizer;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import com.sun.corba.se.spi.orbutil.fsm.ActionBase;
 
 /**
  *  A string that can extend over multiple lines.

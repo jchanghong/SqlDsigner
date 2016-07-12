@@ -25,7 +25,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import mysqls.framework.MultiLineString;
-import sun.net.www.content.image.png;
 
 
 /**

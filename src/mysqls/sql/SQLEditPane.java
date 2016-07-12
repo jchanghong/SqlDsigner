@@ -6,7 +6,6 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.naming.NamingEnumeration;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -16,7 +15,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.StyledDocument;
 
 import mysqls.framework.GraphFrame;
-import sun.net.www.content.image.jpeg;
 
 /**
  * @author jiang sql edit面板
@@ -31,7 +29,6 @@ public class SQLEditPane extends JPanel {
 	private static final String text_ontip = "隐藏sql面板";
 	private static final String text_off = "<<<";
 	private static final String textofftip = "显示sql面板";
-	private static final String logend = "\n";
 
 	private String sqlstring = "" + "这只是测试内容，还在完善\n" + "create table user(id int,name char(20));\n"
 			+ "create view user1(id int,name char(20));\n" + "drop fff fff\n" + "";
@@ -65,16 +62,6 @@ public class SQLEditPane extends JPanel {
 			toggle.setText(text_on);
 			toggle.setToolTipText(textofftip);
 		}
-	}
-
-	private boolean istoggleON() {
-		if (toggle != null) {
-			return toggle.getText().equalsIgnoreCase(text_off);
-
-		} else {
-			return false;
-		}
-
 	}
 
 	public SQLEditPane(GraphFrame graphFrame) {
