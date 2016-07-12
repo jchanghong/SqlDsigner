@@ -43,12 +43,13 @@ public class SQLcreate {
 		return builder.toString();
 		
 	}
-	static public void addsqlassiontion(String sqlstring,List<AssociationEdge> edges)
+	static public String addsqlassiontion(String sqlstring,List<AssociationEdge> edges)
 	{
 		
 		if (edges.size()<1) {
-			return;
+			return sqlstring;
 		}
+		StringBuilder builder=new StringBuilder(sqlstring);
 		for (Iterator<AssociationEdge> iterator = edges.iterator(); iterator.hasNext();) {
 			AssociationEdge associationEdge = (AssociationEdge) iterator.next();
 			ClassNode sNode=(ClassNode) associationEdge.getStart();
@@ -58,24 +59,43 @@ public class SQLcreate {
 			if (associationEdge.getDirectionality()==Directionality.Start) {
 				temp=sNode;
 				sNode=enNode;
-				enNode=sNode;
+				enNode=temp;
 				
 			}
 			
-			addassocition(sqlstring, sNode, enNode);
+		builder=addassocition(sqlstring, sNode, enNode);
 			
 		}
 		
+		return builder.toString();
 		
 		
 		
 	}
 	
-	private static void addassocition(String sql,ClassNode sNode,ClassNode eNode) {
+	private static StringBuilder addassocition(String sql,ClassNode sNode,ClassNode eNode) {
 		String sname=sNode.getName().getMuilineString().get(0);
 		String ename=eNode.getName().getMuilineString().get(0);
-		String firstattrubute=sNode.getAttributes().getMuilineString().get(0);
-		String endattrubute=eNode.getAttributes().getMuilineString().get(0);
+		String sfirstattrubute=sNode.getAttributes().getMuilineString().get(0);
+		String efirsttrubute=eNode.getAttributes().getMuilineString().get(0);
+		int position=0;
+		int index=0;
+		index=sql.indexOf(sname);
+		index=sql.indexOf(");", index+sname.length());
+		StringBuilder builder=new StringBuilder(sql);
+		int i;
+		int j;
+		i=builder.length();
+		builder.insert(index, ",\n PRIMARY KEY ("+sfirstattrubute+")");
+		j=builder.length();
+		builder.insert(index+j-i, ",\n FOREIGN KEY ("+
+		efirsttrubute+")"+" REFERENCES "
+				+ename+"("+efirsttrubute+")");
+		
+		index=builder.indexOf(ename);
+		index=builder.indexOf(");",index);
+		builder.insert(index, ",\n PRIMARY KEY ("+efirsttrubute+")");
+		return builder;
 		
 		
 	}

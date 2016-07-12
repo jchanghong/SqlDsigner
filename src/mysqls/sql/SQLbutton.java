@@ -56,7 +56,8 @@ public class SQLbutton extends JPanel{
 					builder.append("\n");
 					
 				}
-				mFrame.getMsSqlEditPane().setsql(builder.toString());
+			String string=	SQLcreate.addsqlassiontion(builder.toString(), mFrame.getGraph().getClassEdge());
+				mFrame.getMsSqlEditPane().setsql(string);
 			}
 		});
 		
