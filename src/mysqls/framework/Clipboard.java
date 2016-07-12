@@ -253,7 +253,7 @@ public final class Clipboard
 	// of any node who does not have a parent in the pNodes list
 	private static void removeDanglingReferencesToParents(List<Node> pNodes)
 	{
-		for( Node node : pNodes )
+//		for( Node node : pNodes )
 		{
 //			if( node instanceof ChildNode && ((ChildNode)node).getParent() != null )
 //			{

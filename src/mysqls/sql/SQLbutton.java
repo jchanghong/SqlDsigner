@@ -9,11 +9,11 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import com.sun.javafx.collections.SetListenerHelper;
 
 import mysqls.framework.GraphFrame;
 import mysqls.graph.ClassNode;
 
+@SuppressWarnings("serial")
 public class SQLbutton extends JPanel{
 
 	GraphFrame mFrame;
@@ -56,7 +56,8 @@ public class SQLbutton extends JPanel{
 					builder.append("\n");
 					
 				}
-				mFrame.getMsSqlEditPane().setsql(builder.toString());
+			String string=	SQLcreate.addsqlassiontion(builder.toString(), mFrame.getGraph().getClassEdge());
+				mFrame.getMsSqlEditPane().setsql(string);
 			}
 		});
 		
