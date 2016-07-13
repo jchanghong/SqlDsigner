@@ -67,9 +67,15 @@ public class SQLEditPane extends JPanel {
 		}
 	}
 
+<<<<<<< HEAD
 	public SQLEditPane(final GraphFrame graphFrame) {
 
 		mFrame = graphFrame;
+=======
+	public SQLEditPane(GraphFrame graphFrame) {
+
+		mFrame=graphFrame;
+>>>>>>> refs/remotes/origin/master
 		ison = false;
 		setLayout(new BorderLayout());
 		documentListener = new DocumentListener() {

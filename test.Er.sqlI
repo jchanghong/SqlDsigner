@@ -448,10 +448,13 @@
     </void>
    </object>
   </void>
+<<<<<<< HEAD
   <void method="restoreEdge">
    <object class="mysqls.graph.AssociationEdge"/>
    <object idref="ClassNode11"/>
    <object idref="ClassNode0"/>
   </void>
+=======
+>>>>>>> refs/remotes/origin/master
  </object>
 </java>
