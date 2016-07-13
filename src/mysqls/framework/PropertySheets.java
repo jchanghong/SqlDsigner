@@ -35,12 +35,12 @@ import mysqls.graph.PropertyOrder;
 /**
  * A GUI component that can present the properties of an object detected through
  * the JavaBeans framework and allow editing them.
- * 
+ *
  * All writable properties of an object will be presented in the property sheet
  * unless a) there is no corresponding editor detected for them, or b) their
  * name (specified in GraphElementProperties.properties) is the same as the
  * string INVISIBLE_PROPERTY_MARKER
- * 
+ *
  * @author Cay Horstmann - initial version
  * @author Martin P. Robillard - property name sequencing and externalization,
  *         visibility
@@ -63,7 +63,7 @@ public class PropertySheets extends JPanel {
 	/**
 	 * Constructs a property sheet that shows the editable properties of a given
 	 * object.
-	 * 
+	 *
 	 * @param pBean
 	 *            the object whose properties are being edited
 	 */
@@ -101,7 +101,7 @@ public class PropertySheets extends JPanel {
 	/**
 	 * Gets the property editor for a given property, and wires it so that it
 	 * updates the given object.
-	 * 
+	 *
 	 * @param pBean
 	 *            the object whose properties are being edited
 	 * @param pDescriptor
@@ -153,7 +153,7 @@ public class PropertySheets extends JPanel {
 
 	/**
 	 * Wraps a property editor into a component.
-	 * 
+	 *
 	 * @param pEditor
 	 *            the editor to wrap
 	 * @return a button (if there is a custom editor), combo box (if the editor
@@ -201,7 +201,7 @@ public class PropertySheets extends JPanel {
 
 	/**
 	 * Adds a change listener to the list of listeners.
-	 * 
+	 *
 	 * @param pListener
 	 *            the listener to add
 	 */
@@ -211,7 +211,7 @@ public class PropertySheets extends JPanel {
 
 	/**
 	 * Notifies all listeners of a state change.
-	 * 
+	 *
 	 * @param pEvent
 	 *            the event to propagate
 	 */

@@ -85,4 +85,37 @@ public class Table {
 		this.Columnlist = list;
 	}
 
+	// CREATE TABLE Orders
+	// (
+	// Id_O int NOT NULL,
+	// OrderNo int NOT NULL,
+	// Id_P int,
+	// PRIMARY KEY (Id_O),
+	// CONSTRAINT fk_PerOrders FOREIGN KEY (Id_P)
+	// REFERENCES Persons(Id_P)
+	// )
+	public String toSQL() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CREATE  TABLE  ");
+		builder.append(name);
+		builder.append("\n");
+		builder.append("(");
+		builder.append("\n");
+		return builder.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		super.toString();
+		StringBuilder builder = new StringBuilder();
+		builder.append(name + "\n");
+		return builder.toString();
+
+	}
 }
