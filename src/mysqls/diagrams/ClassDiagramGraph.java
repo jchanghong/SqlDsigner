@@ -1,23 +1,3 @@
-/*******************************************************************************
- * JetUML - A desktop application for fast UML diagramming.
- *
- * Copyright (C) 2016 by the contributors of the JetUML project.
- *
- * See: https://github.com/prmr/JetUML
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *******************************************************************************/
 
 package mysqls.diagrams;
 
@@ -35,8 +15,7 @@ import mysqls.graph.NoteNode;
  * A UML class diagram.
  */
 public class ClassDiagramGraph extends Graph {
-	private static final Node[] NODE_PROTOTYPES = new Node[] {
-			new ClassNode(),
+	private static final Node[] NODE_PROTOTYPES = new Node[] { new ClassNode(),
 			// new InterfaceNode(),
 			// new PackageNode(),
 			new NoteNode() };
@@ -52,33 +31,35 @@ public class ClassDiagramGraph extends Graph {
 
 	@Override
 	public Node[] getNodePrototypes() {
-		return NODE_PROTOTYPES;
+		return ClassDiagramGraph.NODE_PROTOTYPES;
 	}
 
 	@Override
 	public Edge[] getEdgePrototypes() {
-		return EDGE_PROTOTYPES;
+		return ClassDiagramGraph.EDGE_PROTOTYPES;
 	}
 
 	@Override
 	public String getFileExtension() {
-		
+
 		return ".Er";
-		
+
 	}
 
 	@Override
 	public String getDescription() {
-//		return ResourceBundle.getBundle("uestc.uml.sql.UMLEditorStrings").getString("class.name");
+		// return
+		// ResourceBundle.getBundle("uestc.uml.sql.UMLEditorStrings").getString("class.name");
 		return "实体关系图";
-		
+
 	}
 
-//	private static boolean canAddNodeAsChild(Node pPotentialChild) {
-//		return pPotentialChild instanceof ClassNode || pPotentialChild instanceof NoteEdge
-//
-//		;
-//	}
+	// private static boolean canAddNodeAsChild(Node pPotentialChild) {
+	// return pPotentialChild instanceof ClassNode || pPotentialChild instanceof
+	// NoteEdge
+	//
+	// ;
+	// }
 
 	@Override
 	public boolean canConnect(Edge pEdge, Node pNode1, Node pNode2, Point2D pPoint2) {
@@ -136,10 +117,9 @@ public class ClassDiagramGraph extends Graph {
 	/*
 	 * (non-Javadoc) See if, given its position, the node should be added as a
 	 * child of a PackageNode.
-	 * 
-	 * @see
-	 * uestc.uml.sql.graph.Graph#addNode(uestc.uml.sql.graph
-	 * .Node, java.awt.geom.Point2D)
+	 *
+	 * @see uestc.uml.sql.graph.Graph#addNode(uestc.uml.sql.graph .Node,
+	 * java.awt.geom.Point2D)
 	 */
 	@Override
 	public boolean addNode(Node pNode, Point2D pPoint) {
