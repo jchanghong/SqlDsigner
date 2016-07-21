@@ -20,27 +20,32 @@ import mysqls.sql.entity.TableColumn;
 public class Test {
 
 	public static void main(String[] args) throws Exception {
-		TableColumn column = new TableColumn();
-		column.addPropertyChangeListener(new PropertyChangeListener() {
+
+		Test.testbeand();
+	}
+
+	public static void testbeand() {
+
+		TableColumn tableColumn = new TableColumn("new");
+		tableColumn.addPropertyChangeListener(new PropertyChangeListener() {
 
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				// TODO Auto-generated method stub
-				System.out.println(evt.getPropertyName() + evt.getNewValue());
+				System.out.println(evt.getPropertyName() + ":" + evt.getOldValue());
 			}
 		});
-		column.setName("hell");
-		Thread.currentThread();
-		Thread.sleep(1000);
-		column.setName("hell2");
-		column.setName("hell3");
-		System.out.println("afterset");
+		tableColumn.setName("fff");
+
+	}
+
+	public static void testui() throws Exception {
 		SwingUtilities.invokeAndWait(new Runnable() {
 
 			@Override
 			public void run() {
 
-				PropertySheets propertySheets = new PropertySheets(Test.column);
+				PropertySheets propertySheets = new PropertySheets(new TableColumn("jjh"));
 
 				String[] options = { "OK" };
 				if (propertySheets != null) {

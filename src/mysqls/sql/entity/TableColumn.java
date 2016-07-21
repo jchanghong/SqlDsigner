@@ -16,6 +16,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class TableColumn implements Serializable {
+	private String name;
 
 	/**
 	 * @return the type
@@ -30,11 +31,10 @@ public class TableColumn implements Serializable {
 	 */
 	public void setType(String type) {
 		String old = type;
-		propertyChangeSupport.firePropertyChange("type", old, type);
+		ChangeSupport.firePropertyChange("type", old, type);
 		this.type = type;
 	}
 
-	private String name;
 	private String type;
 	private boolean primarykey;
 	private boolean foreignKey;
@@ -43,24 +43,23 @@ public class TableColumn implements Serializable {
 	private String defaultvalues;
 	private Table forigntable;
 	private TableColumn forigncolumn;
-	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+	private PropertyChangeSupport ChangeSupport = new PropertyChangeSupport(this);
+	private VetoableChangeSupport mVcs = new VetoableChangeSupport(this);
 
-	private VetoableChangeSupport vetoableChangeSupport = new VetoableChangeSupport(this);
+	public void addVetoableChangeListener(VetoableChangeListener listener) {
+		mVcs.addVetoableChangeListener(listener);
+	}
+
+	public void removeVetoableChangeListener(VetoableChangeListener listener) {
+		mVcs.removeVetoableChangeListener(listener);
+	}
 
 	public void addPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
-		propertyChangeSupport.addPropertyChangeListener(propertyChangeListener);
+		ChangeSupport.addPropertyChangeListener(propertyChangeListener);
 	}
 
 	public void removePropertyChangeListener(PropertyChangeListener propertyChangeListener) {
-		propertyChangeSupport.removePropertyChangeListener(propertyChangeListener);
-	}
-
-	public void removeVetoableChangeListener(VetoableChangeListener vetoableChangeListener) {
-		vetoableChangeSupport.removeVetoableChangeListener(vetoableChangeListener);
-	}
-
-	public void addVetoableChangeListener(VetoableChangeListener vetoableChangeListener) {
-		vetoableChangeSupport.addVetoableChangeListener(vetoableChangeListener);
+		ChangeSupport.removePropertyChangeListener(propertyChangeListener);
 	}
 
 	public String toSQL() {
@@ -171,14 +170,6 @@ public class TableColumn implements Serializable {
 	/**
 	 *
 	 */
-	public TableColumn() {
-		// TODO Auto-generated constructor stub
-		this("null");
-	}
-
-	/**
-	 *
-	 */
 	public TableColumn(String name) {
 		// TODO Auto-generated constructor stub
 		this(name, false, false, false);
@@ -212,10 +203,9 @@ public class TableColumn implements Serializable {
 	 *            the name to set
 	 */
 	public void setName(String name) {
-		String old = name;
-
+		String old = this.name;
 		this.name = name;
-		propertyChangeSupport.firePropertyChange("name", old, name);
+		ChangeSupport.firePropertyChange("name", old, name);
 	}
 
 	/**
