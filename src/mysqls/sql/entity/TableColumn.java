@@ -29,9 +29,9 @@ public class TableColumn implements Serializable {
 	 *            the type to set
 	 */
 	public void setType(String type) {
-		String old = type;
-		propertyChangeSupport.firePropertyChange("type", old, type);
+		String old = this.type;
 		this.type = type;
+		ChangeSupport.firePropertyChange("type", old, type);
 	}
 
 	private String name;
@@ -43,24 +43,23 @@ public class TableColumn implements Serializable {
 	private String defaultvalues;
 	private Table forigntable;
 	private TableColumn forigncolumn;
-	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+	private PropertyChangeSupport ChangeSupport = new PropertyChangeSupport(this);
+	private VetoableChangeSupport vetoSupport = new VetoableChangeSupport(this);
 
-	private VetoableChangeSupport vetoableChangeSupport = new VetoableChangeSupport(this);
+	public void addVetoableChangeListener(VetoableChangeListener listener) {
+		vetoSupport.addVetoableChangeListener(listener);
+	}
+
+	public void removeVetoableChangeListener(VetoableChangeListener listener) {
+		vetoSupport.removeVetoableChangeListener(listener);
+	}
 
 	public void addPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
-		propertyChangeSupport.addPropertyChangeListener(propertyChangeListener);
+		ChangeSupport.addPropertyChangeListener(propertyChangeListener);
 	}
 
 	public void removePropertyChangeListener(PropertyChangeListener propertyChangeListener) {
-		propertyChangeSupport.removePropertyChangeListener(propertyChangeListener);
-	}
-
-	public void removeVetoableChangeListener(VetoableChangeListener vetoableChangeListener) {
-		vetoableChangeSupport.removeVetoableChangeListener(vetoableChangeListener);
-	}
-
-	public void addVetoableChangeListener(VetoableChangeListener vetoableChangeListener) {
-		vetoableChangeSupport.addVetoableChangeListener(vetoableChangeListener);
+		ChangeSupport.removePropertyChangeListener(propertyChangeListener);
 	}
 
 	public String toSQL() {
@@ -171,14 +170,6 @@ public class TableColumn implements Serializable {
 	/**
 	 *
 	 */
-	public TableColumn() {
-		// TODO Auto-generated constructor stub
-		this("null");
-	}
-
-	/**
-	 *
-	 */
 	public TableColumn(String name) {
 		// TODO Auto-generated constructor stub
 		this(name, false, false, false);
@@ -212,10 +203,9 @@ public class TableColumn implements Serializable {
 	 *            the name to set
 	 */
 	public void setName(String name) {
-		String old = name;
-
+		String old = this.name;
 		this.name = name;
-		propertyChangeSupport.firePropertyChange("name", old, name);
+		ChangeSupport.firePropertyChange("name", old, name);
 	}
 
 	/**
@@ -230,7 +220,9 @@ public class TableColumn implements Serializable {
 	 *            the primarykey to set
 	 */
 	public void setPrimarykey(boolean primarykey) {
+		boolean old = this.primarykey;
 		this.primarykey = primarykey;
+		ChangeSupport.firePropertyChange("primarykey", old, primarykey);
 	}
 
 	/**
@@ -245,7 +237,9 @@ public class TableColumn implements Serializable {
 	 *            the foreignKey to set
 	 */
 	public void setForeignKey(boolean foreignKey) {
+		boolean old = this.foreignKey;
 		this.foreignKey = foreignKey;
+		ChangeSupport.firePropertyChange("foreignKey", old, foreignKey);
 	}
 
 	/**
@@ -260,7 +254,9 @@ public class TableColumn implements Serializable {
 	 *            the notnull to set
 	 */
 	public void setNotnull(boolean notnull) {
+		boolean old = this.notnull;
 		this.notnull = notnull;
+		ChangeSupport.firePropertyChange("notnull", old, notnull);
 	}
 
 	/**
@@ -275,7 +271,9 @@ public class TableColumn implements Serializable {
 	 *            the unique to set
 	 */
 	public void setUnique(boolean unique) {
+		boolean old = this.unique;
 		this.unique = unique;
+		ChangeSupport.firePropertyChange("unique", old, unique);
 	}
 
 	/**
@@ -290,7 +288,9 @@ public class TableColumn implements Serializable {
 	 *            the defaultvalues to set
 	 */
 	public void setDefaultvalues(String defaultvalues) {
+		String old = this.defaultvalues;
 		this.defaultvalues = defaultvalues;
+		ChangeSupport.firePropertyChange("defaultvalues", old, defaultvalues);
 	}
 
 	/**
