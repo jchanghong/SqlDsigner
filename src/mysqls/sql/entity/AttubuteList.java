@@ -3,6 +3,9 @@
  */
 package mysqls.sql.entity;
 
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,15 +30,34 @@ public final class AttubuteList {
 	// private Table forigntable;
 	// private TableColumn forigncolumn;
 
-	public final static List<String> list = new ArrayList<>();
+	public final static List<String> namelist = new ArrayList<>();
+	public final static List<PropertyDescriptor> pdList = new ArrayList<>();
 	static {
+		PropertyDescriptor[] pd = null;
+		try {
+			pd = Introspector.getBeanInfo(TableColumn.class).getPropertyDescriptors();
+		} catch (IntrospectionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		AttubuteList.list.add("name");
-		AttubuteList.list.add("type");
-		AttubuteList.list.add("primarykey");
-		AttubuteList.list.add("foreignKey");
-		AttubuteList.list.add("notnull");
-		AttubuteList.list.add("unique");
-		AttubuteList.list.add("defaultvalues");
+		String temps = "";
+		PropertyDescriptor temp = null;
+		for (int i = 0; i < pd.length; i++) {
+			String name = pd[i].getName();
+
+			AttubuteList.namelist.add(name);
+			AttubuteList.pdList.add(pd[i]);
+			if (name.equals("name")) {
+				temps = AttubuteList.namelist.get(0);
+				temp = AttubuteList.pdList.get(0);
+				AttubuteList.namelist.set(0, name);
+				AttubuteList.pdList.set(0, pd[i]);
+				AttubuteList.namelist.set(i, temps);
+				AttubuteList.pdList.set(i, temp);
+
+			}
+
+		}
 	}
 }

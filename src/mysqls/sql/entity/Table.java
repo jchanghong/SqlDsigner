@@ -3,6 +3,10 @@
  */
 package mysqls.sql.entity;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.beans.VetoableChangeListener;
+import java.beans.VetoableChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +18,43 @@ public class Table {
 
 	private String name;
 	private List<TableColumn> Columnlist;
+
+	private PropertyChangeSupport ChangeSupport = new PropertyChangeSupport(this);
+	private VetoableChangeSupport vetoSupport = new VetoableChangeSupport(this);
+
+	/**
+	 *
+	 */
+	public Table() {
+		// TODO Auto-generated constructor stub
+		this("null");
+	}
+
+	/**
+	 *
+	 */
+	public Table(String aname) {
+		// TODO Auto-generated constructor stub
+		name = aname;
+		Columnlist = new ArrayList<>();
+	}
+
+	public Table(String name, List<TableColumn> list) {
+		this.name = name;
+		this.Columnlist = list;
+	}
+
+	public void addColumn(TableColumn column) {
+		Columnlist.add(column);
+	}
+
+	public void addPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
+		ChangeSupport.addPropertyChangeListener(propertyChangeListener);
+	}
+
+	public void addVetoableChangeListener(VetoableChangeListener listener) {
+		vetoSupport.addVetoableChangeListener(listener);
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -37,8 +78,11 @@ public class Table {
 		}
 	}
 
-	public void addColumn(TableColumn column) {
-		Columnlist.add(column);
+	/**
+	 * @return the columnlist
+	 */
+	public List<TableColumn> getColumnlist() {
+		return this.Columnlist;
 	}
 
 	/**
@@ -48,19 +92,12 @@ public class Table {
 		return this.name;
 	}
 
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
+	public void removePropertyChangeListener(PropertyChangeListener propertyChangeListener) {
+		ChangeSupport.removePropertyChangeListener(propertyChangeListener);
 	}
 
-	/**
-	 * @return the columnlist
-	 */
-	public List<TableColumn> getColumnlist() {
-		return this.Columnlist;
+	public void removeVetoableChangeListener(VetoableChangeListener listener) {
+		vetoSupport.removeVetoableChangeListener(listener);
 	}
 
 	/**
@@ -68,21 +105,19 @@ public class Table {
 	 *            the columnlist to set
 	 */
 	public void setColumnlist(List<TableColumn> columnlist) {
+		List<TableColumn> old = this.Columnlist;
 		this.Columnlist = columnlist;
+		ChangeSupport.firePropertyChange("Columnlist", old, columnlist);
 	}
 
 	/**
-	 *
+	 * @param name
+	 *            the name to set
 	 */
-	public Table(String aname) {
-		// TODO Auto-generated constructor stub
-		name = aname;
-		Columnlist = new ArrayList<>();
-	}
-
-	public Table(String name, List<TableColumn> list) {
+	public void setName(String name) {
+		String old = this.name;
 		this.name = name;
-		this.Columnlist = list;
+		ChangeSupport.firePropertyChange("name", old, name);
 	}
 
 	// CREATE TABLE Orders

@@ -3,9 +3,11 @@
  */
 package mysqls.sql.entity;
 
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +18,10 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
+import mysqls.sql.util.Util;
+
 /**
- * @author 长宏
+ * @author 长宏 属性列表
  *
  */
 public class EditTable extends JPanel {
@@ -26,6 +30,12 @@ public class EditTable extends JPanel {
 	private List<JPanel> mrows;
 	private JScrollPane mJScrollPane;
 	private JPanel mrowall;
+
+	public static interface rowchangelister {
+		public void onadd();
+
+		public void onremove();
+	}
 
 	// private String name;
 	// private String type;
@@ -51,12 +61,13 @@ public class EditTable extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				//
+				// JPanel mJPanel = new JPanel();
+				// mJPanel.add(new JButton("ddd"));
+				// mrowall.add(mJPanel);
 
-				JPanel mJPanel = new JPanel();
-				mJPanel.add(new JButton("ddd"));
-				mrowall.add(mJPanel);
-
-				validate();
+				addrow();
+				// validate();
 			}
 		});
 		add(button);
@@ -72,11 +83,6 @@ public class EditTable extends JPanel {
 
 		mrowall = new JPanel();
 		mrowall.setLayout(new GridLayout(0, 1));
-		for (int i = 0; i < 10; i++) {
-			JPanel mJPanel = new JPanel();
-			mJPanel.add(new JButton("ddd"));
-			mrowall.add(mJPanel);
-		}
 		mJScrollPane = new JScrollPane(mrowall, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -91,17 +97,29 @@ public class EditTable extends JPanel {
 
 		mhead = new JPanel();
 		mhead.setLayout(new GridLayout(1, 0));
-		for (int i = 0; i < AttubuteList.list.size(); i++) {
+		for (int i = 0; i < AttubuteList.namelist.size(); i++) {
 			JTextField textField = new JTextField();
 			textField.setHorizontalAlignment(SwingConstants.CENTER);
 
 			textField.setEditable(false);
-			textField.setText(AttubuteList.list.get(i));
+			textField.setText(AttubuteList.namelist.get(i));
 			mhead.add(textField);
 		}
 	}
 
 	public void addrow() {
+
+		JPanel arow = new JPanel();
+		arow.setLayout(new GridLayout(1, 0));
+		for (int i = 0; i < AttubuteList.pdList.size(); i++) {
+
+			PropertyDescriptor propertyDescriptor = AttubuteList.pdList.get(i);
+			Component component = Util.getEditorComponent(propertyDescriptor);
+			arow.add(component);
+		}
+		mrowall.add(arow);
+		mrows.add(arow);
+		validate();
 
 	}
 

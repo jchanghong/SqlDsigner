@@ -28,9 +28,18 @@ public class Test extends JFrame {
 
 	public static void main(String[] args) throws Exception {
 
-		// Test.testbeand();
-		// Test.testui();
-		Test.tst();
+		Test.table.addColumn(Test.column);
+		Test.column.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				// TODO Auto-generated method stub
+				System.out.println(evt.getPropertyName() + "changed!!!===" + evt.getNewValue().toString());
+			}
+		});
+		Test.testbeand();
+		Test.testui();
+		// Test.tst();
 	}
 
 	/**
@@ -79,6 +88,7 @@ public class Test extends JFrame {
 			public void run() {
 
 				PropertySheets propertySheets = new PropertySheets(Test.table);
+
 				String[] options = { "OK" };
 				if (propertySheets != null) {
 
