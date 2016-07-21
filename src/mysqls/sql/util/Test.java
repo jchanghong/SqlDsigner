@@ -78,7 +78,8 @@ public class Test extends JFrame {
 			@Override
 			public void run() {
 
-				PropertySheets propertySheets = new PropertySheets(Test.table);
+				PropertySheets propertySheets = new PropertySheets(new TableColumn("jjh"));
+
 				String[] options = { "OK" };
 				if (propertySheets != null) {
 
