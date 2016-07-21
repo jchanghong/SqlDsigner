@@ -38,9 +38,12 @@ public class SQLCreator {
 	public static String create(Table table) {
 		StringBuilder builder = new StringBuilder();
 		builder.append(table.toSQL());
-		for (TableColumn column : table.getColumnlist()) {
-			builder.append(column.toSQL());
+		for (int i = 0; i < table.getColumnlist().size(); i++) {
+			builder.append(table.getColumnlist().get(i).toSQL());
 		}
+		// for (TableColumn column : table.getColumnlist()) {
+		// builder.append(column.toSQL());
+		// }
 		builder.append(")\n");
 		int index = builder.lastIndexOf(",");
 		builder.deleteCharAt(index);

@@ -13,6 +13,8 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -101,10 +103,29 @@ public class GraphPanel extends JPanel {
 			return;
 		}
 		aPropertyChangeTracker.startTrackingPropertyChange(edited);
-		PropertySheets sheet = new PropertySheets(edited);
+		PropertySheets sheet = null;
+		if (edited instanceof ClassNode) {
+			final ClassNode classNode = (ClassNode) edited;
+			classNode.mTable.addPropertyChangeListener(new PropertyChangeListener() {
+
+				@Override
+				public void propertyChange(PropertyChangeEvent evt) {
+					// TODO Auto-generated method stub
+					classNode.setName(classNode.mTable.getnodeName());
+					classNode.setAttributes(classNode.mTable.getnodeAttu());
+
+					repaint();
+				}
+			});
+			sheet = new PropertySheets(classNode.mTable);
+		} else {
+
+			sheet = new PropertySheets(edited);
+		}
 		if (sheet.isEmpty()) {
 			return;
 		}
+
 		sheet.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent pEvent) {
@@ -284,7 +305,7 @@ public class GraphPanel extends JPanel {
 
 	/**
 	 * Draws a single "grabber", a filled square.
-	 * 
+	 *
 	 * @param pGraphics2D
 	 *            the graphics context
 	 * @param pX
@@ -312,7 +333,7 @@ public class GraphPanel extends JPanel {
 	 * Changes the zoom of this panel. The zoom is 1 by default and is
 	 * multiplied by sqrt(2) for each positive stem or divided by sqrt(2) for
 	 * each negative step.
-	 * 
+	 *
 	 * @param pSteps
 	 *            the number of steps by which to change the zoom. A positive
 	 *            value zooms in, a negative value zooms out.
@@ -331,7 +352,7 @@ public class GraphPanel extends JPanel {
 
 	/**
 	 * Checks whether this graph has been modified since it was last saved.
-	 * 
+	 *
 	 * @return true if the graph has been modified
 	 */
 	public boolean isModified() {
@@ -340,7 +361,7 @@ public class GraphPanel extends JPanel {
 
 	/**
 	 * Sets or resets the modified flag for this graph.
-	 * 
+	 *
 	 * @param pModified
 	 *            true to indicate that the graph has been modified
 	 */
@@ -366,7 +387,7 @@ public class GraphPanel extends JPanel {
 
 	/**
 	 * Sets the value of the hideGrid property.
-	 * 
+	 *
 	 * @param pHideGrid
 	 *            true if the grid is being hidden
 	 */
@@ -377,7 +398,7 @@ public class GraphPanel extends JPanel {
 
 	/**
 	 * Gets the value of the hideGrid property.
-	 * 
+	 *
 	 * @return true if the grid is being hidden
 	 */
 	public boolean getHideGrid() {
@@ -417,7 +438,7 @@ public class GraphPanel extends JPanel {
 	private class GraphPanelMouseListener extends MouseAdapter {
 		/**
 		 * Also adds the inner edges of parent nodes to the selection list.
-		 * 
+		 *
 		 * @param pElement
 		 */
 		private void setSelection(GraphElement pElement) {
@@ -434,7 +455,7 @@ public class GraphPanel extends JPanel {
 
 		/**
 		 * Also adds the inner edges of parent nodes to the selection list.
-		 * 
+		 *
 		 * @param pElement
 		 */
 		private void addToSelection(GraphElement pElement) {

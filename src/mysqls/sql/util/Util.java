@@ -6,9 +6,12 @@ package mysqls.sql.util;
 import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.swing.JComboBox;
@@ -28,10 +31,49 @@ public final class Util {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static Component getEditorComponent(final PropertyDescriptor propertyDescriptor)
+	public static Component getEditorComponent(Object v, final PropertyDescriptor propertyDescriptor)
 
 	{
-		return Util.getEditorComponent(Util.getEditor(propertyDescriptor));
+		return Util.getEditorComponent(Util.getEditor(v, propertyDescriptor));
+	}
+
+	public static PropertyEditor getEditor(final Object pBean, PropertyDescriptor pDescriptor) {
+		try {
+			final Method getter = pDescriptor.getReadMethod();
+			final Method setter = pDescriptor.getWriteMethod();
+			if (getter == null || setter == null) {
+				return null;
+			}
+
+			Class<?> type = pDescriptor.getPropertyType();
+			final PropertyEditor editor;
+			Class<?> editorClass = pDescriptor.getPropertyEditorClass();
+
+			if (editorClass != null) {
+				editor = (PropertyEditor) editorClass.newInstance();
+			} else {
+				editor = PropertyEditorManager.findEditor(type);
+			}
+			if (editor == null) {
+				return null;
+			}
+
+			Object value = getter.invoke(pBean, new Object[] {});
+			editor.setValue(value);
+			editor.addPropertyChangeListener(new PropertyChangeListener() {
+				@Override
+				public void propertyChange(PropertyChangeEvent pEvent) {
+					try {
+						setter.invoke(pBean, new Object[] { editor.getValue() });
+					} catch (IllegalAccessException | InvocationTargetException exception) {
+						exception.printStackTrace();
+					}
+				}
+			});
+			return editor;
+		} catch (InstantiationException | IllegalAccessException | InvocationTargetException exception) {
+			return null;
+		}
 	}
 
 	public static Component getEditorComponent(final PropertyEditor pEditor) {
@@ -56,7 +98,6 @@ public final class Util {
 		} else {
 			final JTextField textField = new JTextField(text, 10);
 			textField.getDocument().addDocumentListener(new DocumentListener() {
-
 				@Override
 				public void insertUpdate(DocumentEvent pEvent) {
 					pEditor.setAsText(textField.getText());
@@ -70,34 +111,8 @@ public final class Util {
 				@Override
 				public void changedUpdate(DocumentEvent pEvent) {
 				}
-
 			});
 			return textField;
-		}
-	}
-
-	public static PropertyEditor getEditor(PropertyDescriptor pDescriptor) {
-		try {
-			final Method getter = pDescriptor.getReadMethod();
-			final Method setter = pDescriptor.getWriteMethod();
-			if (getter == null || setter == null) {
-				return null;
-			}
-
-			Class<?> type = pDescriptor.getPropertyType();
-			final PropertyEditor editor;
-			Class<?> editorClass = pDescriptor.getPropertyEditorClass();
-			if (editorClass != null) {
-				editor = (PropertyEditor) editorClass.newInstance();
-			} else {
-				editor = PropertyEditorManager.findEditor(type);
-			}
-			if (editor == null) {
-				return null;
-			}
-			return editor;
-		} catch (InstantiationException | IllegalAccessException exception) {
-			return null;
 		}
 	}
 
