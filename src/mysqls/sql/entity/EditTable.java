@@ -4,6 +4,8 @@
 package mysqls.sql.entity;
 
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 /**
  * @author 长宏 属性列表
@@ -31,6 +34,8 @@ public class EditTable extends JPanel {
 	private JScrollPane mJScrollPane;
 	private JPanel mrowall;
 
+	int w;
+	int h;
 	private Rowchangelister rowchangelister;
 
 	/**
@@ -54,6 +59,8 @@ public class EditTable extends JPanel {
 		public void onremove(RowPanel panel);
 	}
 
+	GridBagLayout layout;
+
 	// private String name;
 	// private String type;
 	// private boolean primarykey;
@@ -70,7 +77,8 @@ public class EditTable extends JPanel {
 		super();
 		mdata = value;
 		// TODO Auto-generated constructor stub
-		setLayout(new GridLayout(0, 1));
+		layout = new GridBagLayout();
+		setLayout(layout);
 		inithead();
 		initrows();
 		JButton button = new JButton("addrow");
@@ -91,6 +99,19 @@ public class EditTable extends JPanel {
 		add(button);
 		add(mhead);
 		add(mJScrollPane);
+		GridBagConstraints sConstraints = new GridBagConstraints();
+		sConstraints.fill = GridBagConstraints.BOTH;
+		sConstraints.gridwidth = 0;
+		sConstraints.weightx = 1;
+		sConstraints.weighty = 0;
+		layout.setConstraints(button, sConstraints);
+		layout.setConstraints(mhead, sConstraints);
+		sConstraints.weightx = 1;
+		sConstraints.weighty = 1;
+		sConstraints.gridwidth = 0;
+		// sConstraints.gridheight = GridBagConstraints.REMAINDER;
+		layout.setConstraints(mJScrollPane, sConstraints);
+
 	}
 
 	/**
@@ -154,13 +175,16 @@ public class EditTable extends JPanel {
 				return;
 			}
 		}
+
 		mrowall.add(panel);
 		mrows.add(panel);
 		if (rowchangelister != null) {
 			rowchangelister.onadd(panel);
 		}
 		mdata.addColumn(panel.getmTableColumn());
-		validate();
+
+		SwingUtilities.windowForComponent(this).pack();
+		// validate();
 
 	}
 
@@ -172,7 +196,8 @@ public class EditTable extends JPanel {
 		if (rowchangelister != null) {
 			rowchangelister.onremove(panel);
 		}
-		validate();
+		SwingUtilities.windowForComponent(this).pack();
+		// validate();
 	}
 
 }

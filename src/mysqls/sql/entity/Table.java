@@ -47,7 +47,6 @@ public class Table {
 			@Override
 			public void onchang() {
 				// TODO Auto-generated method stub
-				System.out.println("onchang()");
 				ChangeSupport.firePropertyChange("columnlist", null, columnlist);
 
 			}

@@ -3,7 +3,6 @@ package mysqls.sql;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -11,6 +10,7 @@ import javax.swing.JPanel;
 
 import mysqls.framework.GraphFrame;
 import mysqls.graph.ClassNode;
+import mysqls.sql.util.SQLCreator;
 
 @SuppressWarnings("serial")
 public class SQLbutton extends JPanel {
@@ -51,14 +51,20 @@ public class SQLbutton extends JPanel {
 					return;
 				}
 				StringBuilder builder = new StringBuilder();
-				for (Iterator<ClassNode> iterator = list.iterator(); iterator.hasNext();) {
-					ClassNode classNode = (ClassNode) iterator.next();
-					builder.append(SQLcreate.fromNodeObject(classNode));
-					builder.append("\n");
-
+				for (ClassNode classNode : list) {
+					builder.append(SQLCreator.create(classNode.mTable));
 				}
-				String string = SQLcreate.addsqlassiontion(builder.toString(), mFrame.getGraph().getClassEdge());
-				mFrame.getMsSqlEditPane().setsql(string);
+				// for (Iterator<ClassNode> iterator = list.iterator();
+				// iterator.hasNext();) {
+				// ClassNode classNode = (ClassNode) iterator.next();
+				// builder.append(SQLcreate.fromNodeObject(classNode));
+				// builder.append("\n");
+				//
+				// }
+				// String string =
+				// SQLcreate.addsqlassiontion(builder.toString(),
+				// mFrame.getGraph().getClassEdge());
+				mFrame.getMsSqlEditPane().setsql(builder.toString());
 			}
 		});
 

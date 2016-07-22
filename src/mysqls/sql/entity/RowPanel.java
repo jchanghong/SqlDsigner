@@ -32,7 +32,7 @@ public class RowPanel extends JPanel {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -70,6 +70,7 @@ public class RowPanel extends JPanel {
 
 			Component component = Util.getEditorComponent(mTableColumn, propertyDescriptor);
 			add(component);
+
 		}
 	}
 
