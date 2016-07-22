@@ -43,7 +43,7 @@ public class TableColistEditor extends PropertyEditorSupport {
 	public Component getCustomEditor() {
 		// TODO Auto-generated method stub
 		final Columnlist columnlist = (Columnlist) getValue();
-		meditTable = new EditTable(columnlist);
+		meditTable = new EditTable(columnlist.getMtTable());
 		// meditTable.setRowchangelister(new Rowchangelister() {
 		//
 		// @Override

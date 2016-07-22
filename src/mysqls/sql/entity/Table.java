@@ -22,24 +22,9 @@ public class Table {
 
 	private String name;
 	private Columnlist columnlist;
-	private List<TableColumn> list;
+	// private List<TableColumn> list;
 	private PropertyChangeSupport ChangeSupport = new PropertyChangeSupport(this);
 	private VetoableChangeSupport vetoSupport = new VetoableChangeSupport(this);
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#clone()
-	 */
-	@Override
-	public Table clone() {
-		// TODO Auto-generated method stub
-		Table m = new Table();
-		m.name = new String(this.name);
-		m.columnlist = columnlist.clone();
-		m.list = m.columnlist.getList();
-		return m;
-	}
 
 	/**
 	 *
@@ -49,42 +34,21 @@ public class Table {
 		this("null");
 	}
 
-	public ClassNode createNote() {
-		ClassNode node = new ClassNode(this.clone());
-		return node;
-	}
-
-	public MultiLineString getnodeName() {
-		MultiLineString multiLineString = new MultiLineString();
-		multiLineString.setText(this.toString());
-		return multiLineString;
-	}
-
-	public MultiLineString getnodeAttu() {
-		MultiLineString multiLineString = new MultiLineString();
-
-		StringBuilder builder = new StringBuilder("");
-		for (TableColumn tableColumn : list) {
-			builder.append(tableColumn.toString());
-		}
-		multiLineString.setText(builder.toString());
-		return multiLineString;
-	}
-
 	/**
 	 *
 	 */
 	public Table(String aname) {
 		// TODO Auto-generated constructor stub
 		name = aname;
-		list = new ArrayList<>();
-		columnlist = new Columnlist(list);
+		List<TableColumn> list = new ArrayList<>();
+		columnlist = new Columnlist(list, this);
 		columnlist.setChangelistner(new Changelistener() {
 
 			@Override
 			public void onchang() {
 				// TODO Auto-generated method stub
-				ChangeSupport.firePropertyChange("columnlist", null, null);
+				System.out.println("onchang()");
+				ChangeSupport.firePropertyChange("columnlist", null, columnlist);
 
 			}
 		});
@@ -92,8 +56,7 @@ public class Table {
 
 	public Table(String name, List<TableColumn> list) {
 		this.name = name;
-		this.list = list;
-		columnlist = new Columnlist(list);
+		columnlist = new Columnlist(list, this);
 		columnlist.setChangelistner(new Changelistener() {
 
 			@Override
@@ -114,6 +77,29 @@ public class Table {
 
 	public void addVetoableChangeListener(VetoableChangeListener listener) {
 		vetoSupport.addVetoableChangeListener(listener);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Table clone() {
+		// TODO Auto-generated method stub
+		Table m = new Table();
+		m.name = new String(this.name);
+		for (int i = 0; i < columnlist.size(); i++) {
+			TableColumn column = columnlist.get(i);
+			m.addColumn(column.clone());
+		}
+		// m.list = m.columnlist.getList();
+		return m;
+	}
+
+	public ClassNode createNote() {
+		ClassNode node = new ClassNode(this.clone());
+		return node;
 	}
 
 	/*
@@ -152,6 +138,23 @@ public class Table {
 		return this.name;
 	}
 
+	public MultiLineString getnodeAttu() {
+		MultiLineString multiLineString = new MultiLineString();
+
+		StringBuilder builder = new StringBuilder("");
+		for (TableColumn tableColumn : columnlist.getList()) {
+			builder.append(tableColumn.toString());
+		}
+		multiLineString.setText(builder.toString());
+		return multiLineString;
+	}
+
+	public MultiLineString getnodeName() {
+		MultiLineString multiLineString = new MultiLineString();
+		multiLineString.setText(this.toString());
+		return multiLineString;
+	}
+
 	public void removecolumn(TableColumn column) {
 		columnlist.remove(column);
 
@@ -170,8 +173,13 @@ public class Table {
 	 *            the columnlist to set
 	 */
 	public void setColumnlist(Columnlist columnlist) {
+		Columnlist ol = this.columnlist;
 		this.columnlist = columnlist;
-		this.list = columnlist.getList();
+		System.out.println("setColumnlist(Columnlist columnlist) ");
+		ChangeSupport.firePropertyChange("columnlist", null, columnlist);
+
+		System.out.println("setColumnlist(Columnlist columnlist) {");
+		// this.list = columnlist.getList();
 	}
 
 	/**
@@ -215,6 +223,15 @@ public class Table {
 		StringBuilder builder = new StringBuilder();
 		builder.append(name + "\n");
 		return builder.toString();
+
+	}
+
+	/**
+	 * @param getmTableColumn
+	 */
+	public void remove(TableColumn getmTableColumn) {
+		// TODO Auto-generated method stub
+		columnlist.remove(getmTableColumn);
 
 	}
 }

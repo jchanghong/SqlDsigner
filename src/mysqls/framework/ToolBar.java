@@ -159,9 +159,9 @@ public class ToolBar extends JPanel {
 				Graphics2D g2 = (Graphics2D) pGraphics;
 				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-				ClassNode p = new Table().createNote();
+				ClassNode p = new ClassNode(new Table());
 				p.translate(ToolBar.OFFSET, ToolBar.OFFSET);
-				ClassNode q = new Table().createNote();
+				ClassNode q = new ClassNode(new Table());
 				q.translate(ToolBar.BUTTON_SIZE - ToolBar.OFFSET, ToolBar.BUTTON_SIZE - ToolBar.OFFSET);
 				pEdge.connect(p, q);
 

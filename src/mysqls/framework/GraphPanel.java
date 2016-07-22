@@ -111,6 +111,7 @@ public class GraphPanel extends JPanel {
 				@Override
 				public void propertyChange(PropertyChangeEvent evt) {
 					// TODO Auto-generated method stub
+					System.out.println(" editSelected() propertyChange" + evt.getNewValue());
 					classNode.setName(classNode.mTable.getnodeName());
 					classNode.setAttributes(classNode.mTable.getnodeAttu());
 

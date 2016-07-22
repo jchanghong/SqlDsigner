@@ -30,6 +30,22 @@ public class RowPanel extends JPanel {
 		return this.mTableColumn;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		if (obj instanceof RowPanel) {
+			RowPanel rowPanel = (RowPanel) obj;
+			return rowPanel.getmTableColumn().equals(mTableColumn);
+		} else {
+			return false;
+		}
+	}
+
 	/**
 	 * @param mTableColumn
 	 */

@@ -15,7 +15,7 @@ import mysqls.sql.entity.Table;
  * A UML class diagram.
  */
 public class ClassDiagramGraph extends Graph {
-	private static final Node[] NODE_PROTOTYPES = new Node[] { new Table().createNote(),
+	private static final Node[] NODE_PROTOTYPES = new Node[] { new mysqls.graph.ClassNode(new Table()),
 			// new InterfaceNode(),
 			// new PackageNode(),
 			new NoteNode() };

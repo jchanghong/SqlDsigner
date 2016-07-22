@@ -13,16 +13,22 @@ import java.util.List;
  *
  */
 public final class Columnlist implements Cloneable {
-	/**
-	 * @return the list
-	 */
-	public List<TableColumn> getList() {
-		return this.list;
-	}
-
 	public static interface Changelistener {
 		public void onchang();
 
+	}
+
+	/**
+	 * //必须有一个表，也就是不能为空
+	 */
+	private Table mtTable;
+
+	/**
+	 * @param list
+	 *            the list to set
+	 */
+	public void setList(List<TableColumn> list) {
+		this.list = list;
 	}
 
 	private Changelistener changelistner;
@@ -34,8 +40,9 @@ public final class Columnlist implements Cloneable {
 	/**
 	 *
 	 */
-	public Columnlist(List<TableColumn> columns) {
+	public Columnlist(List<TableColumn> columns, Table table) {
 		this.list = columns;
+		this.mtTable = table;
 		listener = new PropertyChangeListener() {
 
 			@Override
@@ -67,6 +74,23 @@ public final class Columnlist implements Cloneable {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Columnlist clone() {
+		// TODO Auto-generated method stub
+		List<TableColumn> tableColumns = new ArrayList<>();
+		for (TableColumn tableColumn : list) {
+			tableColumns.add(tableColumn.clone());
+		}
+		Columnlist columnlist = new Columnlist(tableColumns, null);
+
+		return columnlist;
+	}
+
 	/**
 	 * @param index
 	 * @return null 如果不存在index位置的元素
@@ -86,6 +110,20 @@ public final class Columnlist implements Cloneable {
 		return this.changelistner;
 	}
 
+	/**
+	 * @return the list
+	 */
+	public List<TableColumn> getList() {
+		return this.list;
+	}
+
+	/**
+	 * @return the mtTable
+	 */
+	public Table getMtTable() {
+		return this.mtTable;
+	}
+
 	public void remove(TableColumn column) {
 		TableColumn tem = null;
 		for (TableColumn column2 : list) {
@@ -93,6 +131,9 @@ public final class Columnlist implements Cloneable {
 				tem = column2;
 				break;
 			}
+		}
+		if (tem == null) {
+			return;
 		}
 		list.remove(tem);
 		updatelister();
@@ -110,6 +151,14 @@ public final class Columnlist implements Cloneable {
 		this.changelistner = changelistner;
 	}
 
+	/**
+	 * @param mtTable
+	 *            the mtTable to set
+	 */
+	public void setMtTable(Table mtTable) {
+		this.mtTable = mtTable;
+	}
+
 	public int size() {
 		return list.size();
 	}
@@ -123,22 +172,6 @@ public final class Columnlist implements Cloneable {
 			tableColumn.addPropertyChangeListener(listener);
 		}
 
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#clone()
-	 */
-	@Override
-	public Columnlist clone() {
-		// TODO Auto-generated method stub
-		List<TableColumn> tableColumns = new ArrayList<>();
-		for (TableColumn tableColumn : list) {
-			tableColumns.add(tableColumn.clone());
-		}
-		Columnlist columnlist = new Columnlist(tableColumns);
-		return columnlist;
 	}
 
 }

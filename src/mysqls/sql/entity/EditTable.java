@@ -24,7 +24,7 @@ import javax.swing.SwingConstants;
 @SuppressWarnings("serial")
 public class EditTable extends JPanel {
 
-	private Columnlist mdata;
+	private Table mdata;
 
 	private JPanel mhead;
 	private List<RowPanel> mrows;
@@ -66,7 +66,7 @@ public class EditTable extends JPanel {
 	/**
 	 *
 	 */
-	public EditTable(Columnlist value) {
+	public EditTable(Table value) {
 		super();
 		mdata = value;
 		// TODO Auto-generated constructor stub
@@ -104,8 +104,8 @@ public class EditTable extends JPanel {
 		mrowall.setLayout(new GridLayout(0, 1));
 		mJScrollPane = new JScrollPane(mrowall, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		for (int i = 0; i < mdata.size(); i++) {
-			RowPanel panel = new RowPanel(mdata.get(i), this);
+		for (int i = 0; i < mdata.getColumnlist().size(); i++) {
+			RowPanel panel = new RowPanel(mdata.getColumnlist().get(i), this);
 			mrowall.add(panel);
 			mrows.add(panel);
 		}
@@ -149,12 +149,17 @@ public class EditTable extends JPanel {
 
 	public void addrow(RowPanel panel) {
 
+		for (RowPanel rowPanel : mrows) {
+			if (panel.equals(rowPanel)) {
+				return;
+			}
+		}
 		mrowall.add(panel);
 		mrows.add(panel);
 		if (rowchangelister != null) {
 			rowchangelister.onadd(panel);
 		}
-		mdata.add(panel.getmTableColumn());
+		mdata.addColumn(panel.getmTableColumn());
 		validate();
 
 	}
@@ -167,7 +172,6 @@ public class EditTable extends JPanel {
 		if (rowchangelister != null) {
 			rowchangelister.onremove(panel);
 		}
-
 		validate();
 	}
 

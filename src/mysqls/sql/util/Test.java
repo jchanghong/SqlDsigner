@@ -3,6 +3,8 @@
  */
 package mysqls.sql.util;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
@@ -24,15 +26,35 @@ public class Test extends JFrame {
 	public static Table table = new Table("table");
 
 	public static void main(String[] args) throws Exception {
+		Test.table.addPropertyChangeListener(new PropertyChangeListener() {
 
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				// TODO Auto-generated method stub
+				System.out.println("o;PropertyChangeEvent    " + evt.getPropertyName());
+			}
+		});
 		Test.table.addColumn(Test.column);
 		Test.table.addColumn(new TableColumn("222"));
+
+		Test.table.setName("aaaaaaaaaa");
+		Test.table.getColumnlist().get(0).setName("aaaaaaaaa");
 		Test.table.addColumn(new TableColumn("23444"));
 		System.out.println(SQLCreator.create(Test.table));
 		System.out.println("clone is:\n");
 		Table dTable = Test.table.clone();
+		dTable.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				// TODO Auto-generated method stub
+				System.out.println("propertyChange(PropertyChangeEvent evt)" + evt.getPropertyName());
+			}
+		});
 		System.out.println(SQLCreator.create(dTable));
 		dTable.setName("ccccccccccccccc");
+		dTable.setName("cccccccccccc2ccc");
+		dTable.getColumnlist().get(0).setName("ccccccnnnn");
 		dTable.getColumnlist().get(0).setName("ccccccnnnn");
 		System.out.println("ori is:\n");
 		System.out.println(SQLCreator.create(Test.table));

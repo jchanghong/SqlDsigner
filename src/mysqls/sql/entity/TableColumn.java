@@ -235,6 +235,7 @@ public class TableColumn implements Serializable, Cloneable {
 	public void setName(String name) {
 		String old = this.name;
 		this.name = name;
+		// System.out.println("setname");
 		ChangeSupport.firePropertyChange("name", old, name);
 	}
 

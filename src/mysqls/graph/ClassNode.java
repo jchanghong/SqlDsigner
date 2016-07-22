@@ -17,7 +17,7 @@ public class ClassNode extends InterfaceNode {
 	private MultiLineString aAttributes;
 
 	/**
-	 * Construct a class node with a default size. 不要直接调用这个函数
+	 * Construct a class node with a default size. 不要直接调用这个函数 table就是数据非clone
 	 */
 	public ClassNode(Table table) {
 		mTable = table;
