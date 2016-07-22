@@ -5,8 +5,6 @@ package mysqls.sql.entity;
 
 import java.awt.Component;
 import java.beans.PropertyEditorSupport;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author 长宏
@@ -22,14 +20,7 @@ public class TableColistEditor extends PropertyEditorSupport {
 	public TableColistEditor() {
 		// TODO Auto-generated constructor stub
 		super();
-		meditTable = new EditTable();
-	}
-
-	private List<String> list;
-	{
-		list = new ArrayList<>();
-		list.add("11");
-		list.add("222");
+		// meditTable = new EditTable();
 	}
 
 	/*
@@ -52,10 +43,29 @@ public class TableColistEditor extends PropertyEditorSupport {
 	public Component getCustomEditor() {
 		// TODO Auto-generated method stub
 		@SuppressWarnings("unchecked")
-		ArrayList<TableColumn> list = (ArrayList<TableColumn>) getValue();
-		for (int i = 0; i < list.size(); i++) {
-			meditTable.addrow();
-		}
+		final Columnlist columnlist = (Columnlist) getValue();
+		meditTable = new EditTable(columnlist);
+		// meditTable.setRowchangelister(new Rowchangelister() {
+		//
+		// @Override
+		// public void onremove(RowPanel panel) {
+		// // TODO Auto-generated method stub
+		// list.remove(panel.getmTableColumn());
+		// firePropertyChange();
+		//
+		// }
+		//
+		// @Override
+		// public void onadd(RowPanel panel) {
+		// // TODO Auto-generated method stub
+		// list.add(panel.getmTableColumn());
+		// firePropertyChange();
+		//
+		// }
+		// });
+		// for (int i = 0; i < list.size(); i++) {
+		// meditTable.addrow(new RowPanel(list.get(i), meditTable));
+		// }
 		return meditTable;
 	}
 

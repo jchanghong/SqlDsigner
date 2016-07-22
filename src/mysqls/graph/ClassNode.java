@@ -3,19 +3,37 @@ package mysqls.graph;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import mysqls.framework.MultiLineString;
+import mysqls.sql.entity.Table;
 
 /**
  * A class node in a class diagram.
  */
 public class ClassNode extends InterfaceNode {
+	public Table mTable;
 	private MultiLineString aAttributes;
 
 	/**
 	 * Construct a class node with a default size.
 	 */
 	public ClassNode() {
+		mTable = new Table("null");
+		mTable.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				// TODO Auto-generated method stub
+
+				// aAttributes.setText(mTable.getnodeAttu());
+				// aName.setText(mTable.getnodeName());
+				// setAttributes(aAttributes);
+				// setName(aName);
+				System.out.println(aName);
+			}
+		});
 		aAttributes = new MultiLineString();
 		aAttributes.setJustification(MultiLineString.LEFT);
 		aName.setText("");
@@ -34,7 +52,7 @@ public class ClassNode extends InterfaceNode {
 
 	/**
 	 * Sets the attributes property value.
-	 * 
+	 *
 	 * @param pNewValue
 	 *            the attributes of this class
 	 */
@@ -45,7 +63,7 @@ public class ClassNode extends InterfaceNode {
 
 	/**
 	 * Gets the attributes property value.
-	 * 
+	 *
 	 * @return the attributes of this class
 	 */
 	public MultiLineString getAttributes() {

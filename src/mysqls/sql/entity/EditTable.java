@@ -3,11 +3,10 @@
  */
 package mysqls.sql.entity;
 
-import java.awt.Component;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,23 +17,40 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
-import mysqls.sql.util.Util;
-
 /**
  * @author 长宏 属性列表
  *
  */
 public class EditTable extends JPanel {
 
+	private Columnlist mdata;
+
 	private JPanel mhead;
-	private List<JPanel> mrows;
+	private List<RowPanel> mrows;
 	private JScrollPane mJScrollPane;
 	private JPanel mrowall;
 
-	public static interface rowchangelister {
-		public void onadd();
+	private Rowchangelister rowchangelister;
 
-		public void onremove();
+	/**
+	 * @return the rowchangelister
+	 */
+	public Rowchangelister getRowchangelister() {
+		return this.rowchangelister;
+	}
+
+	/**
+	 * @param rowchangelister
+	 *            the rowchangelister to set
+	 */
+	public void setRowchangelister(Rowchangelister rowchangelister) {
+		this.rowchangelister = rowchangelister;
+	}
+
+	public static interface Rowchangelister {
+		public void onadd(RowPanel panel);
+
+		public void onremove(RowPanel panel);
 	}
 
 	// private String name;
@@ -49,8 +65,9 @@ public class EditTable extends JPanel {
 	/**
 	 *
 	 */
-	public EditTable() {
+	public EditTable(Columnlist value) {
 		super();
+		mdata = value;
 		// TODO Auto-generated constructor stub
 		setLayout(new GridLayout(0, 1));
 		inithead();
@@ -66,7 +83,7 @@ public class EditTable extends JPanel {
 				// mJPanel.add(new JButton("ddd"));
 				// mrowall.add(mJPanel);
 
-				addrow();
+				addrow(new RowPanel(EditTable.this));
 				// validate();
 			}
 		});
@@ -82,11 +99,16 @@ public class EditTable extends JPanel {
 		// TODO Auto-generated method stub
 
 		mrowall = new JPanel();
+		mrows = new ArrayList<>();
 		mrowall.setLayout(new GridLayout(0, 1));
 		mJScrollPane = new JScrollPane(mrowall, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		for (int i = 0; i < mdata.size(); i++) {
+			RowPanel panel = new RowPanel(mdata.get(i), this);
+			mrowall.add(panel);
+			mrows.add(panel);
+		}
 
-		mrows = new ArrayList<>();
 	}
 
 	/**
@@ -96,31 +118,56 @@ public class EditTable extends JPanel {
 		// TODO Auto-generated method stub
 
 		mhead = new JPanel();
-		mhead.setLayout(new GridLayout(1, 0));
+		mhead.setBackground(Color.gray);
+		GridLayout gridLayout = new GridLayout(1, 0);
+		gridLayout.setHgap(0);
+		gridLayout.setVgap(0);
+		mhead.setLayout(gridLayout);
+		JTextField textField1 = new JTextField();
+		textField1.setHorizontalAlignment(SwingConstants.CENTER);
+
+		textField1.setBackground(Color.gray);
+		textField1.setOpaque(false);
+		textField1.setEditable(false);
+		// textField1.setBorder(BorderFactory.createLineBorder(Color.gray, 0));
+		textField1.setText("操作");
+		mhead.add(textField1);
 		for (int i = 0; i < AttubuteList.namelist.size(); i++) {
 			JTextField textField = new JTextField();
 			textField.setHorizontalAlignment(SwingConstants.CENTER);
 
+			textField.setBackground(Color.gray);
+			textField.setOpaque(false);
+			// textField.setBorder(BorderFactory.createLineBorder(Color.gray,
+			// 0));
 			textField.setEditable(false);
 			textField.setText(AttubuteList.namelist.get(i));
 			mhead.add(textField);
 		}
 	}
 
-	public void addrow() {
+	public void addrow(RowPanel panel) {
 
-		JPanel arow = new JPanel();
-		arow.setLayout(new GridLayout(1, 0));
-		for (int i = 0; i < AttubuteList.pdList.size(); i++) {
-
-			PropertyDescriptor propertyDescriptor = AttubuteList.pdList.get(i);
-			Component component = Util.getEditorComponent(propertyDescriptor);
-			arow.add(component);
+		mrowall.add(panel);
+		mrows.add(panel);
+		if (rowchangelister != null) {
+			rowchangelister.onadd(panel);
 		}
-		mrowall.add(arow);
-		mrows.add(arow);
+		mdata.add(panel.getmTableColumn());
 		validate();
 
+	}
+
+	public void removerow(RowPanel panel) {
+
+		mrowall.remove(panel);
+		mrows.remove(panel);
+		mdata.remove(panel.getmTableColumn());
+		if (rowchangelister != null) {
+			rowchangelister.onremove(panel);
+		}
+
+		validate();
 	}
 
 }

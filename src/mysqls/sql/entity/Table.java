@@ -10,6 +10,9 @@ import java.beans.VetoableChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import mysqls.framework.MultiLineString;
+import mysqls.sql.entity.Columnlist.Changelistener;
+
 /**
  * @author 长宏
  *
@@ -17,9 +20,12 @@ import java.util.List;
 public class Table {
 
 	private String name;
-	private List<TableColumn> Columnlist;
 
+	private Columnlist columnlist;
+
+	private List<TableColumn> list;
 	private PropertyChangeSupport ChangeSupport = new PropertyChangeSupport(this);
+
 	private VetoableChangeSupport vetoSupport = new VetoableChangeSupport(this);
 
 	/**
@@ -30,22 +36,58 @@ public class Table {
 		this("null");
 	}
 
+	public MultiLineString getnodeName() {
+		MultiLineString multiLineString = new MultiLineString();
+		multiLineString.setText(this.toString());
+		return multiLineString;
+	}
+
+	public MultiLineString getnodeAttu() {
+		MultiLineString multiLineString = new MultiLineString();
+
+		StringBuilder builder = new StringBuilder();
+		for (TableColumn tableColumn : list) {
+			builder.append(tableColumn.toString());
+		}
+		multiLineString.setText(builder.toString());
+		return multiLineString;
+	}
+
 	/**
 	 *
 	 */
 	public Table(String aname) {
 		// TODO Auto-generated constructor stub
 		name = aname;
-		Columnlist = new ArrayList<>();
+		list = new ArrayList<>();
+		columnlist = new Columnlist(list, ChangeSupport);
+		columnlist.setChangelistner(new Changelistener() {
+
+			@Override
+			public void onchang() {
+				// TODO Auto-generated method stub
+				ChangeSupport.firePropertyChange("columnlist", null, null);
+
+			}
+		});
 	}
 
 	public Table(String name, List<TableColumn> list) {
 		this.name = name;
-		this.Columnlist = list;
+		this.list = list;
+		columnlist = new Columnlist(list, ChangeSupport);
+		columnlist.setChangelistner(new Changelistener() {
+
+			@Override
+			public void onchang() {
+				// TODO Auto-generated method stub
+				ChangeSupport.firePropertyChange("columnlist", null, null);
+			}
+		});
 	}
 
 	public void addColumn(TableColumn column) {
-		Columnlist.add(column);
+		columnlist.add(column);
 	}
 
 	public void addPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
@@ -81,8 +123,8 @@ public class Table {
 	/**
 	 * @return the columnlist
 	 */
-	public List<TableColumn> getColumnlist() {
-		return this.Columnlist;
+	public Columnlist getColumnlist() {
+		return this.columnlist;
 	}
 
 	/**
@@ -90,6 +132,11 @@ public class Table {
 	 */
 	public String getName() {
 		return this.name;
+	}
+
+	public void removecolumn(TableColumn column) {
+		columnlist.remove(column);
+
 	}
 
 	public void removePropertyChangeListener(PropertyChangeListener propertyChangeListener) {
@@ -104,10 +151,8 @@ public class Table {
 	 * @param columnlist
 	 *            the columnlist to set
 	 */
-	public void setColumnlist(List<TableColumn> columnlist) {
-		List<TableColumn> old = this.Columnlist;
-		this.Columnlist = columnlist;
-		ChangeSupport.firePropertyChange("Columnlist", old, columnlist);
+	public void setColumnlist(Columnlist columnlist) {
+		this.columnlist = columnlist;
 	}
 
 	/**

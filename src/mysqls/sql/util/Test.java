@@ -5,7 +5,6 @@ package mysqls.sql.util;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
@@ -13,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import mysqls.framework.PropertySheets;
-import mysqls.sql.entity.EditTable;
 import mysqls.sql.entity.Table;
 import mysqls.sql.entity.TableColumn;
 
@@ -29,6 +27,8 @@ public class Test extends JFrame {
 	public static void main(String[] args) throws Exception {
 
 		Test.table.addColumn(Test.column);
+		Test.column.setForigntable(Test.table);
+		Test.column.setForigncolumn(Test.column);
 		Test.column.addPropertyChangeListener(new PropertyChangeListener() {
 
 			@Override
@@ -37,48 +37,18 @@ public class Test extends JFrame {
 				System.out.println(evt.getPropertyName() + "changed!!!===" + evt.getNewValue().toString());
 			}
 		});
-		Test.testbeand();
-		Test.testui();
-		// Test.tst();
-	}
-
-	/**
-	 *
-	 */
-	private static void tst() {
-		// TODO Auto-generated method stub
-		try {
-			SwingUtilities.invokeAndWait(new Runnable() {
-				@Override
-				public void run() {
-					Test ui = new Test();
-					ui.setContentPane(new EditTable());
-					ui.setSize(400, 300);
-					ui.setVisible(true);
-				}
-			});
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void testbeand() {
-
-		Test.column.addPropertyChangeListener(new PropertyChangeListener() {
+		Test.table.addColumn(new TableColumn("222"));
+		Test.table.addColumn(new TableColumn("23444"));
+		Test.table.addPropertyChangeListener(new PropertyChangeListener() {
 
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				// TODO Auto-generated method stub
-				System.out.println(evt.getPropertyName() + ":" + evt.getOldValue());
+				System.out.println(SQLCreator.create(Test.table));
 			}
 		});
-		Test.column.setName("fff");
-
+		Test.testui();
+		// Test.tst();
 	}
 
 	public static void testui() throws Exception {
