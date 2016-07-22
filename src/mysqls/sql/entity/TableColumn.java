@@ -359,6 +359,7 @@ public class TableColumn implements Serializable, Cloneable {
 		}
 		index = builder.indexOf("(");
 		builder.insert(index + 1, builder2);
+		builder.append("\n");
 
 		return builder.toString();
 	}
