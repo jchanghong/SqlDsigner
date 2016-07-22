@@ -32,6 +32,34 @@ public final class AttubuteList {
 
 	public static List<String> namelist = null;
 	public static List<PropertyDescriptor> pdList = null;
+
+	public static String getName(String property) {
+		String string = "null";
+		if (property.equals("name")) {
+			return "列名";
+		}
+		if (property.equals("type")) {
+			return "类型";
+		}
+		if (property.equals("primarykey")) {
+			return "主键";
+		}
+		if (property.equals("notnull")) {
+			return "非空";
+		}
+		if (property.equals("unique")) {
+			return "唯一";
+		}
+		if (property.equals("defaultvalues")) {
+			return "默认值";
+		}
+		if (property.equals("foreignKey")) {
+			return "外键";
+		}
+
+		return string;
+	}
+
 	static {
 		PropertyDescriptor[] pd = null;
 		try {

@@ -7,13 +7,13 @@ import mysqls.framework.ArrowHead;
 import mysqls.framework.SegmentationStyleFactory;
 
 /**
- * An edge that that represents a UML association, with optional labels and
- * directionality.
+ * 外检关系
  */
 public class AssociationEdge extends ClassRelationshipEdge {
 	/**
 	 * Possible directionalities for an association.
 	 */
+
 	public static enum Directionality {
 		// None,
 		Start, End,

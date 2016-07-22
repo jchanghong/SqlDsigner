@@ -47,6 +47,7 @@ public class SQLCreator {
 		builder.append(")\n");
 		int index = builder.lastIndexOf(",");
 		builder.deleteCharAt(index);
+
 		return builder.toString();
 
 	}

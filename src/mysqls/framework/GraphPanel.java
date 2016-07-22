@@ -114,6 +114,7 @@ public class GraphPanel extends JPanel {
 					classNode.setName(classNode.mTable.getnodeName());
 					classNode.setAttributes(classNode.mTable.getnodeAttu());
 
+					aGraph.layout();
 					repaint();
 				}
 			});

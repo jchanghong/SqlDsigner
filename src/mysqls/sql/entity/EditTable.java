@@ -163,7 +163,8 @@ public class EditTable extends JPanel {
 			// textField.setBorder(BorderFactory.createLineBorder(Color.gray,
 			// 0));
 			textField.setEditable(false);
-			textField.setText(AttubuteList.namelist.get(i));
+			String text = AttubuteList.namelist.get(i);
+			textField.setText(AttubuteList.getName(text));
 			mhead.add(textField);
 		}
 	}

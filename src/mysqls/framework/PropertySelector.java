@@ -8,12 +8,12 @@ import java.beans.PropertyEditorSupport;
  * the user to pick one of a finite set of named values.
  */
 public class PropertySelector extends PropertyEditorSupport {
-	private String[] aNames;
-	private Object[] aValues;
+	public String[] aNames;
+	public Object[] aValues;
 
 	/**
 	 * Constructs a selector that correlates names and objects.
-	 * 
+	 *
 	 * @param pTags
 	 *            the strings to display in a combo box
 	 * @param pValues

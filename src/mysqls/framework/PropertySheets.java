@@ -12,6 +12,7 @@ import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
 import java.beans.PropertyEditorSupport;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -30,7 +31,10 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import mysqls.graph.AssociationEdge;
+import mysqls.graph.ClassNode;
 import mysqls.graph.PropertyOrder;
+import mysqls.sql.entity.Table;
 
 /**
  * A GUI component that can present the properties of an object detected through
@@ -109,6 +113,7 @@ public class PropertySheets extends JPanel {
 	 * @return a property editor that edits the property with the given
 	 *         descriptor and updates the given object
 	 */
+	@SuppressWarnings("unchecked")
 	public PropertyEditor getEditor(final Object pBean, PropertyDescriptor pDescriptor) {
 		try {
 			final Method getter = pDescriptor.getReadMethod();
@@ -123,6 +128,31 @@ public class PropertySheets extends JPanel {
 			if (editorClass == null && PropertySheets.editors.containsKey(type)) {
 				editorClass = PropertySheets.editors.get(type);
 			}
+			if (editorClass == MYedgeEditor.class) {
+				AssociationEdge edge = (AssociationEdge) pBean;
+				Table stat = ((ClassNode) edge.getStart()).mTable;
+				Table end = ((ClassNode) edge.getEnd()).mTable;
+				Constructor<MYedgeEditor> constructor = null;
+				try {
+					constructor = (Constructor<MYedgeEditor>) editorClass.getConstructor(Table.class);
+				} catch (NoSuchMethodException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if (pDescriptor.getName().equals("startLabel")) {
+					editor = constructor.newInstance(stat);
+				} else {
+					editor = constructor.newInstance(end);
+
+				}
+
+			}
+
+			else
+
 			if (editorClass != null) {
 				editor = (PropertyEditor) editorClass.newInstance();
 			} else {
@@ -147,6 +177,8 @@ public class PropertySheets extends JPanel {
 			});
 			return editor;
 		} catch (InstantiationException | IllegalAccessException | InvocationTargetException exception) {
+			// System.out.println(exception.getMessage() +
+			// exception.getCause().toString());
 			return null;
 		}
 	}
