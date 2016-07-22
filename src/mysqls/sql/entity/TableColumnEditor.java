@@ -23,7 +23,7 @@ import javax.swing.event.DocumentListener;
  **/
 public class TableColumnEditor extends PropertyEditorSupport {
 
-	private TableColumn mcolumn;
+	// private TableColumn mcolumn;
 
 	/*
 	 * (non-Javadoc)
@@ -33,15 +33,15 @@ public class TableColumnEditor extends PropertyEditorSupport {
 	@Override
 	public Component getCustomEditor() {
 		// TODO Auto-generated method stub
-		TableColumn column = (TableColumn) getValue();
-		String name = column.getName();
-		String type = column.getType();
-		String defaul = column.getDefaultvalues();
-		boolean notnull = column.isNotnull();
-		boolean pri = column.isPrimarykey();
-		boolean unique = column.isUnique();
-		boolean forigrn = column.isForeignKey();
-		super.getCustomEditor();
+		// TableColumn column = (TableColumn) getValue();
+		// String name = column.getName();
+		// String type = column.getType();
+		// String defaul = column.getDefaultvalues();
+		// boolean notnull = column.isNotnull();
+		// boolean pri = column.isPrimarykey();
+		// boolean unique = column.isUnique();
+		// boolean forigrn = column.isForeignKey();
+		// super.getCustomEditor();
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 0));
 

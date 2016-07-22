@@ -53,7 +53,7 @@ public class TableColumnBeanInfo extends SimpleBeanInfo {
 	@Override
 	public PropertyDescriptor[] getPropertyDescriptors() {
 		// TODO Auto-generated method stub
-		super.getPropertyDescriptors();
+		// super.getPropertyDescriptors();
 		return propertyDescriptors;
 
 	}

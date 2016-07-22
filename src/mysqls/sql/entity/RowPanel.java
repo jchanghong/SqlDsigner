@@ -19,6 +19,7 @@ import mysqls.sql.util.Util;
  * @author jiang 编辑一列
  *
  */
+@SuppressWarnings("serial")
 public class RowPanel extends JPanel {
 	private TableColumn mTableColumn;
 

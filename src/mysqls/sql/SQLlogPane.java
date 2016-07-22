@@ -1,17 +1,16 @@
 package mysqls.sql;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 
-import javax.naming.NamingEnumeration;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import mysqls.framework.GraphFrame;
@@ -25,7 +24,7 @@ public class SQLlogPane extends JPanel {
 	JButton toggle = null;
 	GraphFrame mFrame;
 	JButton mclearlog;
-	private boolean logon=false;//日志显示
+	private boolean logon = false;// 日志显示
 	private static final String text_on = "显示日志";
 	private static final String text_off = "隐藏日志";
 	private static final String logend = "\n";
@@ -35,8 +34,8 @@ public class SQLlogPane extends JPanel {
 	JScrollPane mJScrollPane;
 	JPanel mempty;
 	JPanel mlogpanel;
-	
-	
+
+	@SuppressWarnings("deprecation")
 	public void appendA_log(String log) {
 
 		StringBuilder builder = new StringBuilder();
@@ -45,7 +44,7 @@ public class SQLlogPane extends JPanel {
 		builder.append(time.toLocaleString());
 		builder.append(":::");
 		builder.append(log);
-		builder.append(logend);
+		builder.append(SQLlogPane.logend);
 		logstring = logstring + builder.toString();
 		if (istoggleON()) {
 			mlog.setText(logstring);
@@ -53,25 +52,23 @@ public class SQLlogPane extends JPanel {
 
 	}
 
-	
-
 	private void seton() {
 		if (toggle != null) {
-			toggle.setText(text_off);
-			toggle.setToolTipText(text_off);
+			toggle.setText(SQLlogPane.text_off);
+			toggle.setToolTipText(SQLlogPane.text_off);
 		}
 	}
 
 	private void setoff() {
 		if (toggle != null) {
-			toggle.setText(text_on);
-			toggle.setToolTipText(text_on);
+			toggle.setText(SQLlogPane.text_on);
+			toggle.setToolTipText(SQLlogPane.text_on);
 		}
 	}
 
 	private boolean istoggleON() {
 		if (toggle != null) {
-			return toggle.getText().equalsIgnoreCase(text_off);
+			return toggle.getText().equalsIgnoreCase(SQLlogPane.text_off);
 
 		} else {
 			return false;
@@ -80,45 +77,43 @@ public class SQLlogPane extends JPanel {
 	}
 
 	public SQLlogPane(GraphFrame graphFrame) {
-	
-		mFrame=graphFrame;
+
+		mFrame = graphFrame;
 
 		setLayout(new BorderLayout());
 
-		logon=false;
+		logon = false;
 		createempty();
 		createtoggleButton();
 		createclearbutton();
-		this.setMaximumSize(new Dimension(10000,300));
+		this.setMaximumSize(new Dimension(10000, 300));
 
 	}
 
 	private void createclearbutton() {
 		// TODO Auto-generated method stub
-	
-			mclearlog = new JButton();
-			mclearlog.setText("...");
-			mclearlog.setAlignmentY(CENTER_ALIGNMENT);
-			mclearlog.setToolTipText("clear sql日志");
-			 mclearlog.setPreferredSize(new Dimension(high,high));
-			 mclearlog.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					logstring="";
-//					if (logon) {
-						mlog.setText(logstring);
-//					 remove(mlogpanel);
-//					 mlogpanel.setBounds(mempty.getBounds());
-//					 add(mempty,BorderLayout.CENTER);
-//					}
-				}
-			});
-			 add(mclearlog, BorderLayout.WEST);
+
+		mclearlog = new JButton();
+		mclearlog.setText("...");
+		mclearlog.setAlignmentY(Component.CENTER_ALIGNMENT);
+		mclearlog.setToolTipText("clear sql日志");
+		mclearlog.setPreferredSize(new Dimension(SQLlogPane.high, SQLlogPane.high));
+		mclearlog.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				logstring = "";
+				// if (logon) {
+				mlog.setText(logstring);
+				// remove(mlogpanel);
+				// mlogpanel.setBounds(mempty.getBounds());
+				// add(mempty,BorderLayout.CENTER);
+				// }
+			}
+		});
+		add(mclearlog, BorderLayout.WEST);
 	}
-
-
 
 	private void createempty() {
 		// TODO Auto-generated method stub
@@ -127,66 +122,65 @@ public class SQLlogPane extends JPanel {
 			mlog.setEditable(false);
 			mlog.setLineWrap(true);
 			mlog.setText("");
-			mempty=new JPanel(new BorderLayout());
-			
-			JTextArea jTextField=new JTextArea();
+			mempty = new JPanel(new BorderLayout());
+
+			JTextArea jTextField = new JTextArea();
 			jTextField.setEnabled(false);
 			jTextField.setText("点击右边显示日志");
-			mempty.add(jTextField,BorderLayout.CENTER);
-			
-			mJScrollPane=new JScrollPane(mlog);
+			mempty.add(jTextField, BorderLayout.CENTER);
+
+			mJScrollPane = new JScrollPane(mlog);
 			mJScrollPane.setPreferredSize(new Dimension(mJScrollPane.getPreferredSize().width, 300));
-			mJScrollPane.setMaximumSize(new Dimension(getPreferredSize().width,600));
-			
-			mlogpanel=new JPanel(new BorderLayout());
-			mlogpanel.add(mJScrollPane,BorderLayout.CENTER);
-			
-			
+			mJScrollPane.setMaximumSize(new Dimension(getPreferredSize().width, 600));
+
+			mlogpanel = new JPanel(new BorderLayout());
+			mlogpanel.add(mJScrollPane, BorderLayout.CENTER);
+
 		}
 
-		
 	}
 
 	private void createtoggleButton() {
 		toggle = new JButton();
-		toggle.setText(text_on);
+		toggle.setText(SQLlogPane.text_on);
 
-		toggle.setAlignmentY(CENTER_ALIGNMENT);
+		toggle.setAlignmentY(Component.CENTER_ALIGNMENT);
 		toggle.setToolTipText("显示sql日志");
-		 toggle.setPreferredSize(new Dimension(high, high));
+		toggle.setPreferredSize(new Dimension(SQLlogPane.high, SQLlogPane.high));
 
 		toggle.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent pEvent) {
 				if (logon) {
 
-					logon=false;
+					logon = false;
 					setoff();
 					mempty.setBounds(mempty.getBounds());
 					remove(mlogpanel);
-					add(mempty,BorderLayout.CENTER);
-//					createempty();
-//					remove(mlog);
-//					SwingUtilities.invokeLater(new Runnable() {
-//						public void run() {
-//							mlog.setText("点击右边显示日志");
-//							
-//						}
-//					});
-//					
+					add(mempty, BorderLayout.CENTER);
+					// createempty();
+					// remove(mlog);
+					// SwingUtilities.invokeLater(new Runnable() {
+					// public void run() {
+					// mlog.setText("点击右边显示日志");
+					//
+					// }
+					// });
+					//
 				} else {
-					logon=true;
-//					mlog.setBounds(mempty.getBounds());
+					logon = true;
+					// mlog.setBounds(mempty.getBounds());
 					remove(mempty);
 					setlogpane();
 					add(mlogpanel);
-//					seton();
+					// seton();
 					// add(new JScrollPane(emptypane), BorderLayout.CENTER);
 					// add(new JButton("111111"),BorderLayout.CENTER);
 				}
 			}
 
 		});
-	
+
 		add(mempty, BorderLayout.CENTER);
 		add(toggle, BorderLayout.EAST);
 	}
@@ -195,15 +189,13 @@ public class SQLlogPane extends JPanel {
 		// TODO Auto-generated method stub
 
 		SwingUtilities.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				mlog.setText(logstring);
 				seton();
 			}
 		});
-	
-		
 
 	}
-	
-	
+
 }

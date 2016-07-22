@@ -42,7 +42,6 @@ public class TableColistEditor extends PropertyEditorSupport {
 	@Override
 	public Component getCustomEditor() {
 		// TODO Auto-generated method stub
-		@SuppressWarnings("unchecked")
 		final Columnlist columnlist = (Columnlist) getValue();
 		meditTable = new EditTable(columnlist);
 		// meditTable.setRowchangelister(new Rowchangelister() {

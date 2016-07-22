@@ -30,8 +30,8 @@ public final class AttubuteList {
 	// private Table forigntable;
 	// private TableColumn forigncolumn;
 
-	public final static List<String> namelist = new ArrayList<>();
-	public final static List<PropertyDescriptor> pdList = new ArrayList<>();
+	public static List<String> namelist = null;
+	public static List<PropertyDescriptor> pdList = null;
 	static {
 		PropertyDescriptor[] pd = null;
 		try {
@@ -40,7 +40,8 @@ public final class AttubuteList {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		AttubuteList.namelist = new ArrayList<>(pd.length);
+		AttubuteList.pdList = new ArrayList<>(pd.length);
 		String temps = "";
 		PropertyDescriptor temp = null;
 		for (int i = 0; i < pd.length; i++) {

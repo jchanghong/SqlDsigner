@@ -15,7 +15,7 @@ import java.io.Serializable;
  *         KEY CHECK DEFAULT
  */
 @SuppressWarnings("serial")
-public class TableColumn implements Serializable {
+public class TableColumn implements Serializable, Cloneable {
 
 	private String name;
 	private String type;
@@ -28,6 +28,30 @@ public class TableColumn implements Serializable {
 	private TableColumn forigncolumn;
 	private PropertyChangeSupport ChangeSupport = new PropertyChangeSupport(this);
 	private VetoableChangeSupport vetoSupport = new VetoableChangeSupport(this);
+
+	private void copy(TableColumn sColumn, TableColumn dColumn) {
+		dColumn.name = new String(sColumn.name);
+		dColumn.defaultvalues = new String(sColumn.defaultvalues);
+		dColumn.foreignKey = new Boolean(sColumn.foreignKey);
+		dColumn.notnull = new Boolean(sColumn.notnull);
+		dColumn.primarykey = new Boolean(sColumn.primarykey);
+		dColumn.type = new String(sColumn.type);
+		dColumn.unique = new Boolean(sColumn.unique);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public TableColumn clone() {
+		// TODO Auto-generated method stub
+		TableColumn column = null;
+		column = new TableColumn();
+		copy(this, column);
+		return column;
+	}
 
 	/**
 	 *
@@ -179,6 +203,13 @@ public class TableColumn implements Serializable {
 		boolean old = this.foreignKey;
 		this.foreignKey = foreignKey;
 		ChangeSupport.firePropertyChange("foreignKey", old, foreignKey);
+		if (foreignKey) {
+			forigncolumn = new TableColumn("null");
+			forigntable = new Table("null");
+		} else {
+			forigncolumn = null;
+			forigntable = null;
+		}
 	}
 
 	/**

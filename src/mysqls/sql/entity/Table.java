@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mysqls.framework.MultiLineString;
+import mysqls.graph.ClassNode;
 import mysqls.sql.entity.Columnlist.Changelistener;
 
 /**
@@ -20,13 +21,25 @@ import mysqls.sql.entity.Columnlist.Changelistener;
 public class Table {
 
 	private String name;
-
 	private Columnlist columnlist;
-
 	private List<TableColumn> list;
 	private PropertyChangeSupport ChangeSupport = new PropertyChangeSupport(this);
-
 	private VetoableChangeSupport vetoSupport = new VetoableChangeSupport(this);
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Table clone() {
+		// TODO Auto-generated method stub
+		Table m = new Table();
+		m.name = new String(this.name);
+		m.columnlist = columnlist.clone();
+		m.list = m.columnlist.getList();
+		return m;
+	}
 
 	/**
 	 *
@@ -34,6 +47,11 @@ public class Table {
 	public Table() {
 		// TODO Auto-generated constructor stub
 		this("null");
+	}
+
+	public ClassNode createNote() {
+		ClassNode node = new ClassNode(this.clone());
+		return node;
 	}
 
 	public MultiLineString getnodeName() {
@@ -45,7 +63,7 @@ public class Table {
 	public MultiLineString getnodeAttu() {
 		MultiLineString multiLineString = new MultiLineString();
 
-		StringBuilder builder = new StringBuilder();
+		StringBuilder builder = new StringBuilder("");
 		for (TableColumn tableColumn : list) {
 			builder.append(tableColumn.toString());
 		}
@@ -60,7 +78,7 @@ public class Table {
 		// TODO Auto-generated constructor stub
 		name = aname;
 		list = new ArrayList<>();
-		columnlist = new Columnlist(list, ChangeSupport);
+		columnlist = new Columnlist(list);
 		columnlist.setChangelistner(new Changelistener() {
 
 			@Override
@@ -75,7 +93,7 @@ public class Table {
 	public Table(String name, List<TableColumn> list) {
 		this.name = name;
 		this.list = list;
-		columnlist = new Columnlist(list, ChangeSupport);
+		columnlist = new Columnlist(list);
 		columnlist.setChangelistner(new Changelistener() {
 
 			@Override
@@ -153,6 +171,7 @@ public class Table {
 	 */
 	public void setColumnlist(Columnlist columnlist) {
 		this.columnlist = columnlist;
+		this.list = columnlist.getList();
 	}
 
 	/**

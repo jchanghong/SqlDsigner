@@ -30,7 +30,7 @@ public class SQLEditPane extends JPanel {
 	private static final String text_ontip = "隐藏sql面板";
 	private static final String text_off = "<<<";
 	private static final String textofftip = "显示sql面板";
-	private static final String logend = "\n";
+	// private static final String logend = "\n";
 
 	private String sqlstring = "" + "这只是测试内容，还在完善\n" + "create table user(id int,name char(20));\n"
 			+ "create view user1(id int,name char(20));\n" + "drop fff fff\n" + "";
@@ -68,15 +68,15 @@ public class SQLEditPane extends JPanel {
 		}
 	}
 
-	private boolean istoggleON() {
-		if (toggle != null) {
-			return toggle.getText().equalsIgnoreCase(SQLEditPane.text_off);
-
-		} else {
-			return false;
-		}
-
-	}
+	// private boolean istoggleON() {
+	// if (toggle != null) {
+	// return toggle.getText().equalsIgnoreCase(SQLEditPane.text_off);
+	//
+	// } else {
+	// return false;
+	// }
+	//
+	// }
 
 	public SQLEditPane(final GraphFrame graphFrame) {
 

@@ -17,10 +17,10 @@ public class ClassNode extends InterfaceNode {
 	private MultiLineString aAttributes;
 
 	/**
-	 * Construct a class node with a default size.
+	 * Construct a class node with a default size. 不要直接调用这个函数
 	 */
-	public ClassNode() {
-		mTable = new Table("null");
+	public ClassNode(Table table) {
+		mTable = table;
 		mTable.addPropertyChangeListener(new PropertyChangeListener() {
 
 			@Override
@@ -31,12 +31,12 @@ public class ClassNode extends InterfaceNode {
 				// aName.setText(mTable.getnodeName());
 				// setAttributes(aAttributes);
 				// setName(aName);
-				System.out.println(aName);
+				System.out.println("ClassNode(Table table)propertyChange");
 			}
 		});
-		aAttributes = new MultiLineString();
+		aAttributes = mTable.getnodeAttu();
 		aAttributes.setJustification(MultiLineString.LEFT);
-		aName.setText("");
+		aName = mTable.getnodeName();
 	}
 
 	@Override
@@ -100,6 +100,7 @@ public class ClassNode extends InterfaceNode {
 	public ClassNode clone() {
 		ClassNode cloned = (ClassNode) super.clone();
 		cloned.aAttributes = aAttributes.clone();
+		cloned.mTable = mTable.clone();
 		return cloned;
 	}
 }

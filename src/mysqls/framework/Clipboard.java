@@ -39,7 +39,7 @@ public final class Clipboard {
 
 	/**
 	 * Clones the selection and stores it in the clip-board.
-	 * 
+	 *
 	 * @param pSelection
 	 *            The elements to copy. Cannot be null.
 	 */
@@ -151,7 +151,7 @@ public final class Clipboard {
 
 	/**
 	 * Pastes the current selection into the pGraphPanel.
-	 * 
+	 *
 	 * @param pPanel
 	 *            The current Graph to paste contents to.
 	 * @return The elements to paste as a selectionList.
@@ -209,16 +209,16 @@ public final class Clipboard {
 	// Goes through pNodes and removes the reference to the parent
 	// of any node who does not have a parent in the pNodes list
 	private static void removeDanglingReferencesToParents(List<Node> pNodes) {
-		for (Node node : pNodes) {
-			// if( node instanceof ChildNode && ((ChildNode)node).getParent() !=
-			// null )
-			// {
-			// if( !pNodes.contains(((ChildNode)node).getParent()))
-			// {
-			// ((ChildNode)node).getParent().removeChild((ChildNode)node);
-			// }
-			// }
-		}
+		// for (Node node : pNodes) {
+		// if( node instanceof ChildNode && ((ChildNode)node).getParent() !=
+		// null )
+		// {
+		// if( !pNodes.contains(((ChildNode)node).getParent()))
+		// {
+		// ((ChildNode)node).getParent().removeChild((ChildNode)node);
+		// }
+		// }
+		// }
 	}
 
 	private static Rectangle2D updateBounds(Rectangle2D pBounds, GraphElement pElement) {

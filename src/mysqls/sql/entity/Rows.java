@@ -9,6 +9,7 @@ import javax.swing.JPanel;
  * @author 长宏
  *
  */
+@SuppressWarnings("serial")
 public class Rows extends JPanel {
 
 	/**

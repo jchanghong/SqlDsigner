@@ -41,12 +41,13 @@ import mysqls.graph.Edge;
 import mysqls.graph.Graph;
 import mysqls.graph.GraphElement;
 import mysqls.graph.Node;
+import mysqls.sql.entity.Table;
 
 /**
  * A collapsible tool bar than contains various tools and optional command
  * shortcut buttons. Only one tool can be selected at the time. The tool bar
  * also controls a pop-up menu with the same tools as the tool bar.
- * 
+ *
  * @author Martin P. Robillard
  */
 @SuppressWarnings("serial")
@@ -67,7 +68,7 @@ public class ToolBar extends JPanel {
 
 	/**
 	 * Constructs the tool bar.
-	 * 
+	 *
 	 * @param pGraph
 	 *            The graph associated with this tool bar.
 	 */
@@ -158,9 +159,9 @@ public class ToolBar extends JPanel {
 				Graphics2D g2 = (Graphics2D) pGraphics;
 				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-				ClassNode p = new ClassNode();
+				ClassNode p = new Table().createNote();
 				p.translate(ToolBar.OFFSET, ToolBar.OFFSET);
-				ClassNode q = new ClassNode();
+				ClassNode q = new Table().createNote();
 				q.translate(ToolBar.BUTTON_SIZE - ToolBar.OFFSET, ToolBar.BUTTON_SIZE - ToolBar.OFFSET);
 				pEdge.connect(p, q);
 
@@ -195,13 +196,13 @@ public class ToolBar extends JPanel {
 
 	/*
 	 * Adds a tool to the tool bars and menus.
-	 * 
+	 *
 	 * @param pIcon The icon for the tool
-	 * 
+	 *
 	 * @param pToolTip the tool's tool tip
-	 * 
+	 *
 	 * @param pTool the object representing the tool
-	 * 
+	 *
 	 * @param pIsSelected true if the tool is initially selected.
 	 */
 	private void installTool(Icon pIcon, String pToolTip, GraphElement pTool, boolean pIsSelected,
@@ -284,7 +285,7 @@ public class ToolBar extends JPanel {
 	/**
 	 * Gets the node or edge prototype that is associated with the currently
 	 * selected button.
-	 * 
+	 *
 	 * @return a Node or Edge prototype
 	 */
 	public GraphElement getSelectedTool() {
@@ -420,7 +421,7 @@ public class ToolBar extends JPanel {
 
 	/**
 	 * Show the pop-up menu corresponding to this toolbar.
-	 * 
+	 *
 	 * @param pPanel
 	 *            The panel associated with this menu.
 	 * @param pPoint

@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
  * @author 长宏 属性列表
  *
  */
+@SuppressWarnings("serial")
 public class EditTable extends JPanel {
 
 	private Columnlist mdata;

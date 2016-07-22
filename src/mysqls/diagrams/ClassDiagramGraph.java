@@ -4,18 +4,18 @@ package mysqls.diagrams;
 import java.awt.geom.Point2D;
 
 import mysqls.graph.AssociationEdge;
-import mysqls.graph.ClassNode;
 import mysqls.graph.Edge;
 import mysqls.graph.Graph;
 import mysqls.graph.Node;
 import mysqls.graph.NoteEdge;
 import mysqls.graph.NoteNode;
+import mysqls.sql.entity.Table;
 
 /**
  * A UML class diagram.
  */
 public class ClassDiagramGraph extends Graph {
-	private static final Node[] NODE_PROTOTYPES = new Node[] { new ClassNode(),
+	private static final Node[] NODE_PROTOTYPES = new Node[] { new Table().createNote(),
 			// new InterfaceNode(),
 			// new PackageNode(),
 			new NoteNode() };
