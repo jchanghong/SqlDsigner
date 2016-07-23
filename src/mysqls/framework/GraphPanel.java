@@ -37,6 +37,7 @@ import mysqls.graph.Edge;
 import mysqls.graph.Graph;
 import mysqls.graph.GraphElement;
 import mysqls.graph.Node;
+import mysqls.sql.util.SQLCreator;
 
 /**
  * A panel to draw a graph.
@@ -114,6 +115,7 @@ public class GraphPanel extends JPanel {
 					classNode.setName(classNode.mTable.getnodeName());
 					classNode.setAttributes(classNode.mTable.getnodeAttu());
 
+					aGraph.layout();
 					repaint();
 				}
 			});
@@ -129,6 +131,12 @@ public class GraphPanel extends JPanel {
 		sheet.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent pEvent) {
+				if (pEvent != null) {
+
+					if (pEvent.getSource() instanceof AssociationEdge) {
+						SQLCreator.setTable((AssociationEdge) pEvent.getSource());
+					}
+				}
 				aGraph.layout();
 				repaint();
 			}

@@ -124,6 +124,18 @@ public final class Columnlist implements Cloneable {
 		return this.mtTable;
 	}
 
+	public TableColumn get(String columnname) {
+
+		for (TableColumn tableColumn : list) {
+			if (tableColumn.getName().equals(columnname)) {
+				return tableColumn;
+			}
+
+		}
+		return null;
+
+	}
+
 	public void remove(TableColumn column) {
 		TableColumn tem = null;
 		for (TableColumn column2 : list) {

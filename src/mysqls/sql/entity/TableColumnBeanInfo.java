@@ -22,11 +22,12 @@ public class TableColumnBeanInfo extends SimpleBeanInfo {
 			PropertyDescriptor name = new PropertyDescriptor("name", TableColumn.class);
 			PropertyDescriptor tyPropertyDescriptor = new PropertyDescriptor("type", TableColumn.class);
 			PropertyDescriptor pri = new PropertyDescriptor("primarykey", TableColumn.class);
-			PropertyDescriptor fori = new PropertyDescriptor("foreignKey", TableColumn.class);
+			// PropertyDescriptor fori = new PropertyDescriptor("foreignKey",
+			// TableColumn.class);
 			PropertyDescriptor notn = new PropertyDescriptor("notnull", TableColumn.class);
 			PropertyDescriptor uniq = new PropertyDescriptor("unique", TableColumn.class);
 			PropertyDescriptor def = new PropertyDescriptor("defaultvalues", TableColumn.class);
-			propertyDescriptors = new PropertyDescriptor[] { name, tyPropertyDescriptor, pri, fori, notn, uniq, def };
+			propertyDescriptors = new PropertyDescriptor[] { name, tyPropertyDescriptor, pri, notn, uniq, def };
 		} catch (IntrospectionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
