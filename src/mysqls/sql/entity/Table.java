@@ -45,8 +45,12 @@ public class Table {
 		columnlist.setChangelistner(new Changelistener() {
 
 			@Override
-			public void onchang() {
+			public void onchang(TableColumn column, String news) {
 				// TODO Auto-generated method stub
+				if (column != null || news != null) {
+					ChangeSupport.firePropertyChange("columnlist", column, news);
+					return;
+				}
 				ChangeSupport.firePropertyChange("columnlist", null, columnlist);
 
 			}
@@ -59,9 +63,14 @@ public class Table {
 		columnlist.setChangelistner(new Changelistener() {
 
 			@Override
-			public void onchang() {
+			public void onchang(TableColumn column, String news) {
 				// TODO Auto-generated method stub
-				ChangeSupport.firePropertyChange("columnlist", null, null);
+				if (column != null || news != null) {
+					ChangeSupport.firePropertyChange("columnlist", column, news);
+					return;
+				}
+				ChangeSupport.firePropertyChange("columnlist", null, columnlist);
+
 			}
 		});
 	}

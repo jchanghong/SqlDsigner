@@ -36,20 +36,6 @@ import mysqls.graph.ClassNode;
 import mysqls.graph.PropertyOrder;
 import mysqls.sql.entity.Table;
 
-/**
- * A GUI component that can present the properties of an object detected through
- * the JavaBeans framework and allow editing them.
- *
- * All writable properties of an object will be presented in the property sheet
- * unless a) there is no corresponding editor detected for them, or b) their
- * name (specified in GraphElementProperties.properties) is the same as the
- * string INVISIBLE_PROPERTY_MARKER
- *
- * @author Cay Horstmann - initial version
- * @author Martin P. Robillard - property name sequencing and externalization,
- *         visibility
- * @author Eric Quinn - change listening
- */
 @SuppressWarnings("serial")
 public class PropertySheets extends JPanel {
 	private static final String INVISIBLE_PROPERTY_MARKER = "**INVISIBLE**";
@@ -142,7 +128,7 @@ public class PropertySheets extends JPanel {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if (pDescriptor.getName().equals("startLabel")) {
+				if (pDescriptor.getName().equals("sTableColumn")) {
 					editor = constructor.newInstance(stat);
 				} else {
 					editor = constructor.newInstance(end);
@@ -172,9 +158,13 @@ public class PropertySheets extends JPanel {
 
 						if (pBean instanceof AssociationEdge) {
 							fireStateChanged(new ChangeEvent(pBean));
-						} else {
-							fireStateChanged(null);
+							return;
 						}
+						if (pBean instanceof ClassNode) {
+							fireStateChanged(new ChangeEvent(pBean));
+						}
+
+						fireStateChanged(null);
 					} catch (IllegalAccessException | InvocationTargetException exception) {
 						exception.printStackTrace();
 					}

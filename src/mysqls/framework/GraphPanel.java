@@ -31,16 +31,18 @@ import mysqls.commands.AddNodeCommand;
 import mysqls.commands.CompoundCommand;
 import mysqls.commands.DeleteNodeCommand;
 import mysqls.commands.RemoveEdgeCommand;
+import mysqls.diagrams.ClassDiagramGraph;
 import mysqls.graph.AssociationEdge;
 import mysqls.graph.ClassNode;
 import mysqls.graph.Edge;
 import mysqls.graph.Graph;
 import mysqls.graph.GraphElement;
 import mysqls.graph.Node;
+import mysqls.sql.entity.TableColumn;
 import mysqls.sql.util.SQLCreator;
 
 /**
- * A panel to draw a graph.
+ * A panel to draw a graph.增加实体关系图
  */
 @SuppressWarnings("serial")
 public class GraphPanel extends JPanel {
@@ -114,6 +116,13 @@ public class GraphPanel extends JPanel {
 					// TODO Auto-generated method stub
 					classNode.setName(classNode.mTable.getnodeName());
 					classNode.setAttributes(classNode.mTable.getnodeAttu());
+					if (evt.getPropertyName().equals("columnlist") && evt.getNewValue() != null) {
+						TableColumn column = (TableColumn) evt.getOldValue();
+						ClassDiagramGraph graph = (ClassDiagramGraph) aGraph;
+						AssociationEdge associationEdge = graph.findEdge(classNode);
+						SQLCreator.setEdge(classNode, column, associationEdge);
+
+					}
 
 					aGraph.layout();
 					repaint();
@@ -134,8 +143,15 @@ public class GraphPanel extends JPanel {
 				if (pEvent != null) {
 
 					if (pEvent.getSource() instanceof AssociationEdge) {
-						SQLCreator.setTable((AssociationEdge) pEvent.getSource());
+						AssociationEdge edg = (AssociationEdge) pEvent.getSource();
+						edg.setStartLabel(edg.sTableColumn.getName());
+						edg.setEndLabel(edg.eTableColumn.getName());
+						SQLCreator.setTable(edg);
 					}
+					// if (pEvent.getSource() instanceof ClassNode) {
+					// ClassNode node = (ClassNode) pEvent.getSource();
+					//
+					// }
 				}
 				aGraph.layout();
 				repaint();

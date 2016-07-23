@@ -14,7 +14,21 @@ import java.util.List;
  */
 public final class Columnlist implements Cloneable {
 	public static interface Changelistener {
-		public void onchang();
+		/**
+		 * @param column,列表名的变法，其他不监听
+		 *            不为空就为name
+		 */
+		public void onchang(TableColumn column, String newstring);
+
+	}
+
+	public boolean contain(TableColumn column) {
+		for (TableColumn tableColumn : list) {
+			if (column == tableColumn) {
+				return true;
+			}
+		}
+		return false;
 
 	}
 
@@ -50,7 +64,11 @@ public final class Columnlist implements Cloneable {
 				// TODO Auto-generated method stub
 				if (changelistner != null) {
 
-					changelistner.onchang();
+					if (evt.getPropertyName().equals("name")) {
+						changelistner.onchang((TableColumn) evt.getSource(), evt.getNewValue().toString());
+						return;
+					}
+					changelistner.onchang(null, null);
 				}
 
 			}
@@ -70,7 +88,7 @@ public final class Columnlist implements Cloneable {
 		list.add(column);
 		updatelister();
 		if (changelistner != null) {
-			changelistner.onchang();
+			changelistner.onchang(column, column.getName());
 		}
 	}
 
@@ -150,7 +168,7 @@ public final class Columnlist implements Cloneable {
 		list.remove(tem);
 		updatelister();
 		if (changelistner != null) {
-			changelistner.onchang();
+			changelistner.onchang(null, null);
 		}
 
 	}

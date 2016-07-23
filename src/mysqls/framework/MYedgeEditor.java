@@ -25,7 +25,7 @@ public class MYedgeEditor extends PropertySelector {
 		Object[] pValues = new Object[size];
 		for (int i = 0; i < size; i++) {
 			n[i] = mTable.getColumnlist().get(i).getName();
-			pValues[i] = mTable.getColumnlist().get(i).getName();
+			pValues[i] = mTable.getColumnlist().get(i);
 
 		}
 		this.aNames = n;

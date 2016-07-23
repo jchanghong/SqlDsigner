@@ -4,6 +4,7 @@ package mysqls.diagrams;
 import java.awt.geom.Point2D;
 
 import mysqls.graph.AssociationEdge;
+import mysqls.graph.ClassNode;
 import mysqls.graph.Edge;
 import mysqls.graph.Graph;
 import mysqls.graph.Node;
@@ -43,6 +44,21 @@ public class ClassDiagramGraph extends Graph {
 	public String getFileExtension() {
 
 		return ".Er";
+
+	}
+
+	/**
+	 * @param 借点
+	 * @return 和借点关联的边
+	 */
+	public AssociationEdge findEdge(ClassNode node) {
+		for (AssociationEdge edge : getClassEdge()) {
+			if (edge.getStart() == node || edge.getEnd() == node) {
+				return edge;
+			}
+
+		}
+		return null;
 
 	}
 

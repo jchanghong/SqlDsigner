@@ -54,17 +54,20 @@ public class SQLCreator {
 
 	}
 
+	/**
+	 * @param aEdge变更新后设置变
+	 */
 	public static void setTable(AssociationEdge aEdge) {
 		ClassNode sta = (ClassNode) aEdge.getStart();
 		ClassNode eNode = (ClassNode) aEdge.getEnd();
 		String string = aEdge.getStartLabel();
 		String eString = aEdge.getEndLabel();
-		if (string.length() < 1 || eString.length() < 1) {
-			return;
-		}
-		TableColumn sColumn = sta.mTable.getColumnlist().get(string);
-		TableColumn eColumn = eNode.mTable.getColumnlist().get(eString);
-		if (sColumn == null || eColumn == null) {
+		// if (string.length() < 1 || eString.length() < 1) {
+		// return;
+		// }
+		TableColumn sColumn = aEdge.sTableColumn;
+		TableColumn eColumn = aEdge.eTableColumn;
+		if (sColumn == null && eColumn == null) {
 			return;
 		}
 
@@ -75,9 +78,25 @@ public class SQLCreator {
 			eColumn.setForigntable(sta.mTable);
 		} else {
 
-			sColumn.setForeignKey(true);
+			sColumn.setForeignKey(false);
 			sColumn.setForigncolumn(eColumn);
 			sColumn.setForigntable(eNode.mTable);
+		}
+
+	}
+
+	/**
+	 * @param 借点改变后更新边
+	 */
+	public static void setEdge(ClassNode node, TableColumn column, AssociationEdge edge) {
+		if (edge == null || node == null || column == null) {
+			return;
+		}
+		if (edge.sTableColumn == column) {
+			edge.setStartLabel(column.getName());
+		} else if (edge.eTableColumn == column) {
+			edge.setEndLabel(column.getName());
+
 		}
 
 	}

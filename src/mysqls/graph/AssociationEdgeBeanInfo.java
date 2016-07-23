@@ -22,13 +22,16 @@ public class AssociationEdgeBeanInfo extends SimpleBeanInfo {
 	 */
 	public AssociationEdgeBeanInfo() {
 		// TODO Auto-generated constructor stub
+
 		try {
 			PropertyDescriptor dire = new PropertyDescriptor("directionality", AssociationEdge.class);
 			dire.setPropertyEditorClass(DirectionalityEditor.class);
-			PropertyDescriptor start = new PropertyDescriptor("startLabel", AssociationEdge.class);
+			PropertyDescriptor start = new PropertyDescriptor("sTableColumn", AssociationEdge.class, "getsTableColumn",
+					"setsTableColumn");
 			start.setPropertyEditorClass(MYedgeEditor.class);
 
-			PropertyDescriptor enDescriptor = new PropertyDescriptor("endLabel", AssociationEdge.class);
+			PropertyDescriptor enDescriptor = new PropertyDescriptor("eTableColumn", AssociationEdge.class,
+					"geteTableColumn", "seteTableColumn");
 			enDescriptor.setPropertyEditorClass(MYedgeEditor.class);
 			prop = new PropertyDescriptor[] { dire, start, enDescriptor };
 		} catch (IntrospectionException e) {

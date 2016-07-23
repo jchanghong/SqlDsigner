@@ -5,6 +5,7 @@ import java.awt.geom.Point2D;
 
 import mysqls.framework.ArrowHead;
 import mysqls.framework.SegmentationStyleFactory;
+import mysqls.sql.entity.TableColumn;
 
 /**
  * 外检关系
@@ -13,6 +14,39 @@ public class AssociationEdge extends ClassRelationshipEdge {
 	/**
 	 * Possible directionalities for an association.
 	 */
+	public TableColumn sTableColumn;
+
+	public TableColumn eTableColumn;
+
+	/**
+	 * @return the sTableColumn
+	 */
+	public TableColumn getsTableColumn() {
+		return this.sTableColumn;
+	}
+
+	/**
+	 * @param sTableColumn
+	 *            the sTableColumn to set
+	 */
+	public void setsTableColumn(TableColumn sTableColumn) {
+		this.sTableColumn = sTableColumn;
+	}
+
+	/**
+	 * @return the eTableColumn
+	 */
+	public TableColumn geteTableColumn() {
+		return this.eTableColumn;
+	}
+
+	/**
+	 * @param eTableColumn
+	 *            the eTableColumn to set
+	 */
+	public void seteTableColumn(TableColumn eTableColumn) {
+		this.eTableColumn = eTableColumn;
+	}
 
 	public static enum Directionality {
 		// None,
@@ -26,6 +60,8 @@ public class AssociationEdge extends ClassRelationshipEdge {
 	 * Creates an association edge with no labels. and no directionality
 	 */
 	public AssociationEdge() {
+		sTableColumn = new TableColumn("");
+		eTableColumn = new TableColumn("");
 	}
 
 	/**
