@@ -13,7 +13,7 @@ import mysqls.graph.NoteNode;
 import mysqls.sql.entity.Table;
 
 /**
- * A UML class diagram.
+ * A UML class diagram.uml实体关系图
  */
 public class ClassDiagramGraph extends Graph {
 	private static final Node[] NODE_PROTOTYPES = new Node[] { new mysqls.graph.ClassNode(new Table()),
@@ -43,7 +43,7 @@ public class ClassDiagramGraph extends Graph {
 	@Override
 	public String getFileExtension() {
 
-		return ".Er";
+		return ".sql";
 
 	}
 
@@ -52,6 +52,7 @@ public class ClassDiagramGraph extends Graph {
 	 * @return 和借点关联的边
 	 */
 	public AssociationEdge findEdge(ClassNode node) {
+
 		for (AssociationEdge edge : getClassEdge()) {
 			if (edge.getStart() == node || edge.getEnd() == node) {
 				return edge;
@@ -66,7 +67,7 @@ public class ClassDiagramGraph extends Graph {
 	public String getDescription() {
 		// return
 		// ResourceBundle.getBundle("uestc.uml.sql.UMLEditorStrings").getString("class.name");
-		return "实体关系图";
+		return "SQL文件";
 
 	}
 
@@ -137,17 +138,17 @@ public class ClassDiagramGraph extends Graph {
 	 * @see uestc.uml.sql.graph.Graph#addNode(uestc.uml.sql.graph .Node,
 	 * java.awt.geom.Point2D)
 	 */
-	@Override
-	public boolean addNode(Node pNode, Point2D pPoint) {
-		// if( canAddNodeAsChild(pNode))
-		// {
-		// PackageNode container = findContainer(aRootNodes, pPoint);
-		// if( container != null )
-		// {
-		// container.addChild((ChildNode)pNode);
-		// }
-		// }
-		super.addNode(pNode, pPoint);
-		return true;
-	}
+	// @Override
+	// public boolean addNode(Node pNode, Point2D pPoint) {
+	// // if( canAddNodeAsChild(pNode))
+	// // {
+	// // PackageNode container = findContainer(aRootNodes, pPoint);
+	// // if( container != null )
+	// // {
+	// // container.addChild((ChildNode)pNode);
+	// // }
+	// // }
+	// super.addNode(pNode, pPoint);
+	// return true;
+	// }
 }

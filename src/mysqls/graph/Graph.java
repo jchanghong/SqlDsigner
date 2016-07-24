@@ -16,18 +16,18 @@ import mysqls.framework.Grid;
 
 /**
  * A graph consisting of nodes and edges.
- * 
+ *
  * There are three modes for creating a graph:
- * 
+ *
  * - Restoring nodes or edges. This mode is used for loading serialized elements
  * and does not trigger any notifications. It is intended to be used for
  * deserialization only. See methods restore{Node|Edge}
- * 
+ *
  * - Inserting nodes or edges. This mode is used for inserting elements that had
  * been previously created by were temporarily removed from a diagram. This is
  * indented to be used for functionality such as undoing and copy/pasting. See
  * methods insert{Node|Edge}, which trigger notifications.
- * 
+ *
  * - Adding nodes or edges. This mode is used for adding completely new
  * elements, typically through UI actions. See methods add{Node|Edge}, which
  * trigger notifications.
@@ -37,8 +37,7 @@ public abstract class Graph {
 																// from notify*
 																// methods and
 																// setter
-	protected ArrayList<Node> aRootNodes; // Only nodes without a parent are
-											// tracked by the graph.
+	protected ArrayList<Node> aRootNodes;
 	protected ArrayList<Edge> aEdges;
 	protected transient ArrayList<Node> aNodesToBeRemoved;
 	protected transient ArrayList<Edge> aEdgesToBeRemoved;
@@ -133,7 +132,7 @@ public abstract class Graph {
 
 	/**
 	 * Sets the modification listener.
-	 * 
+	 *
 	 * @param pListener
 	 *            the single GraphModificationListener for this Graph.
 	 */
@@ -157,7 +156,7 @@ public abstract class Graph {
 	 * If certain types of diagrams require additional behavior following the
 	 * addition of an edge to a graph, they can override this method to perform
 	 * that behavior.
-	 * 
+	 *
 	 * @param pOrigin
 	 *            The origin node
 	 * @param pEdge
@@ -184,11 +183,20 @@ public abstract class Graph {
 	// return null;
 	// }
 	// }
+	private PointNode createPointNodeIfAllowed(Node pNode1, Edge pEdge, Point2D pPoint2) {
+		if (pNode1 instanceof NoteNode && pEdge instanceof NoteEdge) {
+			PointNode lReturn = new PointNode();
+			lReturn.translate(pPoint2.getX(), pPoint2.getY());
+			return lReturn;
+		} else {
+			return null;
+		}
+	}
 
 	/**
 	 * Adds an edge to the graph that joins the nodes containing the given
 	 * points. If the points aren't both inside nodes, then no edge is added.
-	 * 
+	 *
 	 * @param pEdge
 	 *            the edge to add
 	 * @param pPoint1
@@ -202,13 +210,11 @@ public abstract class Graph {
 		if (node1 == null) {
 			return false;
 		}
-
 		Node node2 = findNode(pPoint2);
-		// if( node1 instanceof NoteNode )
-		// {
-		// node2 = createPointNodeIfAllowed(node1, pEdge, pPoint2);
-		// }
-		//
+		if (node1 instanceof NoteNode) {
+			node2 = createPointNodeIfAllowed(node1, pEdge, pPoint2);
+		}
+
 		if (!canConnect(pEdge, node1, node2, pPoint2)) {
 			return false;
 		}
@@ -284,7 +290,7 @@ public abstract class Graph {
 	/**
 	 * Finds a node containing the given point. Always returns the deepest child
 	 * and the last one in a list.
-	 * 
+	 *
 	 * @param pPoint
 	 *            a point
 	 * @return a node containing pPoint or null if no nodes contain pPoint
@@ -292,32 +298,11 @@ public abstract class Graph {
 	public Node findNode(Point2D pPoint) {
 		Node result = null;
 		for (Node node : aRootNodes) {
-			Node temp = deepFindNode(node, pPoint);
-			if (temp != null) {
-				result = temp;
+			if (node.contains(pPoint)) {
+				return node;
 			}
 		}
 		return result;
-	}
-
-	private Node deepFindNode(Node pNode, Point2D pPoint) {
-		// Node node = null;
-		//// if( pNode instanceof ParentNode )
-		//// {
-		// for( Node child : ((ParentNode) pNode).getChildren())
-		// {
-		// node = deepFindNode(child, pPoint);
-		// if( node != null )
-		// {
-		// return node;
-		// }
-		// }
-		// }
-		if (pNode.contains(pPoint)) {
-			return pNode;
-		} else {
-			return null;
-		}
 	}
 
 	/**
@@ -361,7 +346,7 @@ public abstract class Graph {
 	 * Returns true iif there exists an edge of type pType between nodes pStart
 	 * and pEnd. The direction matter, and the type testing is for the exact
 	 * type pType, without using polymorphism.
-	 * 
+	 *
 	 * @param pType
 	 *            The type of edge to check for.
 	 * @param pStart
@@ -383,7 +368,7 @@ public abstract class Graph {
 
 	/**
 	 * Draws the graph.
-	 * 
+	 *
 	 * @param pGraphics2D
 	 *            the graphics context
 	 * @param pGrid
@@ -393,7 +378,7 @@ public abstract class Graph {
 		layout(pGraphics2D, pGrid);
 
 		for (Node node : aRootNodes) {
-			drawNode(node, pGraphics2D);
+			node.draw(pGraphics2D);
 		}
 
 		for (Edge edge : aEdges) {
@@ -401,20 +386,9 @@ public abstract class Graph {
 		}
 	}
 
-	private void drawNode(Node pNode, Graphics2D pGraphics2D) {
-		pNode.draw(pGraphics2D);
-		// if( pNode instanceof ParentNode )
-		// {
-		// for( Node node : ((ParentNode) pNode).getChildren())
-		// {
-		// drawNode(node, pGraphics2D);
-		// }
-		// }
-	}
-
 	/**
 	 * Removes a node and all edges that start or end with that node.
-	 * 
+	 *
 	 * @param pNode
 	 *            the node to remove
 	 */
@@ -438,9 +412,9 @@ public abstract class Graph {
 		// }
 
 		// Notify all nodes that pNode is being removed.
-		for (Node node : aRootNodes) {
-			Graph.removeFromParent(node, pNode);
-		}
+		// for (Node node : aRootNodes) {
+		// Graph.removeFromParent(node, pNode);
+		// }
 
 		// Notify all edges that pNode is being removed.
 		for (Edge edge : aEdges) {
@@ -453,24 +427,24 @@ public abstract class Graph {
 		aNeedsLayout = true;
 	}
 
-	private static void removeFromParent(Node pParent, Node pToRemove) {
-		// if( pParent instanceof ParentNode )
-		// {
-		// if( pToRemove instanceof ChildNode && ((ChildNode)
-		// pToRemove).getParent() == pParent )
-		// {
-		// ((ParentNode) pParent).getChildren().remove(pToRemove);
-		// // We don't reassing the parent of the child to null in case the
-		// operation
-		// // is undone, at which point we'll need to know who the parent was.
-		// }
-		// for( Node child : ((ParentNode) pParent).getChildren() )
-		// {
-		// removeFromParent(child, pToRemove );
-		// }
-		// }
+	// private static void removeFromParent(Node pParent, Node pToRemove) {
+	// if( pParent instanceof ParentNode )
+	// {
+	// if( pToRemove instanceof ChildNode && ((ChildNode)
+	// pToRemove).getParent() == pParent )
+	// {
+	// ((ParentNode) pParent).getChildren().remove(pToRemove);
+	// // We don't reassing the parent of the child to null in case the
+	// operation
+	// // is undone, at which point we'll need to know who the parent was.
+	// }
+	// for( Node child : ((ParentNode) pParent).getChildren() )
+	// {
+	// removeFromParent(child, pToRemove );
+	// }
+	// }
 
-	}
+	// }
 
 	/**
 	 * @param pElement
@@ -481,34 +455,32 @@ public abstract class Graph {
 		if (aEdges.contains(pElement)) {
 			return true;
 		}
-		for (Node node : aRootNodes) {
-			if (containsNode(node, pElement)) {
-				return true;
-			}
+		if (aRootNodes.contains(pElement)) {
+			return true;
 		}
 		return false;
 	}
 
-	private boolean containsNode(Node pTest, GraphElement pTarget) {
-		if (pTest == pTarget) {
-			return true;
-		}
-		// else if( pTest instanceof ParentNode )
-		// {
-		// for( Node node : ((ParentNode) pTest).getChildren())
-		// {
-		// if( containsNode(node, pTarget))
-		// {
-		// return true;
-		// }
-		// }
-		// }
-		return false;
-	}
+	// private boolean containsNode(Node pTest, GraphElement pTarget) {
+	// if (pTest == pTarget) {
+	// return true;
+	// }
+	// else if( pTest instanceof ParentNode )
+	// {
+	// for( Node node : ((ParentNode) pTest).getChildren())
+	// {
+	// if( containsNode(node, pTarget))
+	// {
+	// return true;
+	// }
+	// }
+	// }
+	// return false;
+	// }
 
 	/**
 	 * Removes an edge from the graph.
-	 * 
+	 *
 	 * @param pEdge
 	 *            the edge to remove
 	 */
@@ -539,7 +511,7 @@ public abstract class Graph {
 	/**
 	 * Computes the layout of the graph. If you override this method, you must
 	 * first call <code>super.layout</code>.
-	 * 
+	 *
 	 * @param pGraphics2D
 	 *            the graphics context
 	 * @param pGrid
@@ -588,14 +560,14 @@ public abstract class Graph {
 
 	/**
 	 * Gets the node types of a particular graph type.
-	 * 
+	 *
 	 * @return an array of node prototypes
 	 */
 	public abstract Node[] getNodePrototypes();
 
 	/**
 	 * Gets the edge types of a particular graph type.
-	 * 
+	 *
 	 * @return an array of edge prototypes
 	 */
 	public abstract Edge[] getEdgePrototypes();
@@ -603,7 +575,7 @@ public abstract class Graph {
 	/**
 	 * Adds a persistence delegate to a given encoder that encodes the child
 	 * nodes of this graph.
-	 * 
+	 *
 	 * @param pEncoder
 	 *            the encoder to which to add the delegate
 	 */
@@ -627,7 +599,7 @@ public abstract class Graph {
 
 	/**
 	 * Gets the nodes of this graph.
-	 * 
+	 *
 	 * @return an unmodifiable collection of the nodes
 	 */
 	public Collection<Node> getRootNodes() {
@@ -636,7 +608,7 @@ public abstract class Graph {
 
 	/**
 	 * Gets the edges of this graph.
-	 * 
+	 *
 	 * @return an unmodifiable collection of the edges
 	 */
 	public Collection<Edge> getEdges() {
@@ -693,7 +665,7 @@ public abstract class Graph {
 	 * based strictly on the type of nodes and edges. This implementation only
 	 * provides the logic valid across all diagram types. Override for
 	 * diagram-specific rules.
-	 * 
+	 *
 	 * @param pEdge
 	 *            The edge to be added
 	 * @param pNode1

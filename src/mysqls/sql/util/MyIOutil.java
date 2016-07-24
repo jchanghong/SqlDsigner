@@ -15,6 +15,10 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.List;
+
+import mysqls.graph.ClassNode;
+import mysqls.graph.Graph;
 
 /**
  * @author 长宏
@@ -27,6 +31,16 @@ public final class MyIOutil {
 	 */
 	private MyIOutil() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public static void savefile(Graph graph, File file) {
+		List<ClassNode> list = graph.getClassNOdes();
+		StringBuilder builder = new StringBuilder();
+		for (ClassNode classNode : list) {
+			builder.append(SQLCreator.create(classNode.mTable));
+		}
+		MyIOutil.copy(builder.toString(), file);
+
 	}
 
 	public static void copy(String sql, File file) {
