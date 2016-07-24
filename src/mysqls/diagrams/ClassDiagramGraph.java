@@ -43,7 +43,7 @@ public class ClassDiagramGraph extends Graph {
 	@Override
 	public String getFileExtension() {
 
-		return ".Er";
+		return ".sql";
 
 	}
 
@@ -66,7 +66,7 @@ public class ClassDiagramGraph extends Graph {
 	public String getDescription() {
 		// return
 		// ResourceBundle.getBundle("uestc.uml.sql.UMLEditorStrings").getString("class.name");
-		return "实体关系图";
+		return "SQL文件";
 
 	}
 

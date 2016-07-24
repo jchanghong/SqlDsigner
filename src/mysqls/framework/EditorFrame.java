@@ -60,6 +60,7 @@ import mysqls.graph.Edge;
 import mysqls.graph.Graph;
 import mysqls.graph.GraphElement;
 import mysqls.graph.Node;
+import mysqls.sql.util.MyIOutil;
 
 /**
  * This desktop frame contains panes that show graphs.
@@ -106,7 +107,7 @@ public class EditorFrame extends JFrame {
 
 	/**
 	 * Constructs a blank frame with a desktop pane but no graph windows.
-	 * 
+	 *
 	 * @param pAppClass
 	 *            the fully qualified app class name. It is expected that the
 	 *            resources are appClassName + "Strings" and appClassName +
@@ -365,7 +366,7 @@ public class EditorFrame extends JFrame {
 
 	/**
 	 * Adds a graph type to the File->New menu.
-	 * 
+	 *
 	 * @param pResourceName
 	 *            the name of the menu item resource
 	 * @param pGraphClass
@@ -401,7 +402,7 @@ public class EditorFrame extends JFrame {
 
 	/**
 	 * Reads the command line arguments.
-	 * 
+	 *
 	 * @param pArgs
 	 *            the command line arguments
 	 */
@@ -418,7 +419,7 @@ public class EditorFrame extends JFrame {
 	/*
 	 * Opens a file with the given name, or switches to the frame if it is
 	 * already open.
-	 * 
+	 *
 	 * @param pName the file name
 	 */
 	private void open(String pName) {
@@ -451,9 +452,9 @@ public class EditorFrame extends JFrame {
 
 	/*
 	 * Adds an InternalFrame to the list of Tabs.
-	 * 
+	 *
 	 * @param c the component to display in the internal frame
-	 * 
+	 *
 	 * @param t the title of the internal frame.
 	 */
 	private void addTab(final JInternalFrame pInternalFrame) {
@@ -570,7 +571,7 @@ public class EditorFrame extends JFrame {
 	/*
 	 * Adds a file name to the "recent files" list and rebuilds the
 	 * "recent files" menu.
-	 * 
+	 *
 	 * @param pNewFile the file name to add
 	 */
 	private void addRecentFile(String pNewFile) {
@@ -683,7 +684,7 @@ public class EditorFrame extends JFrame {
 	 * Pastes a past selection from the application-specific Clipboard into
 	 * current panel. All the logic is done in the application-specific
 	 * CutPasteBehavior.
-	 * 
+	 *
 	 */
 	public void paste() {
 		if (noCurrentGraphFrame()) {
@@ -765,7 +766,7 @@ public class EditorFrame extends JFrame {
 	/**
 	 * If a user confirms that they want to close their modified graph, this
 	 * method will remove it from the current list of tabs.
-	 * 
+	 *
 	 * @param pJInternalFrame
 	 *            The current JInternalFrame that one wishes to close.
 	 */
@@ -799,7 +800,9 @@ public class EditorFrame extends JFrame {
 			return;
 		}
 		try {
-			PersistenceService.saveFile(frame.getGraph(), new FileOutputStream(file));
+			MyIOutil.savefile(frame.getGraph(), file);
+			// PersistenceService.saveFile(frame.getGraph(), new
+			// FileOutputStream(file));
 			frame.getGraphPanel().setModified(false);
 		} catch (Exception exception) {
 			JOptionPane.showInternalMessageDialog(aTabbedPane, exception);
@@ -850,7 +853,8 @@ public class EditorFrame extends JFrame {
 			if (result != null) {
 				OutputStream out = new FileOutputStream(result);
 				try {
-					PersistenceService.saveFile(graph, out);
+					// PersistenceService.saveFile(graph, out);
+					MyIOutil.savefile(frame.getGraph(), result);
 				} finally {
 					out.close();
 				}
@@ -867,7 +871,7 @@ public class EditorFrame extends JFrame {
 	/**
 	 * Edits the file path so that the pToBeRemoved extension, if found, is
 	 * replaced with pDesired.
-	 * 
+	 *
 	 * @param pOriginal
 	 *            the file to use as a starting point
 	 * @param pToBeRemoved
@@ -1013,9 +1017,9 @@ public class EditorFrame extends JFrame {
 
 	/*
 	 * Return the image corresponding to the graph.
-	 * 
+	 *
 	 * @param pGraph The graph to convert to an image.
-	 * 
+	 *
 	 * @return bufferedImage. To convert it into an image, use the syntax :
 	 * Toolkit.getDefaultToolkit().createImage(bufferedImage.getSource());
 	 */
