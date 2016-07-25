@@ -12,7 +12,7 @@ import mysqls.diagrams.ClassDiagramGraph;
 import mysqls.framework.EditorFrame;
 
 /**
- * A program for editing UML diagrams.
+ * 启动类
  */
 public final class UMLEditor {
 	private static final int JAVA_MAJOR_VERSION = 7;
@@ -40,13 +40,6 @@ public final class UMLEditor {
 				UMLEditor.setLookAndFeel();
 				EditorFrame frame = new EditorFrame(UMLEditor.class);
 				frame.addGraphType("class_diagram", ClassDiagramGraph.class);
-				// frame.addGraphType("sequence_diagram",
-				// SequenceDiagramGraph.class);
-				// frame.addGraphType("state_diagram", StateDiagramGraph.class);
-				// frame.addGraphType("object_diagram",
-				// ObjectDiagramGraph.class);
-				// frame.addGraphType("usecase_diagram",
-				// UseCaseDiagramGraph.class);
 				frame.setVisible(true);
 				frame.readArgs(arguments);
 				frame.addWelcomeTab();
