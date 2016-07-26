@@ -2,6 +2,8 @@ package mysqls.graph;
 
 import java.util.HashMap;
 
+import mysqls.sql.entity.Table;
+
 /**
  * Singleton object that can return the presentation sequence index number at
  * which an object property should be displayed. The order does not have to be
@@ -14,13 +16,15 @@ public final class PropertyOrder {
 	private static final PropertyOrder INSTANCE = new PropertyOrder();
 
 	static {
-		PropertyOrder.INSTANCE.addIndex(ClassRelationshipEdge.class, "startLabel", 1);
-		PropertyOrder.INSTANCE.addIndex(ClassRelationshipEdge.class, "middleLabel", 2);
-		PropertyOrder.INSTANCE.addIndex(ClassRelationshipEdge.class, "endLabel", 3);
+		PropertyOrder.INSTANCE.addIndex(AssociationEdge.class, "directionality", 1);
+		PropertyOrder.INSTANCE.addIndex(AssociationEdge.class, "sTableColumn", 2);
+		PropertyOrder.INSTANCE.addIndex(AssociationEdge.class, "eTableColumn", 3);
+		PropertyOrder.INSTANCE.addIndex(Table.class, "name", 1);
+		PropertyOrder.INSTANCE.addIndex(Table.class, "columnlist", 2);
 		// INSTANCE.addIndex(CallEdge.class, "middleLabel", 1);
-		PropertyOrder.INSTANCE.addIndex(ClassNode.class, "name", 1);
-		PropertyOrder.INSTANCE.addIndex(ClassNode.class, "attributes", 2);
-		PropertyOrder.INSTANCE.addIndex(ClassNode.class, "methods", 3);
+		// PropertyOrder.INSTANCE.addIndex(ClassNode.class, "name", 1);
+		// PropertyOrder.INSTANCE.addIndex(ClassNode.class, "attributes", 2);
+		// PropertyOrder.INSTANCE.addIndex(ClassNode.class, "methods", 3);
 		// INSTANCE.addIndex(InterfaceNode.class, "name", 1);
 		// INSTANCE.addIndex(InterfaceNode.class, "methods", 2);
 		// INSTANCE.addIndex(PackageNode.class, "name", 1);
@@ -43,7 +47,7 @@ public final class PropertyOrder {
 	 * Return the sequence index of pProperty of class pClass. Always returns 0
 	 * if the sequence index is not specified for a property. If pProperty is
 	 * not found in pClass, the superclasses are searched.
-	 * 
+	 *
 	 * @param pClass
 	 *            The class supporting a property.
 	 * @param pProperty
