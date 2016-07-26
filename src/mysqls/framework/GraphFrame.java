@@ -21,7 +21,7 @@ import mysqls.sql.SQLlogPane;
 public class GraphFrame extends JInternalFrame {
 	private JTabbedPane aTabbedPane;
 	private SQLlogPane sqLlogPane;
-	private SQLEditPane msSqlEditPane;
+	private static SQLEditPane msSqlEditPane;
 	private GraphPanel aPanel;
 	private File aFile; // The file associated with this graph
 
@@ -125,7 +125,7 @@ public class GraphFrame extends JInternalFrame {
 		setTitle(aFile.getName());
 	}
 
-	public SQLEditPane getMsSqlEditPane() {
+	public static SQLEditPane getMsSqlEditPane() {
 		return msSqlEditPane;
 	}
 

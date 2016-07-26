@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import mysqls.framework.GraphFrame;
 import mysqls.graph.ClassNode;
+import mysqls.sql.sqlreader.SqlToTable;
 import mysqls.sql.util.SQLCreator;
 
 @SuppressWarnings("serial")
@@ -38,7 +39,8 @@ public class SQLbutton extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-
+				SQLEditPane editPane=mFrame.getMsSqlEditPane();
+				System.out.println(editPane.msqlpane.getText());
 			}
 		});
 		mcreateSQL.addActionListener(new ActionListener() {

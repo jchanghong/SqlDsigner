@@ -50,7 +50,7 @@ public class SQLEditPane extends JPanel {
 	}
 
 	DocumentListener documentListener;
-	JTextPane msqlpane = null;
+	public JTextPane msqlpane = null;
 	JScrollPane mJScrollPane;
 	JPanel mempty;
 
