@@ -23,15 +23,12 @@ public class GraphFrame extends JInternalFrame {
 	private SQLlogPane sqLlogPane;
 	private SQLEditPane msSqlEditPane;
 	private GraphPanel aPanel;
-	private File aFile; // The file associated with this graph
 
-	public GraphPanel getaPanel() {
-		return aPanel;
-	}
+	private File aFile; // The file associated with this graph
 
 	/**
 	 * Constructs a graph frame with an empty tool bar.
-	 * 
+	 *
 	 * @param pGraph
 	 *            the initial graph
 	 * @param pTabbedPane
@@ -53,9 +50,22 @@ public class GraphFrame extends JInternalFrame {
 										// disabled buttons.
 	}
 
+	public GraphPanel getaPanel() {
+		return aPanel;
+	}
+
+	/**
+	 * Gets the file property.
+	 *
+	 * @return the file associated with this graph
+	 */
+	public File getFileName() {
+		return aFile;
+	}
+
 	/**
 	 * Gets the graph that is being edited in this frame.
-	 * 
+	 *
 	 * @return the graph
 	 */
 	public Graph getGraph() {
@@ -64,7 +74,7 @@ public class GraphFrame extends JInternalFrame {
 
 	/**
 	 * Gets the graph panel that is contained in this frame.
-	 * 
+	 *
 	 * @return the graph panel
 	 */
 	public GraphPanel getGraphPanel() {
@@ -74,15 +84,34 @@ public class GraphFrame extends JInternalFrame {
 	/**
 	 * This association and getter method are needed to display messages using
 	 * the copy to clipboard functionality of the Optional ToolBar.
-	 * 
+	 *
 	 * @return aTabbedPane the JTabbedPane associated with this GraphFrame.
 	 */
 	public JTabbedPane getJTabbedPane() {
 		return aTabbedPane;
 	}
 
+	public SQLEditPane getMsSqlEditPane() {
+		return msSqlEditPane;
+	}
+
 	public SQLlogPane getSqLlogPane() {
 		return sqLlogPane;
+	}
+
+	/**
+	 * Sets the file property.
+	 *
+	 * @param pFile
+	 *            The file associated with this graph
+	 */
+	public void setFile(File pFile) {
+		aFile = pFile;
+		setTitle(aFile.getName());
+	}
+
+	public void setMsSqlEditPane(SQLEditPane msSqlEditPane) {
+		this.msSqlEditPane = msSqlEditPane;
 	}
 
 	/**
@@ -103,33 +132,5 @@ public class GraphFrame extends JInternalFrame {
 				setTitle(title);
 			}
 		}
-	}
-
-	/**
-	 * Gets the file property.
-	 * 
-	 * @return the file associated with this graph
-	 */
-	public File getFileName() {
-		return aFile;
-	}
-
-	/**
-	 * Sets the file property.
-	 * 
-	 * @param pFile
-	 *            The file associated with this graph
-	 */
-	public void setFile(File pFile) {
-		aFile = pFile;
-		setTitle(aFile.getName());
-	}
-
-	public SQLEditPane getMsSqlEditPane() {
-		return msSqlEditPane;
-	}
-
-	public void setMsSqlEditPane(SQLEditPane msSqlEditPane) {
-		this.msSqlEditPane = msSqlEditPane;
 	}
 }
