@@ -6,12 +6,14 @@ import java.beans.Expression;
 import java.beans.PersistenceDelegate;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import mysqls.diagrams.ClassDiagramGraph;
 import mysqls.graph.AbstractNode;
 import mysqls.graph.Graph;
 
@@ -50,7 +52,7 @@ public final class PersistenceService {
 
 	/**
 	 * Reads a graph file from pIn then close pIn.
-	 * 
+	 *
 	 * @param pIn
 	 *            the input stream to read. Cannot be null.
 	 * @return the graph that is read in
@@ -68,8 +70,19 @@ public final class PersistenceService {
 	}
 
 	/**
+	 * @param 保存的文件
+	 * @return
+	 */
+	public static Graph read(File file) {
+		assert file != null;
+		Graph graph = new ClassDiagramGraph();
+		return graph;
+
+	}
+
+	/**
 	 * Saves the current graph in a file.
-	 * 
+	 *
 	 * @param pGraph
 	 *            The graph to save
 	 * @param pOut
