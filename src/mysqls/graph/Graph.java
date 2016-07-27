@@ -43,6 +43,12 @@ public abstract class Graph {
 	protected transient ArrayList<Edge> aEdgesToBeRemoved;
 	private transient boolean aNeedsLayout;
 
+	public void removeall() {
+		for (Node node : aRootNodes) {
+			removeNode(node);
+		}
+	}
+
 	public List<ClassNode> getClassNOdes() {
 		List<ClassNode> list = new ArrayList<>();
 

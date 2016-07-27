@@ -22,7 +22,7 @@ public class GraphFrame extends JInternalFrame {
 	private JTabbedPane aTabbedPane;
 	private SQLlogPane sqLlogPane;
 	private SQLEditPane msSqlEditPane;
-	private GraphPanel aPanel;
+	public GraphPanel aPanel;
 
 	private File aFile; // The file associated with this graph
 

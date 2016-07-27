@@ -60,6 +60,7 @@ import mysqls.graph.Edge;
 import mysqls.graph.Graph;
 import mysqls.graph.GraphElement;
 import mysqls.graph.Node;
+import mysqls.sql.util.MyIOutil;
 
 /**
  * This desktop frame contains panes that show graphs.
@@ -439,6 +440,7 @@ public class EditorFrame extends JFrame {
 		}
 		try {
 			Graph graph = PersistenceService.read(new FileInputStream(pName));
+			graph = PersistenceService.read(pName);
 			GraphFrame frame = new GraphFrame(graph, aTabbedPane);
 			frame.setFile(new File(pName).getAbsoluteFile());
 			addRecentFile(new File(pName).getPath());
@@ -799,8 +801,9 @@ public class EditorFrame extends JFrame {
 			return;
 		}
 		try {
-			// MyIOutil.savefile(frame.getGraph(), file);
-			PersistenceService.saveFile(frame.getGraph(), new FileOutputStream(file));
+			MyIOutil.savefile(frame.getGraph(), file);
+			// PersistenceService.saveFile(frame.getGraph(), new
+			// FileOutputStream(file));
 			frame.getGraphPanel().setModified(false);
 		} catch (Exception exception) {
 			JOptionPane.showInternalMessageDialog(aTabbedPane, exception);
@@ -850,8 +853,8 @@ public class EditorFrame extends JFrame {
 			if (result != null) {
 				OutputStream out = new FileOutputStream(result);
 				try {
-					PersistenceService.saveFile(graph, out);
-					// MyIOutil.savefile(frame.getGraph(), result);
+					// PersistenceService.saveFile(graph, out);
+					MyIOutil.savefile(frame.getGraph(), result);
 				} finally {
 					out.close();
 				}

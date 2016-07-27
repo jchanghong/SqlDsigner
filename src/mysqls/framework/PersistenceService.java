@@ -4,7 +4,6 @@ import java.beans.DefaultPersistenceDelegate;
 import java.beans.Encoder;
 import java.beans.Expression;
 import java.beans.PersistenceDelegate;
-import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.File;
 import java.io.IOException;
@@ -12,10 +11,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.List;
 
 import mysqls.diagrams.ClassDiagramGraph;
 import mysqls.graph.AbstractNode;
+import mysqls.graph.ClassNode;
 import mysqls.graph.Graph;
+import mysqls.sql.entity.Table;
+import mysqls.sql.sqlreader.SqlToTable;
+import mysqls.sql.util.MyIOutil;
 
 /**
  * Services for saving and loading Graph objects (i.e., UML diagrams). We use
@@ -61,21 +65,30 @@ public final class PersistenceService {
 	 */
 	public static Graph read(InputStream pIn) throws IOException {
 		assert pIn != null;
-		try (XMLDecoder reader = new XMLDecoder(pIn)) {
-			Graph graph = (Graph) reader.readObject();
-			return graph;
-		} finally {
-			pIn.close();
-		}
+		// try (XMLDecoder reader = new XMLDecoder(pIn)) {
+		// Graph graph = (Graph) reader.readObject();
+		// return graph;
+		// } finally {
+		// pIn.close();
+		// }
+
+		return null;
+
 	}
 
 	/**
 	 * @param 保存的文件
 	 * @return
 	 */
-	public static Graph read(File file) {
-		assert file != null;
+	public static Graph read(String file) {
 		Graph graph = new ClassDiagramGraph();
+		String sql = MyIOutil.read(new File(file));
+		List<Table> list = SqlToTable.getAllTable(sql);
+		for (Table table : list) {
+			graph.insertNode(new ClassNode(table));
+		}
+		assert file != null;
+
 		return graph;
 
 	}

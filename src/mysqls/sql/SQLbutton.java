@@ -1,15 +1,20 @@
 package mysqls.sql;
 
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import mysqls.framework.GraphFrame;
+import mysqls.framework.GraphPanel;
 import mysqls.graph.ClassNode;
+import mysqls.graph.Node;
+import mysqls.sql.entity.Table;
 import mysqls.sql.sqlreader.SqlToTable;
 import mysqls.sql.util.SQLCreator;
 
@@ -39,7 +44,22 @@ public class SQLbutton extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				SQLEditPane editPane=mFrame.getMsSqlEditPane();
+				SQLEditPane editPane = mFrame.getMsSqlEditPane();
+				String sql = editPane.msqlpane.getText();
+				List<ClassNode> nodes = new ArrayList<>();
+				List<Table> list = SqlToTable.getAllTable(sql);
+				for (Table table : list) {
+					nodes.add(new ClassNode(table));
+				}
+
+				GraphPanel graph = mFrame.aPanel;
+				graph.getGraph().removeall();
+				for (ClassNode node : nodes) {
+					Node node2 = node;
+					graph.getGraph().addNode(node2, new Point(20, 20));
+				}
+
+				mFrame.validate();
 				System.out.println(editPane.msqlpane.getText());
 			}
 		});

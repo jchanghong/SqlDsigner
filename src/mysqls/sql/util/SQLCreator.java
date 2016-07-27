@@ -9,7 +9,7 @@ import mysqls.sql.entity.Table;
 import mysqls.sql.entity.TableColumn;
 
 /**
- * @author 长宏
+ * @author 长宏 生产 sqltring。
  *
  */
 public class SQLCreator {

@@ -1,20 +1,11 @@
 package mysqls.sql.sqlreader;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.StringTokenizer;
 
-import com.sun.org.apache.bcel.internal.generic.BIPUSH;
-import com.sun.org.apache.regexp.internal.recompile;
-import com.sun.org.glassfish.external.statistics.Statistic;
-
-import javafx.scene.control.Tab;
 import mysqls.framework.GraphFrame;
 import mysqls.graph.AssociationEdge;
 import mysqls.graph.ClassNode;
-import mysqls.sql.SQLEditPane;
-import mysqls.sql.test;
 import mysqls.sql.entity.Columnlist;
 import mysqls.sql.entity.Table;
 import mysqls.sql.entity.TableColumn;
@@ -36,7 +27,7 @@ public class SqlToTable {
 
 	public static void main(String[] args) {
 		// System.out.println("start test");
-		List<Table> qq = gettable(teString);
+		List<Table> qq = SqlToTable.gettable(SqlToTable.teString);
 		System.out.println(qq.get(0).getName());
 	}
 
@@ -55,6 +46,9 @@ public class SqlToTable {
 			String[] row = liString.split(" ");// 去除空格后
 			String columnname = row[0];
 			column.setName(columnname);// 列名
+			if (row.length < 2) {
+				continue;
+			}
 			String type = row[1];
 			column.setType(type);// 列的类型
 			for (String string2 : row) {
@@ -84,31 +78,32 @@ public class SqlToTable {
 	public static List<AssociationEdge> getEdge(List<Table> tables) {
 		List<AssociationEdge> list = new ArrayList<>();
 
-		AssociationEdge associationEdge=new AssociationEdge();
+		AssociationEdge associationEdge = new AssociationEdge();
 		associationEdge.connect(null, null);
-		ClassNode classNode=new ClassNode(new Table());
-		
+		ClassNode classNode = new ClassNode(new Table());
+
 		return list;
 	}
 
 	public static List<Table> getAllTable(String sql) {
-		List<Table> list=gettable(sql);
+		List<Table> list = SqlToTable.gettable(sql);
 		for (Table table : list) {
 			for (TableColumn column : table.getColumnlist().getList()) {
-				
-				if (column.isForeignKey()==true) {
-					Table re=null;
-					TableColumn column2=null;
-					
+
+				if (column.isForeignKey() == true) {
+					Table re = null;
+					TableColumn column2 = null;
+
 					column.setForigntable(table);
 					column.setForigncolumn(column2);
 				}
 			}
-			
+
 		}
-		
+
 		return list;
 	}
+
 	private static List<Table> gettable(String sqlstring) {
 		List<Table> listabl = new ArrayList<>();
 		List<String> list = new ArrayList<String>();
@@ -128,7 +123,7 @@ public class SqlToTable {
 			if (string.equals(")")) {
 
 				end = i;
-				listabl.add(SqlReader(list, star, end - 1));
+				listabl.add(SqlToTable.SqlReader(list, star, end - 1));
 			}
 
 		}
