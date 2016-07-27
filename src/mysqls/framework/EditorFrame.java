@@ -387,7 +387,7 @@ public class EditorFrame extends JFrame {
 	}
 
 	/**
-	 * Sets the TaskBar icon for the JetUML application.
+	 * Sets the TaskBar icon for the application.
 	 */
 	public void setIcon() {
 		try {
@@ -822,8 +822,7 @@ public class EditorFrame extends JFrame {
 			File result = null;
 
 			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setFileFilter(new ExtensionFilter(graph.getDescription(),
-					graph.getFileExtension() + aAppResources.getString("files.extension")));
+			fileChooser.setFileFilter(new ExtensionFilter(graph.getDescription(), graph.getFileExtension()));
 			fileChooser.setCurrentDirectory(new File("."));
 
 			if (frame.getFileName() != null) {
@@ -835,7 +834,7 @@ public class EditorFrame extends JFrame {
 			if (response == JFileChooser.APPROVE_OPTION) {
 				File f = fileChooser.getSelectedFile();
 				if (!fileChooser.getFileFilter().accept(f)) {
-					f = new File(f.getPath() + graph.getFileExtension() + aAppResources.getString("files.extension"));
+					f = new File(f.getPath() + graph.getFileExtension());
 				}
 
 				if (!f.exists()) {

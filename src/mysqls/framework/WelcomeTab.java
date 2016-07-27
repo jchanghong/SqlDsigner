@@ -24,8 +24,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
- * @author JoelChev This class instantiates the Welcome Tab that is the default
- *         Tab in JetUML.
+ * @author
+ *
  *
  */
 @SuppressWarnings("serial")
@@ -45,6 +45,7 @@ public class WelcomeTab extends JInternalFrame {
 	private ImageIcon aLeftPanelIcon;
 	private ImageIcon aRightPanelIcon;
 	private String aFootText;
+	Font font;
 
 	/**
 	 * @param pNewFileMenu
@@ -53,6 +54,7 @@ public class WelcomeTab extends JInternalFrame {
 	 *            The RecentFileMenu to link to the WelcomeTab.
 	 */
 	public WelcomeTab(JMenu pNewFileMenu, JMenu pRecentFileMenu) {
+		font = new Font("Default", Font.PLAIN, 24);
 		aWelcomeResources = ResourceBundle.getBundle("mysqls.framework.EditorStrings");
 		aLeftPanelIcon = new ImageIcon(
 				getClass().getClassLoader().getResource(aWelcomeResources.getString("welcome.create.icon")));
@@ -102,8 +104,8 @@ public class WelcomeTab extends JInternalFrame {
 
 			for (int i = 0; i < aNewFileMenu.getItemCount(); i++) {
 				final JMenuItem item = aNewFileMenu.getItem(i);
-				String label = item.getText();
-				JButton newDiagramShortcut = new JButton(label.toLowerCase());
+				// String label = item.getText();
+				JButton newDiagramShortcut = new JButton("新建模型");
 				newDiagramShortcut.setUI(new WelcomeButtonUI());
 				newDiagramShortcut.setAlignmentX(Component.RIGHT_ALIGNMENT);
 				newDiagramShortcut.addActionListener(new ActionListener() {
@@ -128,7 +130,7 @@ public class WelcomeTab extends JInternalFrame {
 			for (int i = 0; i < aRecentFileMenu.getItemCount(); i++) {
 				final JMenuItem item = aRecentFileMenu.getItem(i);
 				String label = item.getText().substring(2);
-				JButton fileShortcut = new JButton(label.toLowerCase());
+				JButton fileShortcut = new JButton(label);
 				fileShortcut.setUI(new WelcomeButtonUI());
 				fileShortcut.setAlignmentX(Component.LEFT_ALIGNMENT);
 				fileShortcut.addActionListener(new ActionListener() {
@@ -149,8 +151,11 @@ public class WelcomeTab extends JInternalFrame {
 			JLabel icon = new JLabel();
 			icon.setIcon(this.aLeftPanelIcon);
 
-			JLabel title = new JLabel(aNewFileMenu.getText().toLowerCase());
-			title.setFont(new Font("Arial", Font.PLAIN, WelcomeTab.FONT_SIZE));
+			JLabel title = new JLabel("新建模型");
+
+			title.setFont(font);
+			// title.setFont(new Font("Arial", Font.PLAIN,
+			// WelcomeTab.FONT_SIZE));
 			title.setForeground(Color.DARK_GRAY);
 			title.setBorder(new EmptyBorder(0, WelcomeTab.ALTERNATIVE_BORDER_MARGIN, 0, 0));
 
@@ -176,8 +181,8 @@ public class WelcomeTab extends JInternalFrame {
 			icon.setIcon(this.aRightPanelIcon);
 			icon.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-			JLabel title = new JLabel(aRecentFileMenu.getText().toLowerCase());
-			title.setFont(new Font("Arial", Font.PLAIN, WelcomeTab.FONT_SIZE));
+			JLabel title = new JLabel("打开文件");
+			title.setFont(font);
 			title.setForeground(Color.DARK_GRAY);
 			title.setBorder(new EmptyBorder(0, 0, 0, WelcomeTab.ALTERNATIVE_BORDER_MARGIN));
 

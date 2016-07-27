@@ -35,7 +35,7 @@ public class WelcomeButtonUI extends BasicButtonUI {
 		pButton.setOpaque(false);
 		pButton.setBorderPainted(false);
 		pButton.setRolloverEnabled(true);
-		pButton.setFont(new Font("Arial", Font.PLAIN, WelcomeButtonUI.FONT_SIZE));
+		pButton.setFont(new Font("Default", Font.PLAIN, WelcomeButtonUI.FONT_SIZE));
 		pButton.setBorder(new EmptyBorder(4, 0, 0, 4));
 	}
 
