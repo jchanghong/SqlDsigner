@@ -55,7 +55,7 @@ public class GraphPanel extends JPanel {
 	private static final Color GRABBER_FILL_COLOR = new Color(173, 193, 214);
 	private static final Color GRABBER_FILL_COLOR_TRANSPARENT = new Color(173, 193, 214, 75);
 
-	private Graph aGraph;
+	public Graph aGraph;
 	private ToolBar aSideBar;
 	private double aZoom;
 	private boolean aHideGrid;
@@ -351,6 +351,12 @@ public class GraphPanel extends JPanel {
 	public Dimension getPreferredSize() {
 		Rectangle2D bounds = aGraph.getBounds();
 		return new Dimension((int) (aZoom * bounds.getMaxX()), (int) (aZoom * bounds.getMaxY()));
+	}
+
+	public void updateui() {
+
+		revalidate();
+		repaint();
 	}
 
 	/**
