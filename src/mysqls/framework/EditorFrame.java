@@ -19,7 +19,6 @@ import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -65,8 +64,6 @@ import mysqls.sql.util.MyIOutil;
 /**
  * This desktop frame contains panes that show graphs.
  *
- * @author Cay S. Horstmann - Original code
- * @author Martin P. Robillard - Refactorings, file handling, menu management.
  */
 @SuppressWarnings("serial")
 public class EditorFrame extends JFrame {
@@ -439,13 +436,13 @@ public class EditorFrame extends JFrame {
 			}
 		}
 		try {
-			Graph graph = PersistenceService.read(new FileInputStream(pName));
-			graph = PersistenceService.read(pName);
+			Graph graph = PersistenceService.read(pName);
 			GraphFrame frame = new GraphFrame(graph, aTabbedPane);
 			frame.setFile(new File(pName).getAbsoluteFile());
 			addRecentFile(new File(pName).getPath());
 			addTab(frame);
-		} catch (IOException exception) {
+		} catch (Exception exception) {
+			System.out.println(exception.getStackTrace());
 			JOptionPane.showMessageDialog(aTabbedPane, exception.getMessage(),
 					aEditorResources.getString("file.open.text"), JOptionPane.ERROR_MESSAGE);
 		}

@@ -46,7 +46,7 @@ public class SQLCreator {
 		// for (TableColumn column : table.getColumnlist()) {
 		// builder.append(column.toSQL());
 		// }
-		builder.append(")\n");
+		builder.append(");\n");
 		int index = builder.lastIndexOf(",");
 		builder.deleteCharAt(index);
 

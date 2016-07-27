@@ -211,7 +211,7 @@ public class Table {
 	// )
 	public String toSQL() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("CREATE  TABLE  ");
+		builder.append("create  table  ");
 		builder.append(name);
 		builder.append("\n");
 		builder.append("(");
