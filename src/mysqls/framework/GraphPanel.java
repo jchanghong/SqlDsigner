@@ -17,11 +17,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.Stack;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -158,9 +156,11 @@ public class GraphPanel extends JPanel {
 			}
 		});
 		String[] options = { "OK" };
-		JOptionPane.showOptionDialog(this, sheet,
-				ResourceBundle.getBundle("mysqls.framework.EditorStrings").getString("dialog.properties"),
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
+		// JOptionPane.showOptionDialog(this, sheet,
+		// ResourceBundle.getBundle("mysqls.framework.EditorStrings").getString("dialog.properties"),
+		// JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+		// options, null);
+		sheet.showDialog();
 		CompoundCommand command = aPropertyChangeTracker.stopTrackingPropertyChange(aGraph);
 		if (command.size() > 0) {
 			aUndoManager.add(command);

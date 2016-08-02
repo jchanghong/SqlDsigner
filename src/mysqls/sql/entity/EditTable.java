@@ -4,6 +4,7 @@
 package mysqls.sql.entity;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -12,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.border.EtchedBorder;
 
 /**
  * @author 长宏 属性列表
@@ -81,7 +84,11 @@ public class EditTable extends JPanel {
 		setLayout(layout);
 		inithead();
 		initrows();
-		JButton button = new JButton("addrow");
+		JButton button = new JButton("增加新列");
+		button.setBackground(Color.green);
+		button.setFont(new Font("Default", Font.PLAIN, 24));
+		button.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+
 		button.addActionListener(new ActionListener() {
 
 			@Override
