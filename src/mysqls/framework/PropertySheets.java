@@ -1,7 +1,13 @@
 
 package mysqls.framework;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.IntrospectionException;
@@ -22,7 +28,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -41,6 +49,7 @@ public class PropertySheets extends JPanel {
 	private static final String INVISIBLE_PROPERTY_MARKER = "**INVISIBLE**";
 	private static Map<Class<?>, Class<?>> editors;
 
+	JDialog mDialog;
 	private static ResourceBundle aPropertyNames = ResourceBundle.getBundle("mysqls.graph.GraphElementProperties");
 
 	private ArrayList<ChangeListener> aChangeListeners = new ArrayList<>();
@@ -86,6 +95,50 @@ public class PropertySheets extends JPanel {
 		} catch (IntrospectionException exception) {
 			// Do nothing
 		}
+	}
+
+	public void showDialog() {
+
+		JButton oks = new JButton("完成");
+		JButton cancel = new JButton("取消");
+		oks.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				mDialog.dispose();
+			}
+		});
+		cancel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				mDialog.dispose();
+			}
+		});
+		oks.setBackground(Color.gray);
+		oks.setFont(new Font("Default", Font.PLAIN, 18));
+		cancel.setBackground(Color.gray);
+		cancel.setFont(new Font("Default", Font.PLAIN, 18));
+		add(oks);
+		add(cancel);
+		JPanel option = new JPanel();
+		option.setLayout(new GridLayout(1, 2));
+		option.add(oks);
+		option.add(cancel);
+		JPanel root = new JPanel();
+		root.setLayout(new BorderLayout());
+		root.add(option, BorderLayout.NORTH);
+		root.add(this, BorderLayout.CENTER);
+		mDialog = new JDialog();
+		mDialog.setModal(true);
+		mDialog.setContentPane(root);
+		mDialog.setTitle("编辑");
+		// mDialog.setPreferredSize(root.getPreferredSize());
+		mDialog.revalidate();
+		mDialog.pack();
+		mDialog.setVisible(true);
 	}
 
 	/**

@@ -17,11 +17,9 @@ import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -42,9 +40,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -339,26 +335,31 @@ public class EditorFrame extends JFrame {
 		menuBar.add(helpMenu);
 
 		helpMenu.add(pFactory.createMenuItem("help.about", this, "showAboutDialog"));
-		helpMenu.add(pFactory.createMenuItem("help.license", new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent pEvent) {
-				try {
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(getClass().getResourceAsStream("license.txt")));
-					JTextArea text = new JTextArea(EditorFrame.HELP_MENU_TEXT_WIDTH, EditorFrame.HELP_MENU_TEXT_HEIGHT);
-					String line;
-					while ((line = reader.readLine()) != null) {
-						text.append(line);
-						text.append("\n");
-					}
-					text.setCaretPosition(0);
-					text.setEditable(false);
-					JOptionPane.showInternalMessageDialog(aTabbedPane, new JScrollPane(text),
-							aEditorResources.getString("dialog.license.title"), JOptionPane.PLAIN_MESSAGE);
-				} catch (IOException exception) {
-				}
-			}
-		}));
+		// helpMenu.add(pFactory.createMenuItem("help.license", new
+		// ActionListener() {
+		// @Override
+		// public void actionPerformed(ActionEvent pEvent) {
+		// try {
+		// BufferedReader reader = new BufferedReader(
+		// new
+		// InputStreamReader(getClass().getResourceAsStream("license.txt")));
+		// JTextArea text = new JTextArea(EditorFrame.HELP_MENU_TEXT_WIDTH,
+		// EditorFrame.HELP_MENU_TEXT_HEIGHT);
+		// String line;
+		// while ((line = reader.readLine()) != null) {
+		// text.append(line);
+		// text.append("\n");
+		// }
+		// text.setCaretPosition(0);
+		// text.setEditable(false);
+		// JOptionPane.showInternalMessageDialog(aTabbedPane, new
+		// JScrollPane(text),
+		// aEditorResources.getString("dialog.license.title"),
+		// JOptionPane.PLAIN_MESSAGE);
+		// } catch (IOException exception) {
+		// }
+		// }
+		// }));
 	}
 
 	/**
@@ -1044,7 +1045,7 @@ public class EditorFrame extends JFrame {
 		JOptionPane.showInternalMessageDialog(aTabbedPane,
 				formatter.format(new Object[] { aAppResources.getString("app.name"),
 						aVersionResources.getString("version.number"), aVersionResources.getString("version.date"),
-						aAppResources.getString("app.copyright"), aEditorResources.getString("dialog.about.license") }),
+						aAppResources.getString("app.copyright"), "" }),
 				new MessageFormat(aEditorResources.getString("dialog.about.title"))
 						.format(new Object[] { aAppResources.getString("app.name") }),
 				JOptionPane.INFORMATION_MESSAGE,
