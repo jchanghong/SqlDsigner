@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 /**
- * A string that can extend over multiple lines. 增加。得到每行的string
+ * 这个其实就是为了得到string的大小，方便画图. 增加。得到每行的string
  */
 public class MultiLineString implements Cloneable {
 
@@ -58,7 +58,7 @@ public class MultiLineString implements Cloneable {
 	/**
 	 * Constructs an empty, centered, normal size multi-line string that is not
 	 * underlined. pBold determines if it is bold.
-	 * 
+	 *
 	 * @param pBold
 	 *            True if the string should be bold.
 	 */
@@ -68,7 +68,7 @@ public class MultiLineString implements Cloneable {
 
 	/**
 	 * Sets the value of the text property.
-	 * 
+	 *
 	 * @param pText
 	 *            the text of the multiline string
 	 */
@@ -79,7 +79,7 @@ public class MultiLineString implements Cloneable {
 
 	/**
 	 * Gets the value of the text property.
-	 * 
+	 *
 	 * @return the text of the multi-line string
 	 */
 	public String getText() {
@@ -88,7 +88,7 @@ public class MultiLineString implements Cloneable {
 
 	/**
 	 * Sets the value of the justification property.
-	 * 
+	 *
 	 * @param pJustification
 	 *            the justification, one of LEFT, CENTER, RIGHT
 	 */
@@ -99,7 +99,7 @@ public class MultiLineString implements Cloneable {
 
 	/**
 	 * Gets the value of the justification property.
-	 * 
+	 *
 	 * @return the justification, one of LEFT, CENTER, RIGHT
 	 */
 	public int getJustification() {
@@ -108,7 +108,7 @@ public class MultiLineString implements Cloneable {
 
 	/**
 	 * Gets the value of the underlined property.
-	 * 
+	 *
 	 * @return true if the text is underlined
 	 */
 	public boolean isUnderlined() {
@@ -124,7 +124,7 @@ public class MultiLineString implements Cloneable {
 
 	/**
 	 * Sets the value of the underlined property.
-	 * 
+	 *
 	 * @param pUnderlined
 	 *            true to underline the text
 	 */
@@ -194,7 +194,7 @@ public class MultiLineString implements Cloneable {
 
 	/**
 	 * Gets the bounding rectangle for this multiline string.
-	 * 
+	 *
 	 * @param pGraphics2D
 	 *            the graphics context
 	 * @return the bounding rectangle (with top left corner (0,0))
@@ -209,7 +209,7 @@ public class MultiLineString implements Cloneable {
 
 	/**
 	 * Draws this multi-line string inside a given rectangle.
-	 * 
+	 *
 	 * @param pGraphics2D
 	 *            the graphics context
 	 * @param pRectangle

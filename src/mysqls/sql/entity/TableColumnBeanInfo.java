@@ -8,7 +8,7 @@ import java.beans.PropertyDescriptor;
 import java.beans.SimpleBeanInfo;
 
 /**
- * @author 长宏
+ * @author 长宏 表列的属性列表。javabean
  *
  */
 public class TableColumnBeanInfo extends SimpleBeanInfo {
@@ -34,23 +34,6 @@ public class TableColumnBeanInfo extends SimpleBeanInfo {
 		}
 	}
 
-	// private String name;
-	// private String type;
-	// private boolean primarykey;
-	// private boolean foreignKey;
-	// private boolean notnull;
-	// private boolean unique;
-	// private String defaultvalues;
-	// private Table forigntable;
-	// private TableColumn forigncolumn;
-	/*
-	 * (non-Javadoc) private String name; private String type; private boolean
-	 * primarykey; private boolean foreignKey; private boolean notnull; private
-	 * boolean unique; private String defaultvalues; private Table forigntable;
-	 * private TableColumn forigncolumn;
-	 *
-	 * @see java.beans.SimpleBeanInfo#getPropertyDescriptors()
-	 */
 	@Override
 	public PropertyDescriptor[] getPropertyDescriptors() {
 		// TODO Auto-generated method stub

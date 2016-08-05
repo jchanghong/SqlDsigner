@@ -24,7 +24,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
 /**
- * @author 长宏 属性列表
+ * @author 长宏 编辑表的属性
  *
  */
 @SuppressWarnings("serial")
@@ -64,18 +64,6 @@ public class EditTable extends JPanel {
 
 	GridBagLayout layout;
 
-	// private String name;
-	// private String type;
-	// private boolean primarykey;
-	// private boolean foreignKey;
-	// private boolean notnull;
-	// private boolean unique;
-	// private String defaultvalues;
-	// private Table forigntable;
-	// private TableColumn forigncolumn;
-	/**
-	 *
-	 */
 	public EditTable(Table value) {
 		super();
 		mdata = value;
@@ -93,14 +81,8 @@ public class EditTable extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//
-				// JPanel mJPanel = new JPanel();
-				// mJPanel.add(new JButton("ddd"));
-				// mrowall.add(mJPanel);
 
 				addrow(new RowPanel(EditTable.this));
-				// validate();
 			}
 		});
 		add(button);
@@ -116,7 +98,6 @@ public class EditTable extends JPanel {
 		sConstraints.weightx = 1;
 		sConstraints.weighty = 1;
 		sConstraints.gridwidth = 0;
-		// sConstraints.gridheight = GridBagConstraints.REMAINDER;
 		layout.setConstraints(mJScrollPane, sConstraints);
 
 	}
@@ -126,7 +107,6 @@ public class EditTable extends JPanel {
 	 */
 	private void initrows() {
 		// TODO Auto-generated method stub
-
 		mrowall = new JPanel();
 		mrows = new ArrayList<>();
 		mrowall.setLayout(new GridLayout(0, 1));
@@ -154,11 +134,9 @@ public class EditTable extends JPanel {
 		mhead.setLayout(gridLayout);
 		JTextField textField1 = new JTextField();
 		textField1.setHorizontalAlignment(SwingConstants.CENTER);
-
 		textField1.setBackground(Color.gray);
 		textField1.setOpaque(false);
 		textField1.setEditable(false);
-		// textField1.setBorder(BorderFactory.createLineBorder(Color.gray, 0));
 		textField1.setText("操作");
 		mhead.add(textField1);
 		for (int i = 0; i < AttubuteList.namelist.size(); i++) {
@@ -167,8 +145,6 @@ public class EditTable extends JPanel {
 
 			textField.setBackground(Color.gray);
 			textField.setOpaque(false);
-			// textField.setBorder(BorderFactory.createLineBorder(Color.gray,
-			// 0));
 			textField.setEditable(false);
 			String text = AttubuteList.namelist.get(i);
 			textField.setText(AttubuteList.getName(text));
@@ -177,27 +153,22 @@ public class EditTable extends JPanel {
 	}
 
 	public void addrow(RowPanel panel) {
-
 		for (RowPanel rowPanel : mrows) {
 			if (panel.equals(rowPanel)) {
 				return;
 			}
 		}
-
 		mrowall.add(panel);
 		mrows.add(panel);
 		if (rowchangelister != null) {
 			rowchangelister.onadd(panel);
 		}
 		mdata.addColumn(panel.getmTableColumn());
-
 		SwingUtilities.windowForComponent(this).pack();
-		// validate();
 
 	}
 
 	public void removerow(RowPanel panel) {
-
 		mrowall.remove(panel);
 		mrows.remove(panel);
 		mdata.remove(panel.getmTableColumn());
@@ -205,7 +176,6 @@ public class EditTable extends JPanel {
 			rowchangelister.onremove(panel);
 		}
 		SwingUtilities.windowForComponent(this).pack();
-		// validate();
 	}
 
 }

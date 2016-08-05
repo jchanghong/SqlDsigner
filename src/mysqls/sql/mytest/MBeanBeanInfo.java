@@ -8,7 +8,7 @@ import java.beans.PropertyDescriptor;
 import java.beans.SimpleBeanInfo;
 
 /**
- * @author jiang
+ * @author jiang 测试用的
  *
  */
 public class MBeanBeanInfo extends SimpleBeanInfo {

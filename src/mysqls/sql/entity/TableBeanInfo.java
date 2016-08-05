@@ -8,19 +8,12 @@ import java.beans.PropertyDescriptor;
 import java.beans.SimpleBeanInfo;
 
 /**
- * @author 长宏
+ * @author 长宏 javabean 类，不懂就去看javabean
  *
  */
 public class TableBeanInfo extends SimpleBeanInfo {
 
-	// private String name;
-	// private List<TableColumn> Columnlist;
-
-	/**
-	 *
-	 */
 	public TableBeanInfo() {
-		// TODO Auto-generated constructor stub
 		try {
 			PropertyDescriptor nanme = new PropertyDescriptor("name", Table.class);
 			PropertyDescriptor list = new PropertyDescriptor("columnlist", Table.class);
@@ -32,11 +25,6 @@ public class TableBeanInfo extends SimpleBeanInfo {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.beans.SimpleBeanInfo#getPropertyDescriptors()
-	 */
 	@Override
 	public PropertyDescriptor[] getPropertyDescriptors() {
 		// TODO Auto-generated method stub

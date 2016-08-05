@@ -4,14 +4,14 @@ import mysqls.graph.Graph;
 import mysqls.graph.Node;
 
 /**
- * Represents the removal of a node from the graph.
+ * 这些是为了实现copy等这些操作的Represents the removal of a node from the graph.
  *
  * @author Martin P. Robillard
  */
 public class DeleteNodeCommand extends GraphElementRelatedCommand {
 	/**
 	 * Creates the command.
-	 * 
+	 *
 	 * @param pGraph
 	 *            The graph the node was removed from.
 	 * @param pNode

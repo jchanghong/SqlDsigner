@@ -21,13 +21,13 @@ import mysqls.graph.ClassNode;
 import mysqls.graph.Graph;
 
 /**
- * @author 长宏
+ * @author 长宏 文件输入输出
  *
  */
 public final class MyIOutil {
 
 	/**
-	 *
+	 * 不能new对象
 	 */
 	private MyIOutil() {
 		// TODO Auto-generated constructor stub
@@ -64,7 +64,7 @@ public final class MyIOutil {
 
 	}
 
-	public static void copy(String sql, OutputStream out) {
+	private static void copy(String sql, OutputStream out) {
 		Writer writer = new OutputStreamWriter(new BufferedOutputStream(out));
 		try {
 
@@ -132,14 +132,6 @@ public final class MyIOutil {
 			}
 		}
 		return builder.toString();
-
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	}
 

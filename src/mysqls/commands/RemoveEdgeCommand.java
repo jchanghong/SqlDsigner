@@ -4,14 +4,14 @@ import mysqls.graph.Edge;
 import mysqls.graph.Graph;
 
 /**
- * Represents the removal of an edge to the graph.
+ * 这些是为了实现copy等这些操作的Represents the removal of an edge to the graph.
  *
  * @author Martin P. Robillard
  */
 public class RemoveEdgeCommand extends GraphElementRelatedCommand {
 	/**
 	 * Creates the command.
-	 * 
+	 *
 	 * @param pGraph
 	 *            The target graph.
 	 * @param pEdge

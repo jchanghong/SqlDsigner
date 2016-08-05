@@ -20,7 +20,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 /**
- * @author 长宏
+ * @author 长宏 属性编辑器工具
  *
  */
 public final class Util {

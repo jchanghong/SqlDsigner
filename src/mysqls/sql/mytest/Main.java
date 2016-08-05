@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import mysqls.sql.util.Util;
 
 /**
- * @author jiang
+ * @author jiang 测试
  *
  */
 public class Main {

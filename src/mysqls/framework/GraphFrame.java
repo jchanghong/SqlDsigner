@@ -23,7 +23,7 @@ import mysqls.sql.ui.MyDialog;
 import mysqls.sql.util.SQLCreator;
 
 /**
- * A frame for showing a graphical editor.
+ * 这是主要的显示类。包括是几乎所有的面板。
  */
 @SuppressWarnings("serial")
 public class GraphFrame extends JInternalFrame {

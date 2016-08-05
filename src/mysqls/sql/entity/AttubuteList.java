@@ -20,15 +20,6 @@ public final class AttubuteList {
 	private AttubuteList() {
 		// TODO Auto-generated constructor stub
 	}
-	// private String name;
-	// private String type;
-	// private boolean primarykey;
-	// private boolean foreignKey;
-	// private boolean notnull;
-	// private boolean unique;
-	// private String defaultvalues;
-	// private Table forigntable;
-	// private TableColumn forigncolumn;
 
 	public static List<String> namelist = null;
 	public static List<PropertyDescriptor> pdList = null;

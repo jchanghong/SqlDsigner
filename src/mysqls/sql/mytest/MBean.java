@@ -9,7 +9,7 @@ import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
 
 /**
- * @author jiang
+ * @author jiang 测试
  *
  */
 public class MBean {
