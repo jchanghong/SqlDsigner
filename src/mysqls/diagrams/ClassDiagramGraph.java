@@ -13,7 +13,7 @@ import mysqls.graph.NoteNode;
 import mysqls.sql.entity.Table;
 
 /**
- * A UML class diagram.uml实体关系图
+ * uml实体关系图，也就是我们实际需要的图，大部分画图的基类里面
  */
 public class ClassDiagramGraph extends Graph {
 	private static final Node[] NODE_PROTOTYPES = new Node[] { new mysqls.graph.ClassNode(new Table()),

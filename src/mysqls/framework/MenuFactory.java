@@ -12,7 +12,8 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 /**
- * A class for creating menus from strings in a resource bundle.
+ * 这个根据资源文件来设置menu文字，国际化 A class for creating menus from strings in a resource
+ * bundle.
  */
 class MenuFactory {
 	private ResourceBundle aBundle;
@@ -29,7 +30,7 @@ class MenuFactory {
 
 	/**
 	 * Creates a menu item that calls a method in response to the action event.
-	 * 
+	 *
 	 * @param pPrefix
 	 *            A string such as "file.open" that indicates the menu->submenu
 	 *            path
@@ -47,7 +48,7 @@ class MenuFactory {
 	/**
 	 * Creates a menu item where pListener is triggered when the menu item is
 	 * selected.
-	 * 
+	 *
 	 * @param pPrefix
 	 *            A string such as "file.open" that indicates the menu->submenu
 	 *            path
@@ -63,7 +64,7 @@ class MenuFactory {
 
 	/**
 	 * Create a checkbox menu.
-	 * 
+	 *
 	 * @param pPrefix
 	 *            A string such as "file.open" that indicates the menu->submenu
 	 *            path
@@ -105,7 +106,7 @@ class MenuFactory {
 
 	/**
 	 * Create a menu that corresponds to the resource for key pPrefix.
-	 * 
+	 *
 	 * @param pPrefix
 	 *            A string such as "file" that indicates the menu->submenu path
 	 * @return A configured menu

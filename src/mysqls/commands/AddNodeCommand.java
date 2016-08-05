@@ -4,14 +4,14 @@ import mysqls.graph.Graph;
 import mysqls.graph.Node;
 
 /**
- * Represents the addition of a node to the graph.
+ * 这些是为了实现copy等这些操作的Represents the addition of a node to the graph.
  *
  * @author Martin P. Robillard
  */
 public class AddNodeCommand extends GraphElementRelatedCommand {
 	/**
 	 * Creates the command.
-	 * 
+	 *
 	 * @param pGraph
 	 *            The graph the node was added to.
 	 * @param pNode

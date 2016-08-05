@@ -6,7 +6,8 @@ package mysqls.commands;
  * the graph listener and the undo manager
  */
 /**
- * @author EJBQ An interface to allo for commands to be undoable and redoable.
+ * @author 这些是为了实现copy等这些操作的EJBQ An interface to allo for commands to be
+ *         undoable and redoable.
  *
  */
 public interface Command {

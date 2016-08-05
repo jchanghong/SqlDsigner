@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
 
 import mysqls.framework.GraphFrame;
 
@@ -46,7 +45,7 @@ public class SQLlogPane extends JPanel {
 		builder.append(log);
 		builder.append(SQLlogPane.logend);
 		logstring = logstring + builder.toString();
-		if (istoggleON()) {
+		if (logon) {
 			mlog.setText(logstring);
 		}
 
@@ -64,16 +63,6 @@ public class SQLlogPane extends JPanel {
 			toggle.setText(SQLlogPane.text_on);
 			toggle.setToolTipText(SQLlogPane.text_on);
 		}
-	}
-
-	private boolean istoggleON() {
-		if (toggle != null) {
-			return toggle.getText().equalsIgnoreCase(SQLlogPane.text_off);
-
-		} else {
-			return false;
-		}
-
 	}
 
 	public SQLlogPane(GraphFrame graphFrame) {
@@ -104,12 +93,7 @@ public class SQLlogPane extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				logstring = "";
-				// if (logon) {
 				mlog.setText(logstring);
-				// remove(mlogpanel);
-				// mlogpanel.setBounds(mempty.getBounds());
-				// add(mempty,BorderLayout.CENTER);
-				// }
 			}
 		});
 		add(mclearlog, BorderLayout.WEST);
@@ -158,24 +142,13 @@ public class SQLlogPane extends JPanel {
 					mempty.setBounds(mempty.getBounds());
 					remove(mlogpanel);
 					add(mempty, BorderLayout.CENTER);
-					// createempty();
-					// remove(mlog);
-					// SwingUtilities.invokeLater(new Runnable() {
-					// public void run() {
-					// mlog.setText("点击右边显示日志");
-					//
-					// }
-					// });
-					//
 				} else {
 					logon = true;
-					// mlog.setBounds(mempty.getBounds());
 					remove(mempty);
-					setlogpane();
+					mlog.setText(logstring);
+					seton();
 					add(mlogpanel);
-					// seton();
-					// add(new JScrollPane(emptypane), BorderLayout.CENTER);
-					// add(new JButton("111111"),BorderLayout.CENTER);
+
 				}
 			}
 
@@ -183,19 +156,6 @@ public class SQLlogPane extends JPanel {
 
 		add(mempty, BorderLayout.CENTER);
 		add(toggle, BorderLayout.EAST);
-	}
-
-	private void setlogpane() {
-		// TODO Auto-generated method stub
-
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				mlog.setText(logstring);
-				seton();
-			}
-		});
-
 	}
 
 }

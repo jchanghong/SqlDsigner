@@ -4,14 +4,14 @@ import mysqls.graph.Edge;
 import mysqls.graph.Graph;
 
 /**
- * Represents the addition of an edge to the graph.
+ * 这些是为了实现copy等这些操作的Represents the addition of an edge to the graph.
  *
  * @author Martin P. Robillard
  */
 public class AddEdgeCommand extends GraphElementRelatedCommand {
 	/**
 	 * Creates the command.
-	 * 
+	 *
 	 * @param pGraph
 	 *            The target graph.
 	 * @param pEdge

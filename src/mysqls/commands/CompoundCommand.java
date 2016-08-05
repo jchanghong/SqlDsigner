@@ -3,8 +3,8 @@ package mysqls.commands;
 import java.util.Stack;
 
 /**
- * Holds multiple commands to be executed or undone.
- * 
+ * Holds这些是为了实现copy等这些操作的multiple commands to be executed or undone.
+ *
  * @author EJBQ
  */
 public class CompoundCommand implements Command {
@@ -19,7 +19,7 @@ public class CompoundCommand implements Command {
 
 	/**
 	 * Adds a command to the stack to be performed.
-	 * 
+	 *
 	 * @param pCommand
 	 *            The command to be added
 	 */
@@ -29,7 +29,7 @@ public class CompoundCommand implements Command {
 
 	/**
 	 * Returns the number of commands in the compound command.
-	 * 
+	 *
 	 * @return the size of the stack
 	 */
 	public int size() {

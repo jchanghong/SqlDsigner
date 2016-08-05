@@ -58,7 +58,7 @@ import mysqls.graph.Node;
 import mysqls.sql.util.MyIOutil;
 
 /**
- * This desktop frame contains panes that show graphs.
+ * 主框架，里面可以有很多内部框架，tab
  *
  */
 @SuppressWarnings("serial")

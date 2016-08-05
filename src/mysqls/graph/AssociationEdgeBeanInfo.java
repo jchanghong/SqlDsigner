@@ -11,7 +11,7 @@ import mysqls.framework.DirectionalityEditor;
 import mysqls.framework.MYedgeEditor;
 
 /**
- * @author jiang
+ * @author jiang 属性列表，只列出我们需要的
  *
  */
 public class AssociationEdgeBeanInfo extends SimpleBeanInfo {

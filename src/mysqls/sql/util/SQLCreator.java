@@ -9,7 +9,7 @@ import mysqls.sql.entity.Table;
 import mysqls.sql.entity.TableColumn;
 
 /**
- * @author 长宏 生产 sqltring。
+ * @author 长宏 生产 sql语句
  *
  */
 public class SQLCreator {
@@ -19,22 +19,6 @@ public class SQLCreator {
 	 */
 	private SQLCreator() {
 		// TODO Auto-generated constructor stub
-	}
-
-	public static void main(String[] args) {
-		Table type = new Table("changhong");
-		mysqls.sql.entity.TableColumn tableColumn = new mysqls.sql.entity.TableColumn("changhong", true, true, true);
-		tableColumn.setForeignKey(true);
-		tableColumn.setForigncolumn(tableColumn);
-		tableColumn.setForigntable(type);
-		type.addColumn(tableColumn);
-		type.addColumn(new TableColumn("1111"));
-		System.out.println(type.toSQL());
-		System.out.println(type.toString());
-		System.out.println(tableColumn.toSQL());
-		System.out.println(tableColumn.toString());
-		System.out.println(SQLCreator.create(type));
-
 	}
 
 	public static String create(Table table) {
@@ -55,7 +39,7 @@ public class SQLCreator {
 	}
 
 	/**
-	 * @param aEdge变更新后设置变
+	 * @param aEdge变更新后设置节点
 	 */
 	public static void setTable(AssociationEdge aEdge) {
 		ClassNode sta = (ClassNode) aEdge.getStart();
