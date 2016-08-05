@@ -85,7 +85,7 @@ public class EditTable extends JPanel {
 		inithead();
 		initrows();
 		JButton button = new JButton("增加新列");
-		button.setBackground(Color.green);
+		button.setBackground(Color.gray);
 		button.setFont(new Font("Default", Font.PLAIN, 24));
 		button.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
