@@ -26,29 +26,31 @@ public final class UMLEditor {
 	 *            Each argument is a file to open upon launch. Can be empty.
 	 */
 	public static void main(String[] pArgs) {
-		UMLEditor.checkVersion();
+		UMLEditor.checkVersion();//版本环境检查。
 		try {
-			System.setProperty("apple.laf.useScreenMenuBar", "true");
+			System.setProperty("apple.laf.useScreenMenuBar", "true");//设置指定键对值"apple.laf.useScreenMenuBar"的系统属性"true"
 		} catch (SecurityException ex) {
 			// well, we tried...
 		}
 		final String[] arguments = pArgs;
 
-		SwingUtilities.invokeLater(new Runnable() {
+		SwingUtilities.invokeLater(new Runnable()//为了避免线程锁死问题，建议你使用invokeLater在事件分发线程中为所有新应用程序创建GUI
+		{
 			@Override
 			public void run() {
-				UMLEditor.setLookAndFeel();
+				UMLEditor.setLookAndFeel();//设置界面感官。
 				EditorFrame frame = new EditorFrame(UMLEditor.class);
 				frame.addGraphType("class_diagram", ClassDiagramGraph.class);
-				frame.setVisible(true);
-				frame.readArgs(arguments);
+				frame.setVisible(true);//使界面可视。
+				frame.readArgs(arguments);//读取命令。
 				frame.addWelcomeTab();
 				frame.setIcon();
 			}
 		});
 	}
 
-	private static void setLookAndFeel() {
+	private static void setLookAndFeel()//设置界面感官，美化界面。 
+	{
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -66,10 +68,11 @@ public final class UMLEditor {
 	 * Checks if the current VM has at least the given version, and exits the
 	 * program with an error dialog if not.
 	 */
-	private static void checkVersion() {
+	private static void checkVersion()//检查环境。
+	{
 		String version = UMLEditor.obtainJavaVersion();
 		if (version == null || !UMLEditor.isOKJVMVersion(version)) {
-			ResourceBundle resources = ResourceBundle.getBundle("uestc.uml.sql.framework.EditorStrings");
+			ResourceBundle resources = ResourceBundle.getBundle("uestc.uml.sql.framework.EditorStrings");//就是读取资源属性文件（properties），然后根据.properties文件的名称信息（本地化信息），匹配当前系统的国别语言信息（也可以程序指定），然后获取相应的properties文件的内容。
 			String minor = "";
 			int minorVersion = UMLEditor.JAVA_MINOR_VERSION;
 			if (minorVersion > 0) {
@@ -82,7 +85,7 @@ public final class UMLEditor {
 	}
 
 	static String obtainJavaVersion() {
-		String version = System.getProperty("java.version");
+		String version = System.getProperty("java.version");//获得系统属性（java运行时版本环境）。
 		if (version == null) {
 			version = System.getProperty("java.runtime.version");
 		}
@@ -93,9 +96,10 @@ public final class UMLEditor {
 	 * @return True is the JVM version is higher than the versions specified as
 	 *         constants.
 	 */
-	static boolean isOKJVMVersion(String pVersion) {
+	static boolean isOKJVMVersion(String pVersion) //检测是否符合JVM环境。
+	{
 		assert pVersion != null;
-		String[] components = pVersion.split("\\.|_");
+		String[] components = pVersion.split("\\.|_");//将字符串pVsion以.\_分割为子字符串，然后将结果作为字符串数组返回。
 		boolean lReturn = true;
 
 		try {

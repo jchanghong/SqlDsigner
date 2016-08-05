@@ -85,7 +85,7 @@ public class EditorFrame extends JFrame {
 	private ResourceBundle aAppResources;
 	private ResourceBundle aVersionResources;
 	private ResourceBundle aEditorResources;
-	private JTabbedPane aTabbedPane;
+	private JTabbedPane aTabbedPane;//选项卡窗体。
 	private ArrayList<JInternalFrame> aTabs = new ArrayList<>();
 	private JMenu aNewMenu;
 	private Clipboard aClipboard = new Clipboard();
