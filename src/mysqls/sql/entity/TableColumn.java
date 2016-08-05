@@ -10,9 +10,9 @@ import java.beans.VetoableChangeSupport;
 import java.io.Serializable;
 
 /**
- * @author 长宏 约束用于限制加入表的数据的类型。 可以在创建表时规定约束（通过 CREATE TABLE 语句），或者在表创建之后也可以（通过
- *         ALTER TABLE 语句）。 我们将主要探讨以下几种约束： NOT NULL UNIQUE PRIMARY KEY FOREIGN
- *         KEY CHECK DEFAULT
+ * @author 长宏 代表列 约束用于限制加入表的数据的类型。 可以在创建表时规定约束（通过 CREATE TABLE
+ *         语句），或者在表创建之后也可以（通过 ALTER TABLE 语句）。 我们将主要探讨以下几种约束： NOT NULL UNIQUE
+ *         PRIMARY KEY FOREIGN KEY CHECK DEFAULT
  */
 @SuppressWarnings("serial")
 public class TableColumn implements Serializable, Cloneable {

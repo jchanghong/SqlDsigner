@@ -4,7 +4,7 @@
 package mysqls.sql.entity;
 
 /**
- * @author jiang
+ * @author jiang 目前没有用到，预计以后有用
  *
  */
 public class SQLTypes {

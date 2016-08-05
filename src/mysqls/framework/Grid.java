@@ -8,8 +8,8 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
 /**
- * A grid to which points and rectangles can be "snapped". The snapping
- * operation moves a point to the nearest grid point.
+ * 这个其实就是设置格子的A grid to which points and rectangles can be "snapped". The
+ * snapping operation moves a point to the nearest grid point.
  */
 public class Grid {
 	private static final Color GRID_COLOR = new Color(220, 220, 220);
@@ -17,7 +17,7 @@ public class Grid {
 
 	/**
 	 * Draws this grid inside a rectangle.
-	 * 
+	 *
 	 * @param pGraphics2D
 	 *            the graphics context
 	 * @param pBounds
@@ -39,7 +39,7 @@ public class Grid {
 
 	/**
 	 * Snaps a rectangle to the nearest grid points.
-	 * 
+	 *
 	 * @param pRectangle
 	 *            the rectangle to snap. After the call, the coordinates of r
 	 *            are changed so that all of its corners falls on the grid.

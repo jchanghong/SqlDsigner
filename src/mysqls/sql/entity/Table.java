@@ -15,7 +15,7 @@ import mysqls.graph.ClassNode;
 import mysqls.sql.entity.Columnlist.Changelistener;
 
 /**
- * @author 长宏
+ * @author 长宏 代表一个表。
  *
  */
 public class Table {
@@ -200,15 +200,6 @@ public class Table {
 		ChangeSupport.firePropertyChange("name", old, name);
 	}
 
-	// CREATE TABLE Orders
-	// (
-	// Id_O int NOT NULL,
-	// OrderNo int NOT NULL,
-	// Id_P int,
-	// PRIMARY KEY (Id_O),
-	// CONSTRAINT fk_PerOrders FOREIGN KEY (Id_P)
-	// REFERENCES Persons(Id_P)
-	// )
 	public String toSQL() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("create  table  ");

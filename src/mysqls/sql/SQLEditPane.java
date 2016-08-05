@@ -37,7 +37,7 @@ public class SQLEditPane extends JPanel {
 	private static final int high = 25;
 
 	public void setsql(final String sqlstring) {
-		this.sqlstring = sqlstring;//？？？？
+		this.sqlstring = sqlstring;// ？？？？这里只是为了保存sql语句。函数调用完成后，sql还在
 		if (msqlpane != null && ison) {
 			EventQueue.invokeLater(new Runnable() {
 				@Override
@@ -50,35 +50,25 @@ public class SQLEditPane extends JPanel {
 	}
 
 	DocumentListener documentListener;
-	public JTextPane msqlpane = null;//sql文本编辑区的引用。
-	JScrollPane mJScrollPane;//滚动条。
-	JPanel mempty;//jpanel
+	public JTextPane msqlpane = null;// sql文本编辑区的引用。
+	JScrollPane mJScrollPane;// 滚动条。
+	JPanel mempty;// jpanel
 
-	private void seton()//关闭sqledit界面的按钮。//？？
+	private void seton()// 关闭sqledit界面的按钮。//？？
 	{
 		if (toggle != null) {
 			toggle.setText(SQLEditPane.text_off);
-			toggle.setToolTipText(SQLEditPane.text_ontip);//鼠标在该按钮上停顿一下，就会显示“隐藏sql面板”的提示信息 
+			toggle.setToolTipText(SQLEditPane.text_ontip);// 鼠标在该按钮上停顿一下，就会显示“隐藏sql面板”的提示信息
 		}
 	}
 
-	private void setoff() //打开sqledit界面的按钮。//？？
+	private void setoff() // 打开sqledit界面的按钮。//？？
 	{
 		if (toggle != null) {
 			toggle.setText(SQLEditPane.text_on);
-			toggle.setToolTipText(SQLEditPane.textofftip);//鼠标在该按钮上停顿一下，就会显示“显示sql面板”的提示信息 
+			toggle.setToolTipText(SQLEditPane.textofftip);// 鼠标在该按钮上停顿一下，就会显示“显示sql面板”的提示信息
 		}
 	}
-
-	// private boolean istoggleON() {
-	// if (toggle != null) {
-	// return toggle.getText().equalsIgnoreCase(SQLEditPane.text_off);
-	//
-	// } else {
-	// return false;
-	// }
-	//
-	// }
 
 	public SQLEditPane(final GraphFrame graphFrame) {
 
@@ -128,29 +118,28 @@ public class SQLEditPane extends JPanel {
 
 	private void createempty() {
 		// TODO Auto-generated method stub
-		//创建可编辑的文本区
+		// 创建可编辑的文本区
 		if (msqlpane == null) {
 			msqlpane = new JTextPane();
-			msqlpane.setEditable(true);//可编辑的。
+			msqlpane.setEditable(true);// 可编辑的。
 			StyledDocument document = msqlpane.getStyledDocument();
 
-			document.addDocumentListener(documentListener);//给sql面板设置的颜色。给关键字改颜色的方法和策略
+			document.addDocumentListener(documentListener);// 给sql面板设置的颜色。给关键字改颜色的方法和策略
 
 			JPanel jPanel = new JPanel(new BorderLayout());
 			jPanel.add(msqlpane);
-			mJScrollPane = new JScrollPane(jPanel);//添加滚动条。
-			
-			//先将滚动条的长宽封装在Dimension中，如果 width 值或 height 值小于之前调用 setMinimumSize 指定的最小大小，则它将自动增大。 
-			//mJScrollPane.setMinimumSize(new Dimension(300, (int) mJScrollPane.getPreferredSize().getHeight()));
+			mJScrollPane = new JScrollPane(jPanel);// 添加滚动条。
+
+			// 先将滚动条的长宽封装在Dimension中，如果 width 值或 height 值小于之前调用 setMinimumSize
+			// 指定的最小大小，则它将自动增大。
+			// mJScrollPane.setMinimumSize(new Dimension(300, (int)
+			// mJScrollPane.getPreferredSize().getHeight()));
 
 			mempty = new JPanel(new BorderLayout());
 		}
-
-		// msqlpane.setText("");
 	}
 
-	private void createtoggleButton()
-	{
+	private void createtoggleButton() {
 
 		toggle = new JButton();
 		toggle.setText("<<<");
@@ -164,25 +153,15 @@ public class SQLEditPane extends JPanel {
 
 					ison = false;
 					setoff();
-					// EventQueue.invokeLater(new Runnable() {
-					// public void run() {
-					// msqlpane.setText("");
-					//// remove(mJScrollPane);
-					// }
-					// });
-					//
 					remove(mJScrollPane);
 					add(mempty, BorderLayout.CENTER);
 				} else {
 					ison = true;
 
+					// ui更新，其实可以不用这样，但是有些地方必须要这样
 					EventQueue.invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							// add(mJScrollPane,BorderLayout.CENTER);
-							// add(new JScrollPane(msqlpane),
-							// BorderLayout.CENTER);
-							// add(msqlpane, BorderLayout.CENTER);
 							setsqlstring();
 							SQLcolor.setcolor(msqlpane);
 							remove(mempty);
@@ -193,8 +172,6 @@ public class SQLEditPane extends JPanel {
 
 						}
 					});
-					// add(new JScrollPane(emptypane), BorderLayout.CENTER);
-					// add(new JButton("111111"),BorderLayout.CENTER);
 				}
 			}
 
@@ -204,20 +181,10 @@ public class SQLEditPane extends JPanel {
 		add(toggle, BorderLayout.SOUTH);
 	}
 
-	private void setsqlstring() //设置sqledit面板初始化内容。
+	private void setsqlstring() // 设置sqledit面板初始化内容。
 	{
-		// TODO Auto-generated method stub
 
 		msqlpane.setText(sqlstring);
-		// StyledDocument styledDocument=msqlpane.getStyledDocument();
-		// SimpleAttributeSet attributeSet=new SimpleAttributeSet();
-		// StyleConstants.setForeground(attributeSet, Color.yellow);
-		// int index=sqlstring.indexOf("2");
-		// int last=sqlstring.lastIndexOf("2");
-		//
-		// styledDocument.setCharacterAttributes(index, last-index+1,
-		// attributeSet, false);
-		//
 
 	}
 }

@@ -4,7 +4,7 @@ import mysqls.graph.Graph;
 import mysqls.graph.GraphElement;
 
 /**
- * A command that involves a single graph element.
+ * 这些是为了实现copy等这些操作的A command that involves a single graph element.
  *
  * @author Martin P. Robillard
  */
@@ -14,7 +14,7 @@ abstract class GraphElementRelatedCommand implements Command {
 
 	/**
 	 * Creates the command.
-	 * 
+	 *
 	 * @param pGraph
 	 *            The target graph.
 	 * @param pElement

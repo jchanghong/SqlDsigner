@@ -4,8 +4,8 @@ import mysqls.graph.Graph;
 import mysqls.graph.Node;
 
 /**
- * Stores the moving of a node.
- * 
+ * 这些是为了实现copy等这些操作的Stores the moving of a node.
+ *
  * @author EJBQ
  */
 public class MoveCommand implements Command {
@@ -16,7 +16,7 @@ public class MoveCommand implements Command {
 
 	/**
 	 * Creates the command.
-	 * 
+	 *
 	 * @param pGraph
 	 *            The panel being moved on
 	 * @param pNode

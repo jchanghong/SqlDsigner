@@ -3,28 +3,21 @@ package mysqls.sql.sqlreader;
 import java.util.ArrayList;
 import java.util.List;
 
-import mysqls.graph.AssociationEdge;
-import mysqls.graph.ClassNode;
 import mysqls.sql.entity.Columnlist;
 import mysqls.sql.entity.Table;
 import mysqls.sql.entity.TableColumn;
 
 /**
- * @author Administrator string sql to table class object util
+ * @author sql语句到table的实现
  *
  */
 public final class SqlToTable {
 
 	/**
-	 *
+	 * 工具类不需要实现
 	 */
 	private SqlToTable() {
 		// TODO Auto-generated constructor stub
-	}
-
-	public static Table from(String sqlline) {
-		return null;
-
 	}
 
 	private static Table SqlReader(List<String> sqllist, int start, int end) {
@@ -71,32 +64,8 @@ public final class SqlToTable {
 		return table;
 	}
 
-	public static List<AssociationEdge> getEdge(List<Table> tables) {
-		List<AssociationEdge> list = new ArrayList<>();
-
-		AssociationEdge associationEdge = new AssociationEdge();
-		associationEdge.connect(null, null);
-		ClassNode classNode = new ClassNode(new Table());
-
-		return list;
-	}
-
 	public static List<Table> getAllTable(String sql) {
 		List<Table> list = SqlToTable.gettable(sql);
-		// for (Table table : list) {
-		// for (TableColumn column : table.getColumnlist().getList()) {
-		//
-		// if (column.isForeignKey() == true) {
-		// Table re = null;
-		// TableColumn column2 = null;
-		//
-		// column.setForigntable(table);
-		// column.setForigncolumn(column2);
-		// }
-		// }
-		//
-		// }
-
 		return list;
 	}
 

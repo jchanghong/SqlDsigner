@@ -10,7 +10,7 @@ import mysqls.framework.MultiLineString;
 import mysqls.sql.entity.Table;
 
 /**
- * A class node in a class diagram.
+ * 主要的类，这里只是显示用，就是画图，实际数据在table类里面
  */
 public class ClassNode extends InterfaceNode {
 	public Table mTable;
@@ -26,11 +26,6 @@ public class ClassNode extends InterfaceNode {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				// TODO Auto-generated method stub
-
-				// aAttributes.setText(mTable.getnodeAttu());
-				// aName.setText(mTable.getnodeName());
-				// setAttributes(aAttributes);
-				// setName(aName);
 				System.out.println("ClassNode(Table table)propertyChange");
 			}
 		});

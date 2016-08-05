@@ -20,7 +20,7 @@ public final class LineStyle {
 
 	/**
 	 * Gets a stroke with which to draw this line style.
-	 * 
+	 *
 	 * @return the stroke object that strokes this line style
 	 */
 	public Stroke getStroke() {
