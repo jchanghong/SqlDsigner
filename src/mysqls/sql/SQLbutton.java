@@ -20,7 +20,8 @@ public class SQLbutton extends JPanel {
 	private JButton mcreateSQL;
 	private JButton mcreateNode;
 
-	public SQLbutton(GraphFrame graphFrame) {
+	public SQLbutton(GraphFrame graphFrame)//构造器。
+	{
 		// TODO Auto-generated constructor stub
 		mFrame = graphFrame;
 		setLayout(new GridLayout(0, 2));
@@ -34,7 +35,8 @@ public class SQLbutton extends JPanel {
 
 	private void SetListener() {
 		// TODO Auto-generated method stub
-		mcreateNode.addActionListener(new ActionListener() {
+		mcreateNode.addActionListener(new ActionListener() //mcreateNode监听器。
+		{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
