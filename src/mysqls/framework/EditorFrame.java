@@ -85,7 +85,7 @@ public class EditorFrame extends JFrame {
 	private ResourceBundle aAppResources;
 	private ResourceBundle aVersionResources;
 	private ResourceBundle aEditorResources;
-	private JTabbedPane aTabbedPane;//选项卡窗体。
+	private JTabbedPane aTabbedPane;// 选项卡窗体。
 	private ArrayList<JInternalFrame> aTabs = new ArrayList<>();
 	private JMenu aNewMenu;
 	private Clipboard aClipboard = new Clipboard();
@@ -151,7 +151,106 @@ public class EditorFrame extends JFrame {
 		createFileMenu(factory);
 		createEditMenu(factory);
 		createViewMenu(factory);
+		createSQLmnu();// sqlmenu，
+		createdatabasemenu();// ,,,,
 		createHelpMenu(factory);
+	}
+
+	/**
+	 * 每个内部框架都可以有不同的数据库连接，所以数据库的实现应该在内部框架里面实现，这里直接调用就行
+	 */
+	private void createdatabasemenu() {
+		// TODO Auto-generated method stub
+		JMenuBar menuBar = getJMenuBar();
+		JMenu dbMenu = new JMenu("数据库");
+		aDiagramRelevantMenus.add(dbMenu);
+		menuBar.add(dbMenu);
+
+		JMenuItem server = new JMenuItem("数据库server");
+		server.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				GraphFrame frame = (GraphFrame) aTabbedPane.getSelectedComponent();
+				frame.servermenu();
+			}
+		});
+		dbMenu.add(server);
+
+		JMenuItem database = new JMenuItem("数据库选择");
+		database.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				GraphFrame frame = (GraphFrame) aTabbedPane.getSelectedComponent();
+				frame.databasemenu();
+			}
+		});
+		dbMenu.add(database);
+
+		JMenuItem db2graph = new JMenuItem("加载数据库所有表");
+		db2graph.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				GraphFrame frame = (GraphFrame) aTabbedPane.getSelectedComponent();
+				frame.loaddatabasealltables();
+			}
+		});
+		dbMenu.add(db2graph);
+
+		JMenuItem graph2db = new JMenuItem("sql模型导入数据库");
+		graph2db.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				GraphFrame frame = (GraphFrame) aTabbedPane.getSelectedComponent();
+				frame.graph2dbmenu();
+			}
+		});
+		dbMenu.add(graph2db);
+
+	}
+
+	/**
+	 * 增加menue，具体的功能内部框架来实现.
+	 */
+	private void createSQLmnu() {
+		// TODO Auto-generated method stub
+		JMenuBar menuBar = getJMenuBar();
+		JMenu sqlmenue = new JMenu("SQL建模");
+		aDiagramRelevantMenus.add(sqlmenue);
+		menuBar.add(sqlmenue);
+
+		JMenuItem sql2graph = new JMenuItem("sql->图形");
+		sql2graph.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				GraphFrame frame = (GraphFrame) aTabbedPane.getSelectedComponent();
+				frame.sql2graph();
+
+			}
+		});
+		sqlmenue.add(sql2graph);
+
+		JMenuItem graph2sql = new JMenuItem("图形->sql");
+		graph2sql.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				GraphFrame frame = (GraphFrame) aTabbedPane.getSelectedComponent();
+				frame.graph2sql();
+			}
+		});
+		sqlmenue.add(graph2sql);
+
 	}
 
 	private void createFileMenu(MenuFactory pFactory) {
