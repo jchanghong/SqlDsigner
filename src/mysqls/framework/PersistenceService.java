@@ -9,7 +9,7 @@ import mysqls.diagrams.ClassDiagramGraph;
 import mysqls.graph.ClassNode;
 import mysqls.graph.Graph;
 import mysqls.sql.entity.Table;
-import mysqls.sql.sqlreader.SqlToTable;
+import mysqls.sql.sqlreader.SqlToTable2;
 import mysqls.sql.util.MyIOutil;
 
 /**
@@ -30,7 +30,7 @@ public final class PersistenceService {
 	public static Graph read(String filename) {
 		Graph graph = new ClassDiagramGraph();
 		String sql = MyIOutil.read(new File(filename));
-		List<Table> list = SqlToTable.getAllTable(sql);
+		List<Table> list = SqlToTable2.getAllTable(sql);
 		double x = 0;
 		double y = 50;
 		for (Table table : list) {
@@ -54,7 +54,7 @@ public final class PersistenceService {
 	public static Graph readSQL(String sql, Graph graph) {
 
 		List<ClassNode> nodes = new ArrayList<>();
-		List<Table> list = SqlToTable.getAllTable(sql);
+		List<Table> list = SqlToTable2.getAllTable(sql);
 		for (Table table : list) {
 			nodes.add(new ClassNode(table));
 		}
