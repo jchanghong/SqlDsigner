@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import mysqls.sql.entity.DataTypeUI;
 import mysqls.sql.entity.Table;
 import mysqls.sql.entity.TableColumn;
 import mysqls.sql.util.SQLCreator;
@@ -87,9 +88,9 @@ public final class SqlToTable2 {
 		int index = names[1].lastIndexOf(")");
 		if (index == -1) {
 
-			column.setType(names[1]);
+			column.setType(DataTypeUI.toenum(names[1]));
 		} else {
-			column.setType(names[1].substring(0, index));
+			column.setType(DataTypeUI.toenum(names[1].substring(0, index)));
 
 		}
 		String pnotnull = "\\s*not\\s+null\\s*";

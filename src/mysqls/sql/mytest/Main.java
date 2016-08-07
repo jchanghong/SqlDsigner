@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
-import mysqls.sql.util.Util;
+import mysqls.sql.util.MUiUtil;
 
 /**
  * @author jiang 测试
@@ -37,7 +37,7 @@ public class Main {
 
 		String[] options = { "OK" };
 
-		JOptionPane.showOptionDialog(null, Util.getEditorComponent(Main.bean, descriptor),
+		JOptionPane.showOptionDialog(null, MUiUtil.getEditorComponent(Main.bean, descriptor),
 				ResourceBundle.getBundle("mysqls.framework.EditorStrings").getString("dialog.properties"),
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
 	}

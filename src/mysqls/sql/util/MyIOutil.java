@@ -40,7 +40,6 @@ public final class MyIOutil {
 	public static void copy(String sql, File file) {
 		if (file.exists()) {
 			file.delete();
-
 		}
 		try {
 			file.createNewFile();

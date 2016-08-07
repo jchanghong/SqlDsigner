@@ -10,19 +10,18 @@ import java.beans.VetoableChangeSupport;
 import java.io.Serializable;
 
 /**
- * @author 长宏 代表列 约束用于限制加入表的数据的类型。 可以在创建表时规定约束（通过 CREATE TABLE
- *         语句），或者在表创建之后也可以（通过 ALTER TABLE 语句）。 我们将主要探讨以下几种约束： NOT NULL UNIQUE
- *         PRIMARY KEY FOREIGN KEY CHECK DEFAULT
+ * @author 长宏 代表列 主键一定unique，notnull。外键一定有index，但是不一定unique。
  */
 @SuppressWarnings("serial")
 public class TableColumn implements Serializable, Cloneable {
 
 	private String name;
-	private String type;
+	private DataType type;
 	private boolean primarykey;
 	private boolean foreignKey;
 	private boolean notnull;
 	private boolean unique;
+	private boolean autoadd;
 	private String defaultvalues;
 	private Table forigntable;
 	private TableColumn forigncolumn;
@@ -34,8 +33,9 @@ public class TableColumn implements Serializable, Cloneable {
 		dColumn.defaultvalues = new String(sColumn.defaultvalues);
 		dColumn.foreignKey = new Boolean(sColumn.foreignKey);
 		dColumn.notnull = new Boolean(sColumn.notnull);
+		dColumn.autoadd = new Boolean(sColumn.autoadd);
 		dColumn.primarykey = new Boolean(sColumn.primarykey);
-		dColumn.type = new String(sColumn.type);
+		dColumn.type = DataTypeUI.toenum(type.toString());
 		dColumn.unique = new Boolean(sColumn.unique);
 	}
 
@@ -62,11 +62,28 @@ public class TableColumn implements Serializable, Cloneable {
 	}
 
 	/**
+	 * @return the autoadd
+	 */
+	public boolean isAutoadd() {
+		return this.autoadd;
+	}
+
+	/**
+	 * @param autoadd
+	 *            the autoadd to set
+	 */
+	public void setAutoadd(boolean autoadd) {
+		boolean old = this.autoadd;
+		this.autoadd = autoadd;
+		ChangeSupport.firePropertyChange("autoadd", old, autoadd);
+	}
+
+	/**
 	 *
 	 */
 	public TableColumn(String name) {
 		// TODO Auto-generated constructor stub
-		this(name, false, false, false);
+		this(name, false, true, false);
 	}
 
 	/**
@@ -76,13 +93,14 @@ public class TableColumn implements Serializable, Cloneable {
 		// TODO Auto-generated constructor stub
 		this.name = name;
 		this.primarykey = prikey;
+		autoadd = false;
 		foreignKey = false;
 		this.notnull = notnull;
 		this.unique = unique;
 		defaultvalues = "";
 		forigntable = null;
 		forigncolumn = null;
-		type = "varchar(40)";
+		type = DataType.VARCHAR;
 	}
 
 	public void addPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
@@ -140,13 +158,6 @@ public class TableColumn implements Serializable, Cloneable {
 	 */
 	public String getName() {
 		return this.name;
-	}
-
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return this.type;
 	}
 
 	/**
@@ -263,10 +274,17 @@ public class TableColumn implements Serializable, Cloneable {
 	 * @param type
 	 *            the type to set
 	 */
-	public void setType(String type) {
-		String old = this.type;
+	public void setType(DataType type) {
+		DataType old = this.type;
 		this.type = type;
 		ChangeSupport.firePropertyChange("type", old, type);
+	}
+
+	/**
+	 * @return the type
+	 */
+	public DataType getType() {
+		return this.type;
 	}
 
 	/**
@@ -284,33 +302,48 @@ public class TableColumn implements Serializable, Cloneable {
 		StringBuilder builder = new StringBuilder();
 		builder.append(name);
 		builder.append("  ");
-		builder.append(type);
+		builder.append(DataTypeUI.tostring(type));
+		if (notnull || primarykey || foreignKey || unique) {
+			builder.append("  " + "NOT NULL");
+		}
 		if (primarykey) {
 			builder.append("  " + "PRIMARY KEY");
 
 		} else {
-			if (notnull) {
-				builder.append("  " + "NOT NULL");
-			}
+
 			if (unique) {
 				builder.append("  " + "UNIQUE");
 
 			}
 
 		}
+		if (type.equals(DataType.INT) && autoadd) {
+			builder.append("  " + "AUTO_INCREMENT");
+		}
 
-		if (foreignKey) {
-			builder.append("  ");
-			builder.append("FOREIGN KEY");
-			builder.append("  ");
-			builder.append("REFERENCES");
-			builder.append("  ");
-			builder.append(forigntable.getName());
-			builder.append("(");
-			builder.append(forigncolumn.getName());
-			builder.append(")");
+		if (defaultvalues.trim().length() > 0 && (type.equals(DataType.INT) || type.equals(DataType.DOUBLE))) {
+			builder.append("  " + "DEFAULT " + defaultvalues);
+		}
+
+		if (type.equals(DataType.TEXT) || type.equals(DataType.VARCHAR)) {
+
+			if (defaultvalues.trim().length() > 0) {
+				builder.append("  " + "DEFAULT " + defaultvalues + "");
+			}
 
 		}
+		// if (foreignKey) {
+		// builder.append(" ");
+		// builder.append("FOREIGN KEY");
+		// builder.append(" ");
+		// builder.append("REFERENCES");
+		// builder.append(" ");
+		// builder.append(forigntable.getName());
+		// builder.append("(");
+		// builder.append(forigncolumn.getName());
+		// builder.append(")");
+		//
+		// }
 		builder.append(",\n");
 		return builder.toString();
 	}
