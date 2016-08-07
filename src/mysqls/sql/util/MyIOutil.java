@@ -15,9 +15,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.List;
 
-import mysqls.graph.ClassNode;
 import mysqls.graph.Graph;
 
 /**
@@ -34,13 +32,9 @@ public final class MyIOutil {
 	}
 
 	public static void savefile(Graph graph, File file) {
-		List<ClassNode> list = graph.getClassNOdes();
 		StringBuilder builder = new StringBuilder();
-		for (ClassNode classNode : list) {
-			builder.append(SQLCreator.create(classNode.mTable));
-		}
+		graph.getClassNOdes().stream().forEach(a -> builder.append(SQLCreator.create(a.mTable)));
 		MyIOutil.copy(builder.toString(), file);
-
 	}
 
 	public static void copy(String sql, File file) {
