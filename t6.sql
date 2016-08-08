@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS null11;
+create  table  null11
+(
+null1  INT(11)  NOT NULL  PRIMARY KEY,
+null2  VARCHAR(30)  NOT NULL,
+null3  VARCHAR(30)  NOT NULL
+);
+DROP TABLE IF EXISTS null22;
+create  table  null22
+(
+null4  INT(11)  NOT NULL,
+null5  INT(11)  NOT NULL  PRIMARY KEY,
+null6  TIMESTAMP  NOT NULL,
+CONSTRAINT  FOREIGN KEY (`null4`)  REFERENCES `null11` (`null1`)
+);

@@ -35,16 +35,34 @@ public final class PersistenceService {
 	 */
 	public static Graph read(String filename) {
 		Graph graph = new ClassDiagramGraph();
-		String sql = MyIOutil.read(new File(filename));
-		List<Table> list = SqlToTable2.getAllTable(sql);
+		List<ClassNode> nodes = new ArrayList<>();
+		List<Table> list = SqlToTable2.getAllTable(MyIOutil.read(new File(filename)));
+		for (Table table : list) {
+			nodes.add(new ClassNode(table));
+		}
 		double x = 0;
 		double y = 50;
-		for (Table table : list) {
-			ClassNode node = new ClassNode(table);
+		for (ClassNode node : nodes) {
 			Point2D point2d = new Point2D.Double(x, y);
 			graph.addNode(node, point2d);
 			x = x + node.getBounds().getWidth() + PersistenceService.MAGIN;
 			y += 50;
+
+		}
+		List<Map<String, Table>> maps = list.stream().filter(Table::hasForeigrnKey).map(a -> {
+			Map<String, Table> map = new HashMap<>();
+			map.put("s", a);
+			map.put("e", a.getForeigenTable());
+			return map;
+		}).collect(Collectors.toList());
+
+		for (Map<String, Table> map : maps) {
+			AssociationEdge edge = new AssociationEdge();
+			Table sTable = map.get("s");
+			Table eTable = map.get("e");
+			ClassNode sClassNode = PersistenceService.findNode(nodes, eTable);
+			ClassNode eClassNode = PersistenceService.findNode(nodes, sTable);
+			graph.addEdge(edge, PersistenceService.findcpoint(sClassNode), PersistenceService.findcpoint(eClassNode));
 
 		}
 
