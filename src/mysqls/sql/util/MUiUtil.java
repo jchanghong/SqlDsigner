@@ -5,9 +5,6 @@ package mysqls.sql.util;
 
 import java.awt.Component;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
@@ -23,18 +20,18 @@ import javax.swing.event.DocumentListener;
  * @author 长宏 属性编辑器工具
  *
  */
-public final class Util {
+public final class MUiUtil {
 	/**
 	 *
 	 */
-	private Util() {
+	private MUiUtil() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public static Component getEditorComponent(Object v, final PropertyDescriptor propertyDescriptor)
 
 	{
-		return Util.getEditorComponent(Util.getEditor(v, propertyDescriptor));
+		return MUiUtil.getEditorComponent(MUiUtil.getEditor(v, propertyDescriptor));
 	}
 
 	public static PropertyEditor getEditor(final Object pBean, PropertyDescriptor pDescriptor) {
@@ -60,14 +57,11 @@ public final class Util {
 
 			Object value = getter.invoke(pBean, new Object[] {});
 			editor.setValue(value);
-			editor.addPropertyChangeListener(new PropertyChangeListener() {
-				@Override
-				public void propertyChange(PropertyChangeEvent pEvent) {
-					try {
-						setter.invoke(pBean, new Object[] { editor.getValue() });
-					} catch (IllegalAccessException | InvocationTargetException exception) {
-						exception.printStackTrace();
-					}
+			editor.addPropertyChangeListener(a -> {
+				try {
+					setter.invoke(pBean, new Object[] { editor.getValue() });
+				} catch (IllegalAccessException | InvocationTargetException exception) {
+					exception.printStackTrace();
 				}
 			});
 			return editor;
@@ -86,12 +80,9 @@ public final class Util {
 			// make a combo box that shows all tags
 			final JComboBox<String> comboBox = new JComboBox<>(tags);
 			comboBox.setSelectedItem(text);
-			comboBox.addItemListener(new ItemListener() {
-				@Override
-				public void itemStateChanged(ItemEvent pEvent) {
-					if (pEvent.getStateChange() == ItemEvent.SELECTED) {
-						pEditor.setAsText((String) comboBox.getSelectedItem());
-					}
+			comboBox.addItemListener(a -> {
+				if (a.getStateChange() == ItemEvent.SELECTED) {
+					pEditor.setAsText((String) comboBox.getSelectedItem());
 				}
 			});
 			return comboBox;

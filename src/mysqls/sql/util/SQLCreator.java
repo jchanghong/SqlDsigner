@@ -9,7 +9,7 @@ import mysqls.sql.entity.Table;
 import mysqls.sql.entity.TableColumn;
 
 /**
- * @author 长宏 生产 sql语句
+ * @author 长宏 生产 sql语句 外键一定是index，一定not null，但是不一定unique，主键一定是unique，not null
  *
  */
 public class SQLCreator {
@@ -23,13 +23,33 @@ public class SQLCreator {
 
 	public static String create(Table table) {
 		StringBuilder builder = new StringBuilder();
+
+		// 先删除表
+		builder.append("DROP TABLE IF EXISTS " + table.getName() + ";\n");
+
+		// 常规语句
 		builder.append(table.toSQL());
 		for (int i = 0; i < table.getColumnlist().size(); i++) {
 			builder.append(table.getColumnlist().get(i).toSQL());
 		}
-		// for (TableColumn column : table.getColumnlist()) {
-		// builder.append(column.toSQL());
-		// }
+
+		// 外键语句
+		for (int i = 0; i < table.getColumnlist().size(); i++) {
+
+			TableColumn column = table.getColumnlist().get(i);
+			if (column.isForeignKey() && column.getForigntable() != null && column.getForigncolumn() != null) {
+				builder.append("CONSTRAINT  ");
+				builder.append("FOREIGN KEY");
+				builder.append(" (`" + column.getName() + "`)");
+				builder.append("  REFERENCES");
+				builder.append(" ");
+				builder.append("`" + column.getForigntable().getName() + "`");
+				builder.append(" (`");
+				builder.append(column.getForigncolumn().getName());
+				builder.append("`),\n");
+			}
+
+		}
 		builder.append(");\n");
 		int index = builder.lastIndexOf(",");
 		builder.deleteCharAt(index);

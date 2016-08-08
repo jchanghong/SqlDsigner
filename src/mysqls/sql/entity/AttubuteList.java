@@ -47,6 +47,9 @@ public final class AttubuteList {
 		if (property.equals("foreignKey")) {
 			return "外键";
 		}
+		if (property.equals("autoadd")) {
+			return "自增";
+		}
 
 		return string;
 	}

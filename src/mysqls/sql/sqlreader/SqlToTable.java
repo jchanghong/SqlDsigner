@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mysqls.sql.entity.Columnlist;
+import mysqls.sql.entity.DataTypeUI;
 import mysqls.sql.entity.Table;
 import mysqls.sql.entity.TableColumn;
 
@@ -39,7 +40,7 @@ public final class SqlToTable {
 				continue;
 			}
 			String type = row[1];
-			column.setType(type);// 列的类型
+			column.setType(DataTypeUI.toenum(type));// 列的类型
 			for (String string2 : row) {
 				if (string2.startsWith("PRIMARYKEY")) {// 判断第三个字符是不是Primarykey
 					column.setPrimarykey(true);

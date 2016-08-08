@@ -13,7 +13,7 @@ import java.beans.PropertyDescriptor;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import mysqls.sql.util.Util;
+import mysqls.sql.util.MUiUtil;
 
 /**
  * @author jiang 编辑一列
@@ -68,7 +68,7 @@ public class RowPanel extends JPanel {
 
 			PropertyDescriptor propertyDescriptor = AttubuteList.pdList.get(i);
 
-			Component component = Util.getEditorComponent(mTableColumn, propertyDescriptor);
+			Component component = MUiUtil.getEditorComponent(mTableColumn, propertyDescriptor);
 			add(component);
 
 		}
