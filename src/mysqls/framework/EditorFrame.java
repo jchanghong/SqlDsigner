@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -166,14 +167,19 @@ public class EditorFrame extends JFrame {
 		aDiagramRelevantMenus.add(dbMenu);
 		menuBar.add(dbMenu);
 
-		JMenuItem server = new JMenuItem("数据库server");
+		JMenuItem server = new JMenuItem("连接服务器");
 		server.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				GraphFrame frame = (GraphFrame) aTabbedPane.getSelectedComponent();
-				frame.servermenu();
+				try {
+					frame.servermenu();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		dbMenu.add(server);

@@ -6,8 +6,16 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 
+
+import javax.sql.rowset.JdbcRowSet;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,6 +23,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
+import java.util.Properties;
+
+import jdk.internal.dynalink.beans.StaticClass;
 import mysqls.graph.ClassNode;
 import mysqls.graph.Graph;
 import mysqls.sql.SQLEditPane;
@@ -208,7 +221,7 @@ public class GraphFrame extends JInternalFrame {
 		jTextArea.setForeground(Color.white);
 		jTextArea.setBackground(Color.black);
 		jTextArea.setFont(new Font("Default", Font.PLAIN, 24));
-		JPanel jPanel = new JPanel();
+     	JPanel jPanel = new JPanel();
 		jPanel.add(new JScrollPane(jTextArea));
 		new MyDialog("server").show(jPanel);
 	}
@@ -234,12 +247,15 @@ public class GraphFrame extends JInternalFrame {
 	}
 
 	/**
+	 * @throws SQLException 
 	 *
 	 */
-	public void servermenu() {
+	public void servermenu() throws SQLException {
 		// TODO Auto-generated method stub
-		JTextArea jTextArea = new JTextArea("这个是让用户设置数据库连接，设置好了以后，还要保存连接，" + "这样下次启动的时候，用户就不用再重新设置连接了，"
-				+ "然后，应该检测，如果用户安装了mysql。那么就可以直接让用户输入账号密码就行了。" + "" + "总之，这里应该是设置数据库连接的");
+		JTextArea jTextArea = new JTextArea("首先将你的jar包放置在lib下" + 
+		"这样下次启动的时候，用户就不用再重新设置连接了，"+ 
+		"然后，应该检测，如果用户安装了mysql。那么就可以直接让用户输入账号密码就行了。" + 
+		"" + "总之，这里应该是设置数据库连接的");
 		jTextArea.setEditable(false);
 		jTextArea.setColumns(20);
 		jTextArea.setRows(11);
@@ -253,4 +269,5 @@ public class GraphFrame extends JInternalFrame {
 		new MyDialog("server").show(jPanel);
 
 	}
+	
 }
