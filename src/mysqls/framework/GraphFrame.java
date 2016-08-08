@@ -19,6 +19,7 @@ import mysqls.graph.ClassNode;
 import mysqls.graph.Graph;
 import mysqls.sql.SQLEditPane;
 import mysqls.sql.SQLlogPane;
+import mysqls.sql.sqlreader.StatementUtil;
 import mysqls.sql.ui.MyDialog;
 import mysqls.sql.util.SQLCreator;
 
@@ -63,7 +64,7 @@ public class GraphFrame extends JInternalFrame {
 	public void sql2graph() {
 
 		String sql = msSqlEditPane.msqlpane.getText();
-		if (!sql.trim().startsWith("c")) {
+		if (!StatementUtil.isOKstatement(sql)) {
 			JOptionPane.showMessageDialog(null, "sql错误了！！！！");
 			return;
 		}
