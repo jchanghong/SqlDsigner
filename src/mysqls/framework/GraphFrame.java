@@ -2,9 +2,14 @@
 package mysqls.framework;
 
 import java.awt.BorderLayout;
+import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,18 +17,35 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 
 import javax.sql.rowset.JdbcRowSet;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.omg.CORBA.PUBLIC_MEMBER;
+
+import com.sun.javafx.collections.MappingChange.Map;
+
+import javafx.scene.layout.Border;
 
 import java.util.Properties;
 
@@ -32,8 +54,12 @@ import mysqls.graph.ClassNode;
 import mysqls.graph.Graph;
 import mysqls.sql.SQLEditPane;
 import mysqls.sql.SQLlogPane;
+import mysqls.sql.databaseserver.Connector;
+import mysqls.sql.databaseserver.Users;
 import mysqls.sql.ui.MyDialog;
 import mysqls.sql.util.SQLCreator;
+import sun.util.locale.provider.JRELocaleProviderAdapter;
+import sun.util.logging.resources.logging;
 
 /**
  * 这是主要的显示类。包括是几乎所有的面板。
@@ -231,43 +257,122 @@ public class GraphFrame extends JInternalFrame {
 	 */
 	public void databasemenu() {
 		// TODO Auto-generated method stub
-		JTextArea jTextArea = new JTextArea(
-				"这个功能是，读取数据库server中所有的数据库，如果没有设置数据库server，那么提示让用户先设置server。让用户选择一个可以操作的数据库。这样就可以直接在数据库里面建立表了。"
-						+ "这里应该列出所有的数据库，。然后让用户选择一个，也可以新建立一个数据库");
-		jTextArea.setEditable(false);
-		jTextArea.setLineWrap(true);
-		jTextArea.setColumns(20);
-		jTextArea.setForeground(Color.white);
-		jTextArea.setBackground(Color.black);
-		jTextArea.setRows(11);
-		jTextArea.setFont(new Font("Default", Font.PLAIN, 24));
-		JPanel jPanel = new JPanel();
-		jPanel.add(new JScrollPane(jTextArea));
-		new MyDialog("server").show(jPanel);
+//		JFrame jFrame =new JFrame("show databases"); 
+//		JPanel jPanel = new JPanel(new BorderLayout());
+//		JTextArea showdatabases = new JTextArea();
+//		showdatabases.setEditable(false);
+//		jPanel.add(showdatabases,BorderLayout.NORTH);
+//		jFrame.add(jPanel);
+//		jFrame.setSize(300, 300);
+//		jFrame.setVisible(true);
 	}
 
 	/**
 	 * @throws SQLException 
 	 *
 	 */
-	public void servermenu() throws SQLException {
+	public Users servermenu(){
+		java.util.Map<String, String> map=new HashMap<>();
 		// TODO Auto-generated method stub
-		JTextArea jTextArea = new JTextArea("首先将你的jar包放置在lib下" + 
-		"这样下次启动的时候，用户就不用再重新设置连接了，"+ 
-		"然后，应该检测，如果用户安装了mysql。那么就可以直接让用户输入账号密码就行了。" + 
-		"" + "总之，这里应该是设置数据库连接的");
-		jTextArea.setEditable(false);
-		jTextArea.setColumns(20);
-		jTextArea.setRows(11);
-		jTextArea.setLineWrap(true);
-		jTextArea.setForeground(Color.white);
-		jTextArea.setBackground(Color.black);
-		jTextArea.setFont(new Font("Default", Font.PLAIN, 24));
-		JPanel jPanel = new JPanel();
-		jPanel.setLayout(new BorderLayout());
-		jPanel.add(new JScrollPane(jTextArea), BorderLayout.CENTER);
-		new MyDialog("server").show(jPanel);
+		JFrame jFrame = new JFrame();
+		JLabel jLabel1 = new JLabel("选择数据库连接:");
+		JLabel uname = new JLabel("用户名");
+		JLabel pwd = new JLabel("密    码");
+		JLabel ipLabel = new JLabel("ip地址");
+		JLabel portLabel = new JLabel("端口");
+		JTextField ip = new JTextField("127.0.0.1",21);//ip地址的输入
+		JTextField dbport = new JTextField("3306",21);//端口号的输入
+		JTextField username = new JTextField(20);
+		JPasswordField password = new JPasswordField(21);
+		ip.setEditable(true);
+		dbport.setEditable(true);
+		username.setEditable(true);
+		password.setEditable(true);
+		JCheckBox cb1=new JCheckBox("mysql");
+		JButton link = new JButton("连接");
+		JButton cancel = new JButton("取消");
+		Users user = new Users(null, null, null);
+		
+		//录入ip,端口号，用户名和密码
+		DocumentListener documentListener = new DocumentListener() {
+					
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+			}
+					
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+			// TODO Auto-generated method stub
+			String username = link.getText();
+			String password = cancel.getText();
+			user.setName(username);
+			user.setPas(password);
+			}
+					
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+//				String ipaddress = ip.getText();
+//				String portname = dbport.getText();
+			}
+					
+		};
+		
+		String dbDrive="jdbc:mysql://"+ip.getText()+":"+dbport.getText()+
+		"/?characterEncoding=utf8&useSSL=true";
+		map.put("s", dbDrive);
 
+		ActionListener actionListener = new ActionListener() {
+			
+			@Override
+			public void  actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String choice = ((JButton)e.getSource()).getText();
+				if(choice.equals("连接")){
+					try {
+						Connector.getConnection(map.get("s"), dbDrive, username.getText(), password.getText());
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					databasemenu();
+					
+				}else if(choice.equals("取消")){
+					username.setText("");
+					password.setText("");
+					ip.setText("");
+					dbport.setText("");
+				}
+			}
+		};
+		link.addActionListener(actionListener);
+		cancel.addActionListener(actionListener);
+		
+		JPanel jPanel = new JPanel(),
+				jPanel2 = new JPanel(new FlowLayout()),
+				jPanel3 = new JPanel(new FlowLayout()),
+				jPanel4 = new JPanel(new FlowLayout());
+		jPanel.setLayout(new BorderLayout());
+		jPanel.add(jPanel2,BorderLayout.NORTH);
+		jPanel.add(jPanel3,BorderLayout.CENTER);
+		jPanel.add(jPanel4,BorderLayout.SOUTH);
+		jPanel2.add(jLabel1);
+		jPanel2.add(cb1);
+		jPanel3.add(ipLabel);
+		jPanel3.add(ip);
+		jPanel3.add(portLabel);
+		jPanel3.add(dbport);
+		jPanel3.add(uname);
+		jPanel3.add(username);
+		jPanel3.add(pwd);
+		jPanel3.add(password);
+		jPanel4.add(link);
+		jPanel4.add(cancel);
+		jFrame.add(jPanel);
+		jFrame.setSize(330, 330);
+		jFrame.setVisible(true);
+		return user;
 	}
 	
 }

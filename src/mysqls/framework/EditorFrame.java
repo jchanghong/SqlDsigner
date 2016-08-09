@@ -174,12 +174,7 @@ public class EditorFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				GraphFrame frame = (GraphFrame) aTabbedPane.getSelectedComponent();
-				try {
-					frame.servermenu();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				frame.servermenu();
 			}
 		});
 		dbMenu.add(server);
