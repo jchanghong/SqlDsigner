@@ -9,6 +9,7 @@ import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import mysqls.framework.MultiLineString;
 import mysqls.graph.ClassNode;
@@ -25,6 +26,24 @@ public class Table {
 	// private List<TableColumn> list;
 	private PropertyChangeSupport ChangeSupport = new PropertyChangeSupport(this);
 	private VetoableChangeSupport vetoSupport = new VetoableChangeSupport(this);
+
+	public boolean hasForeigrnKey() {
+
+		Optional<TableColumn> cOptional = columnlist.getList().stream().filter(a -> a.isForeignKey()).findAny();
+		return cOptional.isPresent();
+
+	}
+
+	/**
+	 * @return 没有就换回null
+	 */
+	public Table getForeigenTable() {
+		Optional<TableColumn> cOptional = columnlist.getList().stream().filter(a -> a.isForeignKey()).findAny();
+		if (!cOptional.isPresent()) {
+			return null;
+		}
+		return cOptional.get().getForigntable();
+	}
 
 	/**
 	 *

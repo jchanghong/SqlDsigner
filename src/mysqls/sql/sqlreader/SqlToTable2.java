@@ -1,11 +1,15 @@
 package mysqls.sql.sqlreader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
+import mysqls.framework.PersistenceService;
 import mysqls.sql.entity.DataTypeUI;
+import mysqls.sql.entity.EdgeData;
 import mysqls.sql.entity.Table;
 import mysqls.sql.entity.TableColumn;
 import mysqls.sql.util.SQLCreator;
@@ -35,16 +39,48 @@ public final class SqlToTable2 {
 	 * 外部接口。不能改变函数签名
 	 *
 	 * @param sql
-	 * @return
+	 * @return 加关系的表
 	 */
 	public static List<Table> getAllTable(String sql) {
-		String[] tables = sql.split("\\s*;\\s*");
-		List<Table> result = new ArrayList<>(tables.length);
-		for (int i = 0; i < tables.length; i++) {
-			String string = tables[i];
-			result.add(SqlToTable2.gettable(string));
+		List<Table> result = SqlToTable2.gettables(sql);
+		List<String> sqList = StatementUtil.getAllStatement(sql).stream()
+				.filter(a -> StatementUtil.isCreate(a) && StatementUtil.hasConstraint(a)).collect(Collectors.toList());
+		PersistenceService.mEdgeDatas.clear();
+		sqList.stream().forEach(a -> {
+			EdgeData edgeData = new EdgeData();
+			int nameindex = a.indexOf("(");
+			String name = a.substring(0, nameindex);
+			String[] name1 = name.split("\\s+");
+			name = name1[name1.length - 1];
+			Table table = TableUtil.findtable(result, name);
+			Table fTable = null;
+			TableColumn column = null;
+			TableColumn fColumn = null;
+			String constrnt = StatementUtil.getAconstraint(a);
+			fTable = TableUtil.findtable(result, ConstraintStatementUtil.getftable(constrnt));
+			column = TableUtil.findColumn(table, ConstraintStatementUtil.getcolumn(constrnt));
+			fColumn = TableUtil.findColumn(fTable, ConstraintStatementUtil.getfcolumn(constrnt));
+			column.setForeignKey(true);
+			column.setForigncolumn(fColumn);
+			column.setForigntable(fTable);
+			edgeData.sColumn = column;
+			edgeData.sTable = table;
+			edgeData.eColumn = fColumn;
+			edgeData.eTable = fTable;
+			PersistenceService.mEdgeDatas.add(edgeData);
+		});
+		return result;
+	}
 
-		}
+	/**
+	 * @param sql
+	 * @return 没有加关系的表
+	 */
+	private static List<Table> gettables(String sql) {
+		String[] tables = sql.split("\\s*;\\s*");
+		List<String> creates = Arrays.stream(tables).filter(StatementUtil::isCreate).collect(Collectors.toList());
+		List<Table> result = new ArrayList<>(creates.size());
+		creates.stream().forEach(a -> result.add(SqlToTable2.gettable(a)));
 		return result;
 	}
 
@@ -67,6 +103,9 @@ public final class SqlToTable2 {
 
 		for (int i = 0; i < coluss.length; i++) {
 			String string = coluss[i];
+			if (ColumnStatementUtil.isConstraint(string)) {
+				continue;
+			}
 			table.addColumn(SqlToTable2.getaColumn(string));
 
 		}

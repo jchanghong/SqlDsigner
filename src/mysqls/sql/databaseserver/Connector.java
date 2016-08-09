@@ -43,7 +43,7 @@ public class Connector extends JInternalFrame{
 		JPanel inputPanel = new JPanel(new BorderLayout());//用户输入面板
 		JPanel choicePanel = new JPanel(new FlowLayout());
 		
-		JTextArea showdatabases = new JTextArea(20,20);//此文本域用来显示所有数据库
+		JTextArea showdatabases = new JTextArea(10,10);//此文本域用来显示所有数据库
 		showdatabases.setEditable(false);
 		JScrollPane jScrollPane = new JScrollPane(jPanel);
 		JLabel tips = new JLabel("输入创建数据库或者已有的数据库:");//提示用户选择
@@ -70,7 +70,7 @@ public class Connector extends JInternalFrame{
 						stat.execute(jTextField.getText());//执行用户输入的创建数据库的命令
 						ResultSet resultSet = stat.executeQuery("SHOW DATABASES");//显示已有的数据库
 						while(resultSet.next()){
-							showdatabases.replaceRange(resultSet.getString(1), 0, 20);
+							showdatabases.replaceRange(resultSet.getString(1), 0, 10);
 							showdatabases .append("\n");
 						}
 					} catch (SQLException e1) {

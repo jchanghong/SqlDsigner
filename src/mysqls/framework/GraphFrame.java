@@ -56,6 +56,7 @@ import mysqls.sql.SQLEditPane;
 import mysqls.sql.SQLlogPane;
 import mysqls.sql.databaseserver.Connector;
 import mysqls.sql.databaseserver.Users;
+import mysqls.sql.sqlreader.StatementUtil;
 import mysqls.sql.ui.MyDialog;
 import mysqls.sql.util.SQLCreator;
 import sun.util.locale.provider.JRELocaleProviderAdapter;
@@ -102,11 +103,11 @@ public class GraphFrame extends JInternalFrame {
 	public void sql2graph() {
 
 		String sql = msSqlEditPane.msqlpane.getText();
-		if (!sql.trim().startsWith("c")) {
+		if (!StatementUtil.isOKstatement(sql)) {
 			JOptionPane.showMessageDialog(null, "sql错误了！！！！");
 			return;
 		}
-		PersistenceService.readSQL(sql, aPanel.aGraph);
+		aPanel.aGraph = PersistenceService.readSQL(sql, aPanel.aGraph);
 
 		aPanel.updateui();
 
