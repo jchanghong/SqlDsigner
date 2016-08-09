@@ -183,8 +183,10 @@ public class PropertySheets extends JPanel {
 				}
 				if (pDescriptor.getName().equals("sTableColumn")) {
 					editor = constructor.newInstance(stat);
+					editor.setValue(edge.sTableColumn);
 				} else {
 					editor = constructor.newInstance(end);
+					editor.setValue(edge.eTableColumn);
 
 				}
 

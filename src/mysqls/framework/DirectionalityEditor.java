@@ -10,7 +10,7 @@ import mysqls.graph.AssociationEdge;
  *
  */
 public class DirectionalityEditor extends PropertySelector {
-	private static final String[] name = { "前点", "后点" };
+	private static final String[] name = { "反向", "正向" };
 	private static final Object[] values = { AssociationEdge.Directionality.Start, AssociationEdge.Directionality.End };
 
 	/**

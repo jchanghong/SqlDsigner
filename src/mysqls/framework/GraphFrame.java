@@ -68,7 +68,7 @@ public class GraphFrame extends JInternalFrame {
 			JOptionPane.showMessageDialog(null, "sql错误了！！！！");
 			return;
 		}
-		PersistenceService.readSQL(sql, aPanel.aGraph);
+		aPanel.aGraph = PersistenceService.readSQL(sql, aPanel.aGraph);
 
 		aPanel.updateui();
 

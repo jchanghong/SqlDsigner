@@ -5,15 +5,13 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import mysqls.diagrams.ClassDiagramGraph;
 import mysqls.graph.AssociationEdge;
 import mysqls.graph.ClassNode;
 import mysqls.graph.Graph;
+import mysqls.sql.entity.EdgeData;
 import mysqls.sql.entity.Table;
 import mysqls.sql.sqlreader.SqlToTable2;
 import mysqls.sql.util.MyIOutil;
@@ -24,6 +22,13 @@ import mysqls.sql.util.MyIOutil;
  */
 public final class PersistenceService {
 
+	/**
+	 * 只有一个，只有sqlreader 包里的类才能更改，的时候才会用
+	 */
+	public static List<EdgeData> mEdgeDatas;
+	static {
+		PersistenceService.mEdgeDatas = new ArrayList<>();
+	}
 	public static double MAGIN = 5.0;// 图形间距
 
 	private PersistenceService() {
@@ -49,21 +54,18 @@ public final class PersistenceService {
 			y += 50;
 
 		}
-		List<Map<String, Table>> maps = list.stream().filter(Table::hasForeigrnKey).map(a -> {
-			Map<String, Table> map = new HashMap<>();
-			map.put("s", a);
-			map.put("e", a.getForeigenTable());
-			return map;
-		}).collect(Collectors.toList());
-
-		for (Map<String, Table> map : maps) {
+		for (EdgeData eData : PersistenceService.mEdgeDatas) {
 			AssociationEdge edge = new AssociationEdge();
-			Table sTable = map.get("s");
-			Table eTable = map.get("e");
+			Table sTable = eData.sTable;
+			Table eTable = eData.eTable;
 			ClassNode sClassNode = PersistenceService.findNode(nodes, eTable);
 			ClassNode eClassNode = PersistenceService.findNode(nodes, sTable);
-			graph.addEdge(edge, PersistenceService.findcpoint(sClassNode), PersistenceService.findcpoint(eClassNode));
+			graph.addEdge(edge, PersistenceService.findcpoint(eClassNode), PersistenceService.findcpoint(sClassNode));
 
+			edge.sTableColumn = eData.sColumn;
+			edge.eTableColumn = eData.eColumn;
+			edge.setStartLabel(edge.sTableColumn.getName());
+			edge.setEndLabel(edge.eTableColumn.getName());
 		}
 
 		return graph;
@@ -76,7 +78,7 @@ public final class PersistenceService {
 	 * @return
 	 */
 	public static Graph readSQL(String sql, Graph graph) {
-
+		graph = new ClassDiagramGraph();// 全新的graph。。bug，
 		List<ClassNode> nodes = new ArrayList<>();
 		List<Table> list = SqlToTable2.getAllTable(sql);
 		for (Table table : list) {
@@ -92,21 +94,18 @@ public final class PersistenceService {
 			y += 50;
 
 		}
-		List<Map<String, Table>> maps = list.stream().filter(Table::hasForeigrnKey).map(a -> {
-			Map<String, Table> map = new HashMap<>();
-			map.put("s", a);
-			map.put("e", a.getForeigenTable());
-			return map;
-		}).collect(Collectors.toList());
-
-		for (Map<String, Table> map : maps) {
+		for (EdgeData eData : PersistenceService.mEdgeDatas) {
 			AssociationEdge edge = new AssociationEdge();
-			Table sTable = map.get("s");
-			Table eTable = map.get("e");
+			Table sTable = eData.sTable;
+			Table eTable = eData.eTable;
 			ClassNode sClassNode = PersistenceService.findNode(nodes, eTable);
 			ClassNode eClassNode = PersistenceService.findNode(nodes, sTable);
-			graph.addEdge(edge, PersistenceService.findcpoint(sClassNode), PersistenceService.findcpoint(eClassNode));
+			graph.addEdge(edge, PersistenceService.findcpoint(eClassNode), PersistenceService.findcpoint(sClassNode));
 
+			edge.sTableColumn = eData.sColumn;
+			edge.eTableColumn = eData.eColumn;
+			edge.setStartLabel(edge.sTableColumn.getName());
+			edge.setEndLabel(edge.eTableColumn.getName());
 		}
 
 		return graph;

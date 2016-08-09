@@ -7,7 +7,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import mysqls.framework.PersistenceService;
 import mysqls.sql.entity.DataTypeUI;
+import mysqls.sql.entity.EdgeData;
 import mysqls.sql.entity.Table;
 import mysqls.sql.entity.TableColumn;
 import mysqls.sql.util.SQLCreator;
@@ -43,7 +45,9 @@ public final class SqlToTable2 {
 		List<Table> result = SqlToTable2.gettables(sql);
 		List<String> sqList = StatementUtil.getAllStatement(sql).stream()
 				.filter(a -> StatementUtil.isCreate(a) && StatementUtil.hasConstraint(a)).collect(Collectors.toList());
+		PersistenceService.mEdgeDatas.clear();
 		sqList.stream().forEach(a -> {
+			EdgeData edgeData = new EdgeData();
 			int nameindex = a.indexOf("(");
 			String name = a.substring(0, nameindex);
 			String[] name1 = name.split("\\s+");
@@ -59,6 +63,11 @@ public final class SqlToTable2 {
 			column.setForeignKey(true);
 			column.setForigncolumn(fColumn);
 			column.setForigntable(fTable);
+			edgeData.sColumn = column;
+			edgeData.sTable = table;
+			edgeData.eColumn = fColumn;
+			edgeData.eTable = fTable;
+			PersistenceService.mEdgeDatas.add(edgeData);
 		});
 		return result;
 	}
