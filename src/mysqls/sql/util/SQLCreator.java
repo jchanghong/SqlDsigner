@@ -78,11 +78,13 @@ public class SQLCreator {
 		if (aEdge.getDirectionality().equals(AssociationEdge.Directionality.Start)) {
 
 			eColumn.setForeignKey(true);
+			sColumn.setForeignKey(false);
 			eColumn.setForigncolumn(sColumn);
 			eColumn.setForigntable(sta.mTable);
 		} else {
 
-			sColumn.setForeignKey(false);
+			sColumn.setForeignKey(true);
+			eColumn.setForeignKey(false);
 			sColumn.setForigncolumn(eColumn);
 			sColumn.setForigntable(eNode.mTable);
 		}
