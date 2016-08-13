@@ -7,16 +7,23 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Scanner;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,12 +46,16 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 
 import org.omg.CORBA.PRIVATE_MEMBER;
 import org.omg.CORBA.PUBLIC_MEMBER;
 
+import com.sun.corba.se.spi.orbutil.fsm.Action;
 import com.sun.javafx.collections.MappingChange.Map;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
+import javafx.scene.control.RadioButton;
 import javafx.scene.layout.Border;
 
 import java.util.Properties;
@@ -71,7 +82,12 @@ public class GraphFrame extends JInternalFrame {
 	private SQLlogPane sqLlogPane;
 	private SQLEditPane msSqlEditPane;
 	public GraphPanel aPanel;
-
+	String database;
+	String dbDrive;
+	String username;
+	String password;
+	List<String> list = new ArrayList<String>();
+	
 	private File aFile; // The file associated with this graph
 
 	/**
@@ -239,25 +255,25 @@ public class GraphFrame extends JInternalFrame {
 	 *
 	 */
 	public void loaddatabasealltables() {
-		// TODO Auto-generated method stub
-		JTextArea jTextArea = new JTextArea("加载数据库中的所有表，如果没有选择数据库，就提示让用户先选择或者重新建立");
-		jTextArea.setEditable(false);
-		jTextArea.setLineWrap(true);
-		jTextArea.setColumns(20);
-		jTextArea.setRows(11);
-		jTextArea.setForeground(Color.white);
-		jTextArea.setBackground(Color.black);
-		jTextArea.setFont(new Font("Default", Font.PLAIN, 24));
-     	JPanel jPanel = new JPanel();
-		jPanel.add(new JScrollPane(jTextArea));
-		new MyDialog("server").show(jPanel);
+//		// TODO Auto-generated method stub
+//		JTextArea jTextArea = new JTextArea("加载数据库中的所有表，如果没有选择数据库，就提示让用户先选择或者重新建立");
+//		jTextArea.setEditable(false);
+//		jTextArea.setLineWrap(true);
+//		jTextArea.setColumns(20);
+//		jTextArea.setRows(11);
+//		jTextArea.setForeground(Color.white);
+//		jTextArea.setBackground(Color.black);
+//		jTextArea.setFont(new Font("Default", Font.PLAIN, 24));
+//     	JPanel jPanel = new JPanel();
+//		jPanel.add(new JScrollPane(jTextArea));
+//		new MyDialog("server").show(jPanel);
 	}
 
 	/**
 	 *
 	 */
 	public void databasemenu() {
-		// TODO Auto-generated method stub
+//		// TODO Auto-generated method stub
 //		JFrame jFrame =new JFrame("show databases"); 
 //		JPanel jPanel = new JPanel(new BorderLayout());
 //		JTextArea showdatabases = new JTextArea();
@@ -273,25 +289,33 @@ public class GraphFrame extends JInternalFrame {
 	 *
 	 */
 	public Users servermenu(){
+		
 		java.util.Map<String, String> map=new HashMap<>();
 		// TODO Auto-generated method stub
 		JFrame jFrame = new JFrame();
 		JLabel jLabel1 = new JLabel("选择数据库连接:");
+		JRadioButton mysql =new JRadioButton("mysql");
+		JRadioButton oracle =new JRadioButton("oracle");
+		JRadioButton sqlsever =new JRadioButton("SQL Sever");
+		ButtonGroup dbsevergroup = new ButtonGroup();
 		JLabel uname = new JLabel("用户名");
 		JLabel pwd = new JLabel("密    码");
 		JLabel ipLabel = new JLabel("ip地址");
-		JLabel portLabel = new JLabel("端口");
-		JTextField ip = new JTextField("127.0.0.1",21);//ip地址的输入
-		JTextField dbport = new JTextField("3306",21);//端口号的输入
-		JTextField username = new JTextField(20);
-		JPasswordField password = new JPasswordField(21);
-		ip.setEditable(true);
-		dbport.setEditable(true);
-		username.setEditable(true);
-		password.setEditable(true);
-		JCheckBox cb1=new JCheckBox("mysql");
+		JLabel portLabel = new JLabel("端   口");
+		JTextField ipField = new JTextField("127.0.0.1",10);//ip地址的输入
+		JTextField dbportField = new JTextField("3306",10);//端口号的输入
+		JTextField usernameField = new JTextField(10);
+		JPasswordField passwordField = new JPasswordField(10);
+		JLabel recentLink = new JLabel("最近连接");
+		JTextArea linkRecord = new JTextArea(7,7);
+		linkRecord.setBounds(200, 50, 7, 0);
+		linkRecord.setEditable(false);
+		ipField.setEditable(true);
+		dbportField.setEditable(true);
+		usernameField.setEditable(true);
+		passwordField.setEditable(true);
 		JButton link = new JButton("连接");
-		JButton cancel = new JButton("取消");
+		JButton cancel = new JButton("重新输入");
 		Users user = new Users(null, null, null);
 		
 		//录入ip,端口号，用户名和密码
@@ -305,74 +329,197 @@ public class GraphFrame extends JInternalFrame {
 			@Override
 			public void insertUpdate(DocumentEvent e) {
 			// TODO Auto-generated method stub
-			String username = link.getText();
-			String password = cancel.getText();
-			user.setName(username);
-			user.setPas(password);
+				
+//			String username = link.getText();
+//			String password = cancel.getText();
+//			String ipaddress = ipField.getText();
+//			String port = cancel.getText();
+//			user.setName(ipaddress);
+//			user.setName(port);
+//			user.setName(username);
+//			user.setPas(password);
 			}
 					
 			@Override
 			public void changedUpdate(DocumentEvent e) {
 				// TODO Auto-generated method stub
-//				String ipaddress = ip.getText();
-//				String portname = dbport.getText();
 			}
 					
 		};
 		
-		String dbDrive="jdbc:mysql://"+ip.getText()+":"+dbport.getText()+
-		"/?characterEncoding=utf8&useSSL=true";
-		map.put("s", dbDrive);
-
+		//读取最近的链接
+		File rectFile = new File("D:\\360data\\重要数据\\桌面\\学习软件\\text\\");
+		File[] array = rectFile.listFiles();
+		for(int i=0;i<array.length;i++){
+			if(array[i].isFile()){
+				linkRecord.append(array[i].getName());
+				linkRecord.append("\n");
+			}
+		}
+		
+		linkRecord.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int clickTimes = e.getClickCount();
+				if(clickTimes==2){
+					Scanner scanner =null;
+					try {
+						
+						scanner = new Scanner(new File("D:\\360data\\重要数据\\桌面\\学习软件\\text\\"+
+					linkRecord.getSelectedText()));
+						String str = null;
+					    while (scanner.hasNextLine()) {
+					    	
+					          str = scanner.nextLine();
+					          list.add(str);
+					        }
+					    String savemessage = list.toString();
+					    dbDrive = savemessage.substring(1, savemessage.indexOf("*"));
+					    username = savemessage.substring(savemessage.indexOf("*")+3, savemessage.indexOf(")"));
+					    password = savemessage .substring(savemessage.indexOf(")")+3, savemessage.length()-1);
+					    Connector.getConnection(dbDrive, dbDrive, username, password);
+					} catch (FileNotFoundException e1) {
+						
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} finally {
+						
+					    if(scanner !=null)
+					          scanner.close();
+					}
+				}
+			}
+		});
+		
+		
+		//监听选择的数据库服务器
+		ActionListener radioButtonListener = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(mysql.isSelected()){
+					database = "mysql";
+				}else if(oracle.isSelected()){
+					//后续加入oracle的驱动语句
+				}else if(sqlsever.isSelected()){
+					//后续加入sqlsever驱动语句
+				}
+			}
+		};
+		
+		//监听选择的是连接还是重新输入
 		ActionListener actionListener = new ActionListener() {
 			
 			@Override
 			public void  actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				String choice = ((JButton)e.getSource()).getText();
+			
+			String choice = ((JButton)e.getSource()).getText();
 				if(choice.equals("连接")){
 					try {
-						Connector.getConnection(map.get("s"), dbDrive, username.getText(), password.getText());
+						
+						try {
+							
+							dbDrive="jdbc:"+database+"://"+ipField.getText()+":"+dbportField.getText()+
+									"/?characterEncoding=utf8&useSSL=true";
+							map.put("s", dbDrive);
+							Connector.getConnection(map.get("s"), dbDrive, usernameField.getText(), passwordField.getText());
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					databasemenu();
 					
-				}else if(choice.equals("取消")){
-					username.setText("");
-					password.setText("");
-					ip.setText("");
-					dbport.setText("");
+				}else if(choice.equals("重新输入")){
+					usernameField.setText("");
+					passwordField.setText("");
 				}
 			}
 		};
+		
 		link.addActionListener(actionListener);
 		cancel.addActionListener(actionListener);
+		mysql.addActionListener(radioButtonListener);
+		oracle.addActionListener(radioButtonListener);
+		sqlsever.addActionListener(radioButtonListener);
 		
 		JPanel jPanel = new JPanel(),
-				jPanel2 = new JPanel(new FlowLayout()),
-				jPanel3 = new JPanel(new FlowLayout()),
-				jPanel4 = new JPanel(new FlowLayout());
+				jPanelNorth = new JPanel(new FlowLayout()),
+				jPanelCenter = new JPanel(new GridLayout(4,2,-25,1)),
+				jpanelEast = new JPanel(new BorderLayout()),
+				jPanelSouth = new JPanel(new FlowLayout());
+		
 		jPanel.setLayout(new BorderLayout());
-		jPanel.add(jPanel2,BorderLayout.NORTH);
-		jPanel.add(jPanel3,BorderLayout.CENTER);
-		jPanel.add(jPanel4,BorderLayout.SOUTH);
-		jPanel2.add(jLabel1);
-		jPanel2.add(cb1);
-		jPanel3.add(ipLabel);
-		jPanel3.add(ip);
-		jPanel3.add(portLabel);
-		jPanel3.add(dbport);
-		jPanel3.add(uname);
-		jPanel3.add(username);
-		jPanel3.add(pwd);
-		jPanel3.add(password);
-		jPanel4.add(link);
-		jPanel4.add(cancel);
+		jPanel.add(jPanelNorth,BorderLayout.NORTH);
+		jPanel.add(jPanelCenter,BorderLayout.CENTER);
+		jPanel.add(jpanelEast,BorderLayout.EAST);
+		jPanel.add(jPanelSouth,BorderLayout.SOUTH);
+		
+		jPanelNorth.add(jLabel1);
+		jPanelNorth.add(mysql);
+		jPanelNorth.add(oracle);
+		jPanelNorth.add(sqlsever);
+		
+		dbsevergroup.add(mysql);
+		dbsevergroup.add(oracle);
+		dbsevergroup.add(sqlsever);
+		
+		jPanelCenter.add(ipLabel);
+		jPanelCenter.add(ipField);
+		jPanelCenter.add(portLabel);
+		jPanelCenter.add(dbportField);
+		jPanelCenter.add(uname);
+		jPanelCenter.add(usernameField);
+		jPanelCenter.add(pwd);
+		jPanelCenter.add(passwordField);
+		
+		jpanelEast.add(recentLink,BorderLayout.NORTH);
+		jpanelEast.add(linkRecord,BorderLayout.CENTER);
+		
+		jPanelSouth.add(link);
+		jPanelSouth.add(cancel);
+		
 		jFrame.add(jPanel);
-		jFrame.setSize(330, 330);
+		jFrame.setSize(400, 330);
+		jFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		jFrame.setVisible(true);
+		jFrame.pack();
 		return user;
 	}
 	
