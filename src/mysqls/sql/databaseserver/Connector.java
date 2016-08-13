@@ -352,7 +352,7 @@ public static void viewTable(String tableName ,Connection connection) throws SQL
 	
 	JTable jTable = new JTable(0, columnCount);
 	DefaultTableModel defaultTableModel =(DefaultTableModel) jTable.getModel();
-	for(int col=columnCount;col>0;col--){
+	for(int col=1;col<=columnCount;col++){
 		colName = resultSetMetaData.getColumnName(col);
 		v1.addElement(colName);
 	}
@@ -382,6 +382,6 @@ public static void viewTable(String tableName ,Connection connection) throws SQL
 	viewTable.setSize(500, 500);
 	viewTable.add(jScrollPane);
 	viewTable.setVisible(true);
-	connection.close();
+	
 }
 }
