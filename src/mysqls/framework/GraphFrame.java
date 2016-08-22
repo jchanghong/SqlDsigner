@@ -2,37 +2,24 @@
 package mysqls.framework;
 
 import java.awt.BorderLayout;
-import java.awt.Checkbox;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Scanner;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
-import javax.sql.rowset.JdbcRowSet;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -46,21 +33,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
-import org.omg.CORBA.PUBLIC_MEMBER;
-
-import com.sun.corba.se.spi.orbutil.fsm.Action;
-import com.sun.javafx.collections.MappingChange.Map;
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
-import javafx.scene.control.RadioButton;
-import javafx.scene.layout.Border;
-
-import java.util.Properties;
-
-import jdk.internal.dynalink.beans.StaticClass;
 import mysqls.graph.ClassNode;
 import mysqls.graph.Graph;
 import mysqls.sql.SQLEditPane;
@@ -68,10 +41,7 @@ import mysqls.sql.SQLlogPane;
 import mysqls.sql.databaseserver.Connector;
 import mysqls.sql.databaseserver.Users;
 import mysqls.sql.sqlreader.StatementUtil;
-import mysqls.sql.ui.MyDialog;
 import mysqls.sql.util.SQLCreator;
-import sun.util.locale.provider.JRELocaleProviderAdapter;
-import sun.util.logging.resources.logging;
 
 /**
  * 这是主要的显示类。包括是几乎所有的面板。
@@ -238,50 +208,21 @@ public class GraphFrame extends JInternalFrame {
 	 */
 	public void graph2dbmenu() {
 		// TODO Auto-generated method stub
-		JTextArea jTextArea = new JTextArea("直接把数据库模型加载到数据库中，这样用户不用输入任何sql语句就能建立数据库。一般来说，一个应用程序只需要一个数据库，这样是很方便的。");
-		jTextArea.setEditable(false);
-		jTextArea.setFont(new Font("Default", Font.PLAIN, 24));
-		jTextArea.setLineWrap(true);
-		jTextArea.setColumns(20);
-		jTextArea.setRows(11);
-		jTextArea.setForeground(Color.white);
-		jTextArea.setBackground(Color.black);
-		JPanel jPanel = new JPanel();
-		jPanel.add(new JScrollPane(jTextArea));
-		new MyDialog("server").show(jPanel);
+		
 	}
 
 	/**
 	 *
 	 */
 	public void loaddatabasealltables() {
-//		// TODO Auto-generated method stub
-//		JTextArea jTextArea = new JTextArea("加载数据库中的所有表，如果没有选择数据库，就提示让用户先选择或者重新建立");
-//		jTextArea.setEditable(false);
-//		jTextArea.setLineWrap(true);
-//		jTextArea.setColumns(20);
-//		jTextArea.setRows(11);
-//		jTextArea.setForeground(Color.white);
-//		jTextArea.setBackground(Color.black);
-//		jTextArea.setFont(new Font("Default", Font.PLAIN, 24));
-//     	JPanel jPanel = new JPanel();
-//		jPanel.add(new JScrollPane(jTextArea));
-//		new MyDialog("server").show(jPanel);
+
 	}
 
 	/**
 	 *
 	 */
 	public void databasemenu() {
-//		// TODO Auto-generated method stub
-//		JFrame jFrame =new JFrame("show databases"); 
-//		JPanel jPanel = new JPanel(new BorderLayout());
-//		JTextArea showdatabases = new JTextArea();
-//		showdatabases.setEditable(false);
-//		jPanel.add(showdatabases,BorderLayout.NORTH);
-//		jFrame.add(jPanel);
-//		jFrame.setSize(300, 300);
-//		jFrame.setVisible(true);
+
 	}
 
 	/**
@@ -330,14 +271,14 @@ public class GraphFrame extends JInternalFrame {
 			public void insertUpdate(DocumentEvent e) {
 			// TODO Auto-generated method stub
 				
-//			String username = link.getText();
-//			String password = cancel.getText();
-//			String ipaddress = ipField.getText();
-//			String port = cancel.getText();
-//			user.setName(ipaddress);
-//			user.setName(port);
-//			user.setName(username);
-//			user.setPas(password);
+			String username = link.getText();
+			String password = cancel.getText();
+			String ipaddress = ipField.getText();
+			String port = cancel.getText();
+			user.setName(ipaddress);
+			user.setName(port);
+			user.setName(username);
+			user.setPas(password);
 			}
 					
 			@Override
