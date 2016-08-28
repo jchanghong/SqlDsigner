@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import mysqls.contanst.TabeleConstant;
 import mysqls.sql.entity.DataTypeUI;
 import mysqls.sql.entity.Table;
 import mysqls.sql.entity.TableColumn;
@@ -63,8 +64,50 @@ abstract public class DataBaseTables2graph {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		DataBaseTables2graph.settables(databaseMetaData, database, tables, connection);// 增加关系
 
+		TabeleConstant.alltables = tables;
 		return tables;
+
+	}
+
+	/**
+	 * @param databaseMetaData
+	 * @param database
+	 * @param tables增加外键
+	 * @param connection
+	 */
+	private static void settables(DatabaseMetaData databaseMetaData, String database, List<Table> tables,
+			Connection connection) {
+		// TODO Auto-generated method stub
+		try {
+
+			tables.stream().forEach(aa -> {
+				try {
+					ResultSet fkSet = databaseMetaData.getExportedKeys(database, null, aa.getName());
+					while (fkSet.next()) {
+						String pktable = fkSet.getString("PKTABLE_NAME");
+						String fktable = fkSet.getString("FKTABLE_NAME");
+						String pkcolumn = fkSet.getString("PKCOLUMN_NAME");
+						String fkcolumn = fkSet.getString("FKCOLUMN_NAME");
+						Table pTable = DataBaseTables2graph.findtable(pktable, tables);
+						Table fTable = DataBaseTables2graph.findtable(fktable, tables);
+						TableColumn pColumn = DataBaseTables2graph.findcolumn(pkcolumn, pTable);
+						TableColumn fColumn = DataBaseTables2graph.findcolumn(fkcolumn, fTable);
+						fColumn.setForeignKey(true);
+						fColumn.setForigncolumn(pColumn);
+						fColumn.setForigntable(pTable);
+
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -79,10 +122,15 @@ abstract public class DataBaseTables2graph {
 		String sql = "select * from " + tablename + ";";
 		TableColumn column = null;
 		try {
+			List<String> pkcolumns = new ArrayList<>();
 			ResultSet primarycolums = databaseMetaData.getPrimaryKeys(databse, null, tablename);
-			primarycolums.next();
-			String prymary = primarycolums.getString("COLUMN_NAME");
-			System.out.println("prymary;" + prymary);
+			String prymary = null;
+			while (primarycolums.next()) {
+
+				prymary = primarycolums.getString("COLUMN_NAME");
+				pkcolumns.add(prymary);
+				System.out.println("prymary;" + prymary);
+			}
 
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(sql);
@@ -93,7 +141,7 @@ abstract public class DataBaseTables2graph {
 				// 获得指定列的列名
 				String columnName = data.getColumnName(i);
 				column.setName(columnName);
-				if (columnName.equals(prymary)) {
+				if (pkcolumns.contains(columnName)) {
 					column.setPrimarykey(true);
 				}
 				// 获得指定列的数据类型名
@@ -127,6 +175,24 @@ abstract public class DataBaseTables2graph {
 			e.printStackTrace();
 		}
 
+	}
+
+	private static Table findtable(String tablename, List<Table> tables) {
+		for (Table table : tables) {
+			if (table.getName().equals(tablename)) {
+				return table;
+			}
+		}
+		return null;
+	}
+
+	private static TableColumn findcolumn(String columnname, Table table) {
+		for (TableColumn coulmn : table.getColumnlist().getList()) {
+			if (coulmn.getName().equals(columnname)) {
+				return coulmn;
+			}
+		}
+		return null;
 	}
 
 }
