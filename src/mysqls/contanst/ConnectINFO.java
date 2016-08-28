@@ -17,5 +17,7 @@ public class ConnectINFO {
 	public static String user;
 	public static String passworld;
 	public static String databaseType;// 数据库类型
+	public static String databaseName;
+	public static String tableName;
 
 }
