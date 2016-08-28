@@ -4,6 +4,7 @@ package mysqls.framework;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,6 +34,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
+import com.mysql.jdbc.Connection;
 
 import mysqls.graph.ClassNode;
 import mysqls.graph.Graph;
@@ -321,6 +324,7 @@ public class GraphFrame extends JInternalFrame {
 					    username = savemessage.substring(savemessage.indexOf("*")+3, savemessage.indexOf(")"));
 					    password = savemessage .substring(savemessage.indexOf(")")+3, savemessage.length()-1);
 					    Connector.getConnection(dbDrive, dbDrive, username, password);
+					    jFrame.setExtendedState(Frame.ICONIFIED);
 					} catch (FileNotFoundException e1) {
 						
 						// TODO Auto-generated catch block
@@ -372,6 +376,7 @@ public class GraphFrame extends JInternalFrame {
 									"/?characterEncoding=utf8&useSSL=true";
 							map.put("s", dbDrive);
 							Connector.getConnection(map.get("s"), dbDrive, usernameField.getText(), passwordField.getText());
+							jFrame.setExtendedState(Frame.ICONIFIED);
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
