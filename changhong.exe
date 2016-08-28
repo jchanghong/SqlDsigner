@@ -1,0 +1,1 @@
+jdbc:mysql://127.0.0.1:3306/?characterEncoding=utf8&useSSL=true|root|0000

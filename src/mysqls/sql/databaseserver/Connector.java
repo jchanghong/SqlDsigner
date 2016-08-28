@@ -2,7 +2,6 @@ package mysqls.sql.databaseserver;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -42,10 +41,12 @@ public class Connector extends JInternalFrame {
 		JPanel jPanel = new JPanel(new BorderLayout());
 		JPanel inputPanel = new JPanel(new BorderLayout());// 用户输入面板
 		JPanel choicePanel = new JPanel(new FlowLayout());
+		JPanel database = new JPanel();
 
-		JTextArea showdatabases = new JTextArea(10, 10);// 此文本域用来显示所有数据库
+		JTextArea showdatabases = new JTextArea(10, 20);// 此文本域用来显示所有数据库
 		showdatabases.setEditable(false);
-		JScrollPane jScrollPane = new JScrollPane(jPanel);
+		database.add(showdatabases);
+		database.add(new JScrollPane(showdatabases));
 		JLabel tips = new JLabel("输入数据库名:");// 提示用户选择
 		JTextField jTextField = new JTextField(10);// 用户输入操作
 		JButton create = new JButton("创建");
@@ -121,7 +122,7 @@ public class Connector extends JInternalFrame {
 					try {
 
 						new OperationTable(jTextField.getText(), connection);
-						jFrame.setExtendedState(Frame.ICONIFIED);
+						jFrame.setExtendedState(HIDE_ON_CLOSE);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -134,7 +135,7 @@ public class Connector extends JInternalFrame {
 		open.addActionListener(actionListener);
 		delete.addActionListener(actionListener);
 
-		jPanel.add(showdatabases, BorderLayout.NORTH);
+		jPanel.add(database, BorderLayout.NORTH);
 		jPanel.add(inputPanel, BorderLayout.CENTER);
 		jPanel.add(choicePanel, BorderLayout.SOUTH);
 		inputPanel.add(tips, BorderLayout.NORTH);
@@ -144,8 +145,9 @@ public class Connector extends JInternalFrame {
 		choicePanel.add(delete);
 
 		jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		jFrame.add(jScrollPane);
+		jFrame.add(jPanel);
 		jFrame.setSize(500, 500);
+		jFrame.setLocation(400, 250);
 		jFrame.pack();
 		jFrame.setVisible(true);
 	}

@@ -111,6 +111,44 @@ public final class PersistenceService {
 		return graph;
 	}
 
+	/**
+	 * @param sql
+	 * @param graph设置graph
+	 * @return
+	 */
+	public static Graph readSQL(List<Table> list, Graph graph) {
+		graph = new ClassDiagramGraph();// 全新的graph。。bug，
+		List<ClassNode> nodes = new ArrayList<>();
+		for (Table table : list) {
+			nodes.add(new ClassNode(table));
+		}
+		graph.removeall();
+		double x = 0;
+		double y = 50;
+		for (ClassNode node : nodes) {
+			Point2D point2d = new Point2D.Double(x, y);
+			graph.addNode(node, point2d);
+			x = x + node.getBounds().getWidth() + PersistenceService.MAGIN;
+			y += 50;
+
+		}
+		for (EdgeData eData : PersistenceService.mEdgeDatas) {
+			AssociationEdge edge = new AssociationEdge();
+			Table sTable = eData.sTable;
+			Table eTable = eData.eTable;
+			ClassNode sClassNode = PersistenceService.findNode(nodes, eTable);
+			ClassNode eClassNode = PersistenceService.findNode(nodes, sTable);
+			graph.addEdge(edge, PersistenceService.findcpoint(eClassNode), PersistenceService.findcpoint(sClassNode));
+
+			edge.sTableColumn = eData.sColumn;
+			edge.eTableColumn = eData.eColumn;
+			edge.setStartLabel(edge.sTableColumn.getName());
+			edge.setEndLabel(edge.eTableColumn.getName());
+		}
+
+		return graph;
+	}
+
 	private static Point findcpoint(ClassNode node) {
 		Rectangle2D rectangle2d = node.getBounds();
 		return new Point((int) rectangle2d.getCenterX(), (int) rectangle2d.getCenterY());

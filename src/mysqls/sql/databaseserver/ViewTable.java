@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -139,12 +137,10 @@ public class ViewTable {
 					if(e.getType()==TableModelEvent.UPDATE){
 					
 					newdata = model.getValueAt(e.getFirstRow(), e.getColumn());
-//					for(int line =1;line<=changeText.getLineCount();line++){
-						text = " update "+databaseName+"."+tableName+" set "+colName+"="+"'"+newdata+"'"
-								+" where "+firstColumnName+"="+"'"+rowValue+"'";
-								changeText.setText(text);//在文本框中显示用户的操作
-								changeText.append("\n");
-//								}
+					text = " update "+databaseName+"."+tableName+" set "+colName+"="+"'"+newdata+"'"
+							+" where "+firstColumnName+"="+"'"+rowValue+"'";
+							changeText.setText(text);//在文本框中显示用户的操作
+							changeText.append("\n");
 					}else if(e.getType()==TableModelEvent.DELETE){
 						jTable.repaint();
 					}else if(e.getType()==TableModelEvent.INSERT){
@@ -212,6 +208,7 @@ public class ViewTable {
 			viewTable.add(jScrollPane,BorderLayout.NORTH);
 			viewTable.setDefaultCloseOperation(1);
 			viewTable.setSize(400,600);
+			viewTable.setLocation(400, 10);
 			viewTable.pack();
 			viewTable.setVisible(true);
 			
