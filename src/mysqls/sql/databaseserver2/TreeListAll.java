@@ -3,6 +3,8 @@
  */
 package mysqls.sql.databaseserver2;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 
 /**
@@ -11,9 +13,20 @@ import javax.swing.JFrame;
  */
 public class TreeListAll {
 
-	public static JFrame getui() {
+	public static void main(String[] args) {
+		JFrame jFrame = TreeListAll.getui();
+		jFrame.setVisible(true);
 
-		return null;
+	}
+
+	public static JFrame getui() {
+		JFrame jFrame = new JFrame();
+		jFrame.setSize(500, 400);
+
+		jFrame.setLayout(new BorderLayout());
+		jFrame.add(TreeLeft.getui(), BorderLayout.WEST);
+
+		return jFrame;
 
 	}
 
