@@ -2,14 +2,10 @@ package mysqls.sql.databaseserver;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,8 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import com.sun.java.swing.plaf.windows.resources.windows;
 
 public class OperationTable {
 
@@ -107,7 +101,6 @@ public class OperationTable {
 							try {
 								
 								new ViewTable(databaseName,selectField.getText(),connection);
-								jTables.setExtendedState(Frame.ICONIFIED);
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
