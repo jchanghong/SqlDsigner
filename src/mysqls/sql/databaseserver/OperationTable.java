@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,7 +32,7 @@ public class OperationTable {
 	    JTextArea showTables = new JTextArea(10,10);
 	    JScrollPane tablescrollpane = new JScrollPane(jPanel);
 	    JTextField selectField = new JTextField(15);
-	    JButton loadTable = new JButton("创建表语句");
+	    JButton loadTable = new JButton("创建语句");
 	    JButton viewTable = new JButton("查看表");
 	    JButton deleteTable = new JButton("删除表");
 	     
@@ -71,7 +70,7 @@ public class OperationTable {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				String choice = ((JButton)e.getSource()).getText();
-				if(choice.equals("加载表")){
+				if(choice.equals("创建语句")){
 					
 					try {
 						loadTable(databaseName,selectField.getText(),connection);
@@ -150,7 +149,5 @@ public class OperationTable {
 		loadTable.add(viewPanel);
 		loadTable.setSize(400, 400);
 		loadTable.setVisible(true);
-		
 	}
-	
 }

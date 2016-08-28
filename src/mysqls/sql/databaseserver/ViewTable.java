@@ -36,7 +36,7 @@ public class ViewTable {
 	int focusedRowIndex=0;//选中的行
 	int focusedColIndex=0;//选中的列
 	
-	//功能为显示表的内容
+	//显示表的内容
 		public ViewTable(String databaseName,String tableName ,Connection connection) throws SQLException{
 			
 			String colMessage = null;
@@ -137,9 +137,12 @@ public class ViewTable {
 					if(e.getType()==TableModelEvent.UPDATE){
 					
 					newdata = model.getValueAt(e.getFirstRow(), e.getColumn());
-					text = " update "+databaseName+"."+tableName+" set "+colName+"="+"'"+newdata+"'"
-							+" where "+firstColumnName+"="+"'"+rowValue+"'";
-							changeText.append(text);//在文本框中显示用户的操作
+//					for(int line =1;line<=changeText.getLineCount();line++){
+						text = " update "+databaseName+"."+tableName+" set "+colName+"="+"'"+newdata+"'"
+								+" where "+firstColumnName+"="+"'"+rowValue+"'";
+								changeText.setText(text);//在文本框中显示用户的操作
+								changeText.append("\n");
+//								}
 					}else if(e.getType()==TableModelEvent.DELETE){
 						jTable.repaint();
 					}else if(e.getType()==TableModelEvent.INSERT){
@@ -148,7 +151,7 @@ public class ViewTable {
 				}	
 			});
 
-	        //此删除功能还有待完善
+	        //删除功能
 	        delMenItem.addActionListener(new ActionListener() {
 	        	
 	            public void actionPerformed(ActionEvent e) {
@@ -168,7 +171,11 @@ public class ViewTable {
 					String choice = ((JButton)e.getSource()).getText();
 					if(choice.equals("apply")){
 					try {
-						statement.executeUpdate(text);
+						
+						String[] sqlString = changeText.getText().split("\n");
+						for(String i:sqlString){
+							statement.executeUpdate(i);
+						}
 						JOptionPane.showMessageDialog(null, "更新成功");
 						changeText .setText("");
 						jTable.repaint();

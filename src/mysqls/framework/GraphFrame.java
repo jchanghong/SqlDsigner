@@ -7,8 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -298,31 +298,7 @@ public class GraphFrame extends JInternalFrame {
 			}
 		}
 		
-		linkRecord.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+		linkRecord.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -356,14 +332,12 @@ public class GraphFrame extends JInternalFrame {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} finally {
-						
 					    if(scanner !=null)
 					          scanner.close();
 					}
 				}
 			}
 		});
-		
 		
 		//监听选择的数据库服务器
 		ActionListener radioButtonListener = new ActionListener() {
