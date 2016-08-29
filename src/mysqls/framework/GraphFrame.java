@@ -82,11 +82,15 @@ public class GraphFrame extends JInternalFrame {
 	}
 
 	/**
-	 * sql到图形
+	 * 加载 db到模型
 	 */
 	public void sql2graph(List<Table> list) {
 
-		aPanel.aGraph = PersistenceService.readSQL(list, aPanel.aGraph);
+		StringBuilder builder = new StringBuilder();
+		list.stream().forEach(a -> {
+			builder.append(SQLCreator.create(a));
+		});
+		aPanel.aGraph = PersistenceService.readSQL(builder.toString(), aPanel.aGraph);
 
 		aPanel.updateui();
 
