@@ -78,6 +78,7 @@ public class TreeLeft {
 			if (object == jitemedit) {
 				MYtreeNodeTable table = (MYtreeNodeTable) node;
 				System.out.println("edit table:" + table.getName());
+				TreeNouth.edittable(table);
 			}
 			if (object == jMenuload) {
 				MYtreeNodeDB db = (MYtreeNodeDB) node;

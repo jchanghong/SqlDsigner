@@ -326,7 +326,7 @@ public class MainUI {
 	}
 
 	private static void opendbUI() {
-		JFrame jFrame = TreeListAll.getui();
+		JFrame jFrame = TreeFrame.getui();
 		jFrame.setVisible(true);
 
 	}

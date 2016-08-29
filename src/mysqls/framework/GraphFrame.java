@@ -20,7 +20,7 @@ import mysqls.graph.Graph;
 import mysqls.sql.SQLEditPane;
 import mysqls.sql.SQLlogPane;
 import mysqls.sql.databaseserver2.MainUI;
-import mysqls.sql.databaseserver2.TreeListAll;
+import mysqls.sql.databaseserver2.TreeFrame;
 import mysqls.sql.entity.Table;
 import mysqls.sql.sqlreader.StatementUtil;
 import mysqls.sql.util.SQLCreator;
@@ -212,7 +212,7 @@ public class GraphFrame extends JInternalFrame {
 
 		}
 
-		JFrame ui = TreeListAll.getui();
+		JFrame ui = TreeFrame.getui();
 		for (JFrame jrame : UIconstant.frames.values()) {
 			if (jrame != null) {
 				jrame.setVisible(false);
