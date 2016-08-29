@@ -146,6 +146,7 @@ public class TreeNouth {
 				ConnectINFO.tableName+" set "+map.get("columnName")+"="+"'"+map.get("newv")+"'"
 						+" where "+firstColumnName+"="+"'"+map.get("rowv")+"'";
 				
+				TreeListAll.sqList.add(updatesql);
 				}else if(e.getType()==TableModelEvent.DELETE){
 					jTable.repaint();
 				}else if(e.getType()==TableModelEvent.INSERT){
@@ -162,6 +163,7 @@ public class TreeNouth {
             	//删除语句
             	String deletesql = "delete from "+ConnectINFO.databaseName+"."+ConnectINFO.tableName+" where "+
 						firstColumnName+"="+defaultTableModel.getValueAt((int) map.get("colindex"), 0);
+            	TreeListAll.sqList.add(deletesql);
 				defaultTableModel.removeRow((int) map.get("roeindex"));
             }  
         });
@@ -178,6 +180,8 @@ public class TreeNouth {
 					
 					//插入语句
 					String insertsql = " insert into "+ConnectINFO.databaseName+"."+ConnectINFO.tableName+"("+map.get("columnName")+")"+" values ('"+null+"')";
+					TreeListAll.sqList.add(insertsql);
+					
 					statement.execute(insertsql);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block

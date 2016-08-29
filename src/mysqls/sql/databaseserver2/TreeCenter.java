@@ -30,6 +30,11 @@ public class TreeCenter {
 		jPanel.add(cancel,BorderLayout.CENTER);
 		jPanel.add(sqlEdit,BorderLayout.NORTH);
 		
+		StringBuilder builder=new StringBuilder();
+		TreeListAll.sqList.stream().forEach(sql->{
+			builder.append(sql);
+		});
+		sqlEdit.setText(builder.toString());
 		//sqlEdit记录所要操作的sql语句
 		
 		
@@ -44,6 +49,14 @@ public class TreeCenter {
 //					for(sqlEdit.hasnextLine){
 //						statement.execute(sql);
 //					}
+					TreeListAll.sqList.stream().forEach(sql->{
+						try {
+							statement.execute(sql);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					});
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
