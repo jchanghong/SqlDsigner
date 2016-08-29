@@ -18,6 +18,7 @@ public class UIconstant {
 	public static final String ALLdatable = "alldatables";
 	public static final String ALLtable = "alltable";
 	public static final String viewTABLE = "view";
+	public static final String TREEUI = "viewTREE";
 	public static Map<String, JFrame> frames;
 	static {
 		UIconstant.frames = new HashMap<>();
@@ -25,6 +26,7 @@ public class UIconstant {
 		UIconstant.frames.put(UIconstant.ALLdatable, null);
 		UIconstant.frames.put(UIconstant.ALLtable, null);
 		UIconstant.frames.put(UIconstant.viewTABLE, null);
+		UIconstant.frames.put(UIconstant.TREEUI, null);
 	}
 
 }

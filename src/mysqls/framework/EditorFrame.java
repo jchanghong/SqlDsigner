@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -189,9 +188,9 @@ public class EditorFrame extends JFrame {
 				frame.databasemenu();
 			}
 		});
-		dbMenu.add(database);
+		// dbMenu.add(database);
 
-		JMenuItem db2graph = new JMenuItem("加载数据库所有表");
+		JMenuItem db2graph = new JMenuItem("数据库操作");
 		db2graph.addActionListener(new ActionListener() {
 
 			@Override

@@ -133,6 +133,7 @@ abstract public class DataBaseTables2graph {
 			}
 
 			Statement statement = connection.createStatement();
+			statement.execute("use " + databse + ";");
 			ResultSet resultSet = statement.executeQuery(sql);
 			ResultSetMetaData data = resultSet.getMetaData();
 
