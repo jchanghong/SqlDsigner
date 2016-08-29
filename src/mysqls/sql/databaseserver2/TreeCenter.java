@@ -23,12 +23,14 @@ public class TreeCenter {
 	public static JPanel getui() { 
 		
 		JPanel jPanel = new JPanel(new BorderLayout());
+		JPanel buttonPanel = new JPanel();
 		JTextArea sqlEdit = new JTextArea(20,40);
 		JButton apply = new JButton("确定"),
 				cancel = new JButton("取消");
 		jPanel.add(apply,BorderLayout.CENTER);
-		jPanel.add(cancel,BorderLayout.CENTER);
-		jPanel.add(sqlEdit,BorderLayout.NORTH);
+		buttonPanel.add(cancel);
+		buttonPanel .add(sqlEdit);
+		jPanel.add(buttonPanel);
 		
 		StringBuilder builder=new StringBuilder();
 		TreeListAll.sqList.stream().forEach(sql->{
