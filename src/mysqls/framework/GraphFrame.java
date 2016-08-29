@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
+import mysqls.contanst.ConnectINFO;
 import mysqls.contanst.UIconstant;
 import mysqls.graph.ClassNode;
 import mysqls.graph.Graph;
@@ -200,7 +201,7 @@ public class GraphFrame extends JInternalFrame {
 	 */
 	public void graph2dbmenu() {
 		// TODO Auto-generated method stub
-		if (UIconstant.frames.get(UIconstant.MAIN) == null) {
+		if (ConnectINFO.connection == null) {
 			servermenu();
 			return;
 
@@ -220,7 +221,7 @@ public class GraphFrame extends JInternalFrame {
 	 * treelist列表
 	 */
 	public void loaddatabasealltables() {
-		if (UIconstant.frames.get(UIconstant.MAIN) == null) {
+		if (ConnectINFO.connection == null) {
 			servermenu();
 			return;
 

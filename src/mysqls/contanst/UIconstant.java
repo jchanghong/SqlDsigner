@@ -15,6 +15,10 @@ import javax.swing.JFrame;
 public class UIconstant {
 
 	public static final String MAIN = "MAIN";
+	/**
+	 * 如何到main界面的,1是自己，2是数据库，3是tree frame
+	 */
+	public static String WHY_Main = "1";
 	public static final String ALLdatable = "alldatables";
 	public static final String ALLtable = "alltable";
 	public static final String viewTABLE = "view";

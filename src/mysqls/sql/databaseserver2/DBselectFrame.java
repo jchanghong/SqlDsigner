@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,7 +26,9 @@ import javax.swing.WindowConstants;
 
 import mysqls.contanst.ConnectINFO;
 import mysqls.contanst.UIconstant;
-import mysqls.sql.databaseserver.OperationTable;
+import mysqls.framework.GraphFrame;
+import mysqls.graph.ClassNode;
+import mysqls.sql.util.SQLCreator;
 
 /**
  * @author 长宏 数据库选择面板
@@ -50,7 +53,7 @@ public class DBselectFrame {
 				JLabel tips = new JLabel("输入数据库名:");// 提示用户选择
 				JTextField jTextField = new JTextField(10);// 用户输入操作
 				JButton create = new JButton("创建");
-				JButton open = new JButton("打开");
+				JButton open = new JButton("确认导入");
 				JButton delete = new JButton("删除");
 
 				Statement stat = ConnectINFO.connection.createStatement();
@@ -85,8 +88,14 @@ public class DBselectFrame {
 						if (choice.equals("创建")) {
 							try {
 
+								if (jTextField.getText().length() < 1) {
+									JOptionPane.showMessageDialog(null, "数据库名字不能为空!!!");
+									return;
+
+								}
 								showdatabases.setText("");
 								stat.executeUpdate("create database " + jTextField.getText());// 执行用户输入的创建数据库的命令
+								JOptionPane.showMessageDialog(null, "创建成功！！！");
 								ResultSet resultSet = stat.executeQuery("SHOW DATABASES");// 显示已有的数据库
 								while (resultSet.next()) {
 									showdatabases.append(resultSet.getString(1));
@@ -106,6 +115,7 @@ public class DBselectFrame {
 
 								showdatabases.setText("");
 								stat.executeUpdate("drop database " + jTextField.getText());// 执行用户输入的创建数据库的命令
+								JOptionPane.showMessageDialog(null, "删除成功！！！");
 								ResultSet resultSet = stat.executeQuery("SHOW DATABASES");// 显示已有的数据库
 								while (resultSet.next()) {
 
@@ -116,17 +126,18 @@ public class DBselectFrame {
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
+								JOptionPane.showMessageDialog(null, e1.getMessage());
 							}
 
-						} else if (choice.equals("打开")) {
-							try {
-
-								new OperationTable(jTextField.getText(), ConnectINFO.connection);
-								// jFrame.setExtendedState(HIDE_ON_CLOSE);
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
+						} else if (choice.equals("确认导入")) {
+							if (jTextField.getText().length() < 1) {
+								JOptionPane.showMessageDialog(null, "数据库不能为空!!!");
+								return;
 							}
+							DBselectFrame.graph2db(jTextField.getText());
+							// new OperationTable(jTextField.getText(),
+							// ConnectINFO.connection);
+							// jFrame.setExtendedState(HIDE_ON_CLOSE);
 						}
 					}
 				};
@@ -148,6 +159,7 @@ public class DBselectFrame {
 				jFrame.add(jPanel);
 				jFrame.setSize(500, 500);
 				jFrame.setLocation(400, 250);
+				jFrame.setTitle("选择或者创建数据库");
 				jFrame.pack();
 				jFrame.setVisible(true);
 				UIconstant.frames.put(UIconstant.ALLdatable, jFrame);
@@ -157,6 +169,46 @@ public class DBselectFrame {
 			}
 		}
 		return jFrame;
+
+	}
+
+	/**
+	 * @param text
+	 */
+	protected static void graph2db(String text) {
+		// TODO Auto-generated method stub
+
+		List<ClassNode> list = GraphFrame.me.aPanel.getClassNOdes();
+		if (list.size() < 1) {
+			JOptionPane.showMessageDialog(null, "没有sql图形！！！！");
+			return;
+		}
+		Statement statement = null;
+		try {
+			statement = ConnectINFO.connection.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		for (ClassNode classNode : list) {
+			try {
+				String create = SQLCreator.create(classNode.mTable);
+				System.out.println(create);
+				statement.execute(create);
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 *
+	 */
+	protected static void graph2db() {
+		// TODO Auto-generated method stub
 
 	}
 

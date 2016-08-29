@@ -114,7 +114,8 @@ public class MainUI {
 							String[] urls = str.split("\\|");
 							ConnectINFO.connection = DriverManager.getConnection(urls[0], urls[1], urls[2]);
 
-							GraphFrame.me.loaddatabasealltables();
+							// GraphFrame.me.loaddatabasealltables();
+							MainUI.onclickOpen();
 
 							// Connector.runtext(ConnectINFO.connection);
 							// MainUI.opendbUI();
@@ -171,7 +172,11 @@ public class MainUI {
 								}
 								// Connector.runtext(ConnectINFO.connection);
 
-								GraphFrame.me.loaddatabasealltables();
+								//
+
+								// GraphFrame.me.loaddatabasealltables();
+								MainUI.onclickOpen();
+
 								// jFrame.setExtendedState(Frame.ICONIFIED);
 							} catch (Exception e1) {
 								// TODO Auto-generated catch block
@@ -234,6 +239,7 @@ public class MainUI {
 			jFrame.setSize(400, 330);
 			jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			jFrame.setLocation(400, 250);
+			jFrame.setTitle("服务器选择");
 			jFrame.setVisible(true);
 			jFrame.pack();
 			// return user;
@@ -328,6 +334,22 @@ public class MainUI {
 	private static void opendbUI() {
 		JFrame jFrame = TreeFrame.getui();
 		jFrame.setVisible(true);
+
+	}
+
+	public static void onclickOpen() {
+		String why = UIconstant.WHY_Main;
+		if (why.equals("1")) {
+
+			GraphFrame.me.loaddatabasealltables();
+		}
+		if (why.equals("2")) {
+
+			GraphFrame.me.loaddatabasealltables();
+		} else {
+			GraphFrame.me.loaddatabasealltables();
+
+		}
 
 	}
 
