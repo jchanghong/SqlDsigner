@@ -23,10 +23,10 @@ public class TreeListAll {
 
 	public static JFrame mainui;
 	public static List<String> sqList;
-	static
-	{
-		sqList=new ArrayList<>();
+	static {
+		TreeListAll.sqList = new ArrayList<>();
 	}
+
 	public static void main(String[] args) {
 		String url = "jdbc:mysql://localhost:3306/changhong";
 		try {
@@ -51,11 +51,19 @@ public class TreeListAll {
 			jFrame.setLocation(400, 250);
 			jFrame.setLayout(new BorderLayout());
 			jFrame.add(TreeLeft.getui(), BorderLayout.WEST);
+			try {
+				jFrame.add(TreeNouth.getui(), BorderLayout.NORTH);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			jFrame.add(TreeCenter.getui(), BorderLayout.CENTER);
+
 			UIconstant.frames.put(UIconstant.TREEUI, jFrame);
 			jFrame.pack();
 		}
 
-		mainui=jFrame;
+		TreeListAll.mainui = jFrame;
 		return jFrame;
 
 	}

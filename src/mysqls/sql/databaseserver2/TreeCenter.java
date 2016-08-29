@@ -20,38 +20,35 @@ import mysqls.contanst.ConnectINFO;
  *
  */
 public class TreeCenter {
-	public static JPanel getui() { 
-		
+	public static JPanel getui() {
+
 		JPanel jPanel = new JPanel(new BorderLayout());
-		JPanel buttonPanel = new JPanel();
-		JTextArea sqlEdit = new JTextArea(20,40);
-		JButton apply = new JButton("确定"),
-				cancel = new JButton("取消");
-		jPanel.add(apply,BorderLayout.CENTER);
-		buttonPanel.add(cancel);
-		buttonPanel .add(sqlEdit);
-		jPanel.add(buttonPanel);
-		
-		StringBuilder builder=new StringBuilder();
-		TreeListAll.sqList.stream().forEach(sql->{
+
+		JTextArea sqlEdit = new JTextArea(20, 40);
+		JButton apply = new JButton("确定"), cancel = new JButton("取消");
+		jPanel.add(apply, BorderLayout.CENTER);
+		jPanel.add(cancel, BorderLayout.CENTER);
+		jPanel.add(sqlEdit, BorderLayout.NORTH);
+
+		StringBuilder builder = new StringBuilder();
+		TreeListAll.sqList.stream().forEach(sql -> {
 			builder.append(sql);
 		});
 		sqlEdit.setText(builder.toString());
-		//sqlEdit记录所要操作的sql语句
-		
-		
-		//确定按钮执行所有的sql语句
+		// sqlEdit记录所要操作的sql语句
+
+		// 确定按钮执行所有的sql语句
 		apply.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
 					Statement statement = ConnectINFO.connection.createStatement();
-//					for(sqlEdit.hasnextLine){
-//						statement.execute(sql);
-//					}
-					TreeListAll.sqList.stream().forEach(sql->{
+					// for(sqlEdit.hasnextLine){
+					// statement.execute(sql);
+					// }
+					TreeListAll.sqList.stream().forEach(sql -> {
 						try {
 							statement.execute(sql);
 						} catch (SQLException e1) {
@@ -65,17 +62,17 @@ public class TreeCenter {
 				}
 			}
 		});
-		
-		//取消按钮取消之前的操作
+
+		// 取消按钮取消之前的操作
 		cancel.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		return null;
+		return jPanel;
 	}
 
 }
