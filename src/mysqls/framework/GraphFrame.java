@@ -202,6 +202,7 @@ public class GraphFrame extends JInternalFrame {
 	public void graph2dbmenu() {
 		// TODO Auto-generated method stub
 		if (ConnectINFO.connection == null) {
+			UIconstant.WHY_Main = "2";
 			servermenu();
 			return;
 
@@ -214,6 +215,7 @@ public class GraphFrame extends JInternalFrame {
 			}
 		}
 		ui.setVisible(true);
+		ui.requestFocus();
 
 	}
 
@@ -222,6 +224,7 @@ public class GraphFrame extends JInternalFrame {
 	 */
 	public void loaddatabasealltables() {
 		if (ConnectINFO.connection == null) {
+			UIconstant.WHY_Main = "3";
 			servermenu();
 			return;
 
@@ -234,6 +237,7 @@ public class GraphFrame extends JInternalFrame {
 			}
 		}
 		ui.setVisible(true);
+		ui.requestFocus();
 
 	}
 
@@ -257,6 +261,8 @@ public class GraphFrame extends JInternalFrame {
 			}
 		}
 		ui.setVisible(true);
+		ui.requestFocus();
+
 	}
 
 }

@@ -232,6 +232,7 @@ public class MainUI {
 			jpanelEast.add(recentLink, BorderLayout.NORTH);
 			jpanelEast.add(linkRecord, BorderLayout.CENTER);
 
+			jPanelSouth.setLayout(new GridLayout(1, 0));
 			jPanelSouth.add(link);
 			jPanelSouth.add(cancel);
 
@@ -241,7 +242,9 @@ public class MainUI {
 			jFrame.setLocation(400, 250);
 			jFrame.setTitle("服务器选择");
 			jFrame.setVisible(true);
+			jFrame.setResizable(false);
 			jFrame.pack();
+
 			// return user;
 			UIconstant.frames.put(UIconstant.MAIN, jFrame);
 			return jFrame;
@@ -345,7 +348,7 @@ public class MainUI {
 		}
 		if (why.equals("2")) {
 
-			GraphFrame.me.loaddatabasealltables();
+			GraphFrame.me.graph2dbmenu();
 		} else {
 			GraphFrame.me.loaddatabasealltables();
 

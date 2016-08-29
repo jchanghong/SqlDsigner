@@ -5,6 +5,7 @@ package mysqls.sql.databaseserver2;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,7 +13,9 @@ import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,6 +31,7 @@ import mysqls.contanst.ConnectINFO;
 import mysqls.contanst.UIconstant;
 import mysqls.framework.GraphFrame;
 import mysqls.graph.ClassNode;
+import mysqls.sql.entity.TableCompertor;
 import mysqls.sql.util.SQLCreator;
 
 /**
@@ -52,6 +56,7 @@ public class DBselectFrame {
 				database.add(new JScrollPane(showdatabases));
 				JLabel tips = new JLabel("输入数据库名:");// 提示用户选择
 				JTextField jTextField = new JTextField(10);// 用户输入操作
+				jTextField.setText(ConnectINFO.databaseName);
 				JButton create = new JButton("创建");
 				JButton open = new JButton("确认导入");
 				JButton delete = new JButton("删除");
@@ -75,6 +80,9 @@ public class DBselectFrame {
 						if (clickTimes == 2) {
 							String text = showdatabases.getSelectedText();
 							jTextField.setText(text);
+
+							ConnectINFO.databaseName = text;
+
 						}
 					}
 				});
@@ -96,6 +104,7 @@ public class DBselectFrame {
 								showdatabases.setText("");
 								stat.executeUpdate("create database " + jTextField.getText());// 执行用户输入的创建数据库的命令
 								JOptionPane.showMessageDialog(null, "创建成功！！！");
+								ConnectINFO.databaseName = jTextField.getText();
 								ResultSet resultSet = stat.executeQuery("SHOW DATABASES");// 显示已有的数据库
 								while (resultSet.next()) {
 									showdatabases.append(resultSet.getString(1));
@@ -111,6 +120,10 @@ public class DBselectFrame {
 							}
 
 						} else if (choice.equals("删除")) {
+							if (jTextField.getText().length() < 1) {
+								JOptionPane.showMessageDialog(null, "数据库不能为空");
+								return;
+							}
 							try {
 
 								showdatabases.setText("");
@@ -121,8 +134,9 @@ public class DBselectFrame {
 
 									showdatabases.append(resultSet.getString(1));
 									showdatabases.append("\n");
-									jTextField.setText("");
 								}
+								jTextField.setText("");
+								ConnectINFO.databaseName = "";
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -151,6 +165,7 @@ public class DBselectFrame {
 				jPanel.add(choicePanel, BorderLayout.SOUTH);
 				inputPanel.add(tips, BorderLayout.NORTH);
 				inputPanel.add(jTextField, BorderLayout.CENTER);
+				choicePanel.setLayout(new GridLayout(1, 0));
 				choicePanel.add(create);
 				choicePanel.add(open);
 				choicePanel.add(delete);
@@ -172,6 +187,8 @@ public class DBselectFrame {
 
 	}
 
+	private static Statement statement;
+
 	/**
 	 * @param text
 	 */
@@ -183,25 +200,28 @@ public class DBselectFrame {
 			JOptionPane.showMessageDialog(null, "没有sql图形！！！！");
 			return;
 		}
-		Statement statement = null;
 		try {
-			statement = ConnectINFO.connection.createStatement();
+			DBselectFrame.statement = ConnectINFO.connection.createStatement();
+			DBselectFrame.statement.execute("use " + text + "; ");
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		for (ClassNode classNode : list) {
-			try {
-				String create = SQLCreator.create(classNode.mTable);
-				System.out.println(create);
-				statement.execute(create);
-			} catch (SQLException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage());
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		list.stream().map(aa -> aa.mTable).sorted(new TableCompertor()).map(bb -> SQLCreator.create(bb)).
+
+				flatMap(t -> Arrays.asList(t.split(";")).stream()).collect(Collectors.toList()).forEach(string -> {
+
+					System.out.println(string);
+					try {
+						DBselectFrame.statement.execute(string);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				});
+
 	}
 
 	/**
