@@ -17,11 +17,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 
 import mysqls.framework.GraphFrame;
 
 /**
- * @author 长宏
+ * @author 长宏 tree列表
  *
  */
 public class TreeLeft {
@@ -46,8 +49,11 @@ public class TreeLeft {
 
 	}
 
+	public static JPanel me;
+
 	public static JPanel getui() {
 		JPanel panel = new JPanel();
+		TreeLeft.me = panel;
 		JScrollPane jScrollPane = new JScrollPane();
 		MYtreeNodeRoot mYtreeNodeRoot = new MYtreeNodeRoot("root");
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode(mYtreeNodeRoot);
@@ -67,13 +73,14 @@ public class TreeLeft {
 		DefaultTreeModel model = new DefaultTreeModel(root);
 		JTree jTree = new JTree(model);
 		JPopupMenu popupMenu = new JPopupMenu();
-		JMenuItem jItemresh = new JMenuItem("shuxin");
-		JMenuItem jItemdelete = new JMenuItem("delete");
-		JMenuItem jitemedit = new JMenuItem("edit");
-		JMenuItem jMenuload = new JMenuItem("load2graph");
+		JMenuItem jItemresh = new JMenuItem("刷新");
+		JMenuItem jItemdelete = new JMenuItem("删除");
+		JMenuItem jitemedit = new JMenuItem("编辑");
+		JMenuItem jMenuload = new JMenuItem("加载到图形");
 		ActionListener actionListener = ee -> {
 
 			MYtreeNode node = TreeLeft.getmynode(jTree);
+			DefaultMutableTreeNode node2ui = (DefaultMutableTreeNode) jTree.getLastSelectedPathComponent();
 			Object object = ee.getSource();
 			if (object == jitemedit) {
 				MYtreeNodeTable table = (MYtreeNodeTable) node;
@@ -83,6 +90,14 @@ public class TreeLeft {
 			if (object == jMenuload) {
 				MYtreeNodeDB db = (MYtreeNodeDB) node;
 				GraphFrame.me.sql2graph(db.geTablesdata());
+			}
+			if (object == jItemresh) {
+
+				TreeLeft.shuaxinnode(node, jTree, node2ui);
+			}
+			if (object == jItemdelete) {
+
+				TreeLeft.deletenode(node, jTree, node2ui);
 			}
 
 		};
@@ -125,7 +140,6 @@ public class TreeLeft {
 						TreeLeft.showpopmenu(popupMenu, 1);
 
 					}
-					popupMenu.getComponent(1).setVisible(false);
 					popupMenu.show(jTree, e.getX(), e.getY());
 				}
 
@@ -166,6 +180,105 @@ public class TreeLeft {
 		panel.add(jScrollPane, BorderLayout.CENTER);
 		// panel.add(button, BorderLayout.EAST);
 		return panel;
+	}
+
+	/**
+	 * @param node
+	 * @param jTree
+	 * @param node2ui
+	 */
+	private static void deletenode(MYtreeNode node, JTree jTree, DefaultMutableTreeNode node2ui) {
+		// TODO Auto-generated method stub
+		if (node instanceof MYtreeNodeColumn) {
+			// node2ui.
+		}
+
+	}
+
+	/**
+	 * @param node
+	 * @param jTree
+	 * @param node2ui
+	 */
+	private static void shuaxinnode(MYtreeNode node, JTree jTree, DefaultMutableTreeNode node2ui) {
+		// TODO Auto-generated method stub
+		final DefaultTreeModel model = (DefaultTreeModel) jTree.getModel();
+		if (node instanceof MYtreeNodeTable) {
+			while (node2ui.getChildCount() > 0) {
+
+				model.removeNodeFromParent((MutableTreeNode) node2ui.getChildAt(0));
+
+			}
+			MYtreeNodeTable table = (MYtreeNodeTable) node;
+			table.getcolumns().stream().forEach(a -> {
+				model.insertNodeInto(new DefaultMutableTreeNode(a), node2ui, node2ui.getChildCount());
+			});
+			// jTree.repaint();
+			// TreeLeft.me.invalidate();
+			// 显示
+			TreeNode[] nodes = model.getPathToRoot(node2ui.getChildAt(0));
+			TreePath path = new TreePath(nodes);
+			jTree.scrollPathToVisible(path);
+		}
+
+		if (node instanceof MYtreeNodeDB) {
+			while (node2ui.getChildCount() > 0) {
+
+				model.removeNodeFromParent((MutableTreeNode) node2ui.getChildAt(0));
+
+			}
+			MYtreeNodeDB db = (MYtreeNodeDB) node;
+			for (MYtreeNodeTable table : db.geTables()) {
+				DefaultMutableTreeNode mutableTreeNode = new DefaultMutableTreeNode(table);
+
+				model.insertNodeInto(mutableTreeNode, node2ui, 0);
+				for (MYtreeNodeColumn column : table.getcolumns()) {
+					DefaultMutableTreeNode c = new DefaultMutableTreeNode(column);
+					model.insertNodeInto(c, mutableTreeNode, 0);
+				}
+
+			}
+
+			// jTree.repaint();
+			// TreeLeft.me.invalidate();
+			// 显示
+			TreeNode[] nodes = model.getPathToRoot(node2ui.getChildAt(0));
+			TreePath path = new TreePath(nodes);
+			jTree.scrollPathToVisible(path);
+
+		}
+		if (node instanceof MYtreeNodeRoot) {
+			while (node2ui.getChildCount() > 0) {
+
+				model.removeNodeFromParent((MutableTreeNode) node2ui.getChildAt(0));
+
+			}
+			MYtreeNodeRoot root = (MYtreeNodeRoot) node;
+			for (MYtreeNodeDB db : root.getdbs()) {
+
+				DefaultMutableTreeNode dbNode = new DefaultMutableTreeNode(db);
+				model.insertNodeInto(dbNode, node2ui, 0);
+				for (MYtreeNodeTable table : db.geTables()) {
+					DefaultMutableTreeNode mutableTreeNode = new DefaultMutableTreeNode(table);
+
+					model.insertNodeInto(mutableTreeNode, dbNode, 0);
+					for (MYtreeNodeColumn column : table.getcolumns()) {
+						DefaultMutableTreeNode c = new DefaultMutableTreeNode(column);
+						model.insertNodeInto(c, mutableTreeNode, 0);
+					}
+
+				}
+			}
+
+			// jTree.repaint();
+			// TreeLeft.me.invalidate();
+			// 显示
+			TreeNode[] nodes = model.getPathToRoot(node2ui.getChildAt(0).getChildAt(0));
+			TreePath path = new TreePath(nodes);
+			jTree.scrollPathToVisible(path);
+
+		}
+
 	}
 
 	private static MYtreeNode getmynode(MouseEvent event, JTree jTree) {
