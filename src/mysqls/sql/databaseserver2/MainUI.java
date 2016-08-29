@@ -114,7 +114,7 @@ public class MainUI {
 							String[] urls = str.split("\\|");
 							ConnectINFO.connection = DriverManager.getConnection(urls[0], urls[1], urls[2]);
 
-							GraphFrame.me.servermenu();
+							GraphFrame.me.loaddatabasealltables();
 
 							// Connector.runtext(ConnectINFO.connection);
 							// MainUI.opendbUI();
@@ -171,7 +171,7 @@ public class MainUI {
 								}
 								// Connector.runtext(ConnectINFO.connection);
 
-								GraphFrame.me.servermenu();
+								GraphFrame.me.loaddatabasealltables();
 								// jFrame.setExtendedState(Frame.ICONIFIED);
 							} catch (Exception e1) {
 								// TODO Auto-generated catch block

@@ -40,10 +40,10 @@ public class TreeListAll {
 		if (jFrame == null) {
 			jFrame = new JFrame();
 			jFrame.setSize(500, 400);
-
+			jFrame.setLocation(400, 250);
 			jFrame.setLayout(new BorderLayout());
 			jFrame.add(TreeLeft.getui(), BorderLayout.WEST);
-
+			UIconstant.frames.put(UIconstant.TREEUI, jFrame);
 			jFrame.pack();
 		}
 
