@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -19,6 +21,12 @@ import mysqls.contanst.UIconstant;
  */
 public class TreeListAll {
 
+	public static JFrame mainui;
+	public static List<String> sqList;
+	static
+	{
+		sqList=new ArrayList<>();
+	}
 	public static void main(String[] args) {
 		String url = "jdbc:mysql://localhost:3306/changhong";
 		try {
@@ -50,6 +58,7 @@ public class TreeListAll {
 			jFrame.pack();
 		}
 
+		mainui=jFrame;
 		return jFrame;
 
 	}
