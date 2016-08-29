@@ -65,6 +65,14 @@ public class TreeCenter {
 		});
 		
 		//取消按钮取消之前的操作
+		cancel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		return null;
 	}
 
