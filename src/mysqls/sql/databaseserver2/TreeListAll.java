@@ -51,12 +51,7 @@ public class TreeListAll {
 			jFrame.setLocation(400, 250);
 			jFrame.setLayout(new BorderLayout());
 			jFrame.add(TreeLeft.getui(), BorderLayout.WEST);
-			try {
-				jFrame.add(TreeNouth.getui(), BorderLayout.NORTH);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				jFrame.add(TreeNouthPanel.getMePanel(), BorderLayout.NORTH);
 			jFrame.add(TreeCenter.getui(), BorderLayout.CENTER);
 
 			UIconstant.frames.put(UIconstant.TREEUI, jFrame);
