@@ -33,6 +33,7 @@ import javax.swing.WindowConstants;
 
 import mysqls.contanst.ConnectINFO;
 import mysqls.contanst.UIconstant;
+import mysqls.sql.databaseserver2.TreeListAll;
 import mysqls.sql.util.MyIOutil;
 
 /**
@@ -113,7 +114,8 @@ public class MainUI {
 							String[] urls = str.split("\\|");
 							ConnectINFO.connection = DriverManager.getConnection(urls[0], urls[1], urls[2]);
 
-							Connector.runtext(ConnectINFO.connection);
+							// Connector.runtext(ConnectINFO.connection);
+							MainUI.opendbUI();
 						} catch (Exception e1) {
 
 							// TODO Auto-generated catch block
@@ -165,7 +167,9 @@ public class MainUI {
 									MainUI.savainfo(ConnectINFO.url, ConnectINFO.user, ConnectINFO.passworld);
 
 								}
-								Connector.runtext(ConnectINFO.connection);
+								// Connector.runtext(ConnectINFO.connection);
+
+								MainUI.opendbUI();
 								// jFrame.setExtendedState(Frame.ICONIFIED);
 							} catch (Exception e1) {
 								// TODO Auto-generated catch block
@@ -317,6 +321,12 @@ public class MainUI {
 		}
 
 		return null;
+	}
+
+	private static void opendbUI() {
+		JFrame jFrame = TreeListAll.getui();
+		jFrame.setVisible(true);
+
 	}
 
 }

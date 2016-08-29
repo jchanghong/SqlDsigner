@@ -23,12 +23,24 @@ public class TreeLeft {
 	public static JPanel getui() {
 		JPanel panel = new JPanel();
 		JScrollPane jScrollPane = new JScrollPane();
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("chanh");
-		for (int i = 0; i < 5; i++) {
-			root.add(new DefaultMutableTreeNode(panel));
+		MYtreeNodeRoot mYtreeNodeRoot = new MYtreeNodeRoot("root");
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode(mYtreeNodeRoot);
+		for (MYtreeNodeDB db : mYtreeNodeRoot.getdbs()) {
+			DefaultMutableTreeNode dbNode = new DefaultMutableTreeNode(db);
+			root.add(dbNode);
+			for (MYtreeNodeTable table : db.geTables()) {
+				DefaultMutableTreeNode mutableTreeNode = new DefaultMutableTreeNode(table);
+				dbNode.add(mutableTreeNode);
+				for (MYtreeNodeColumn column : table.getcolumns()) {
+					DefaultMutableTreeNode c = new DefaultMutableTreeNode(column);
+					mutableTreeNode.add(c);
+				}
+
+			}
 		}
 		DefaultTreeModel model = new DefaultTreeModel(root);
 		JTree jTree = new JTree(model);
+		jTree.setRootVisible(false);
 		jScrollPane = new JScrollPane(jTree);
 
 		panel.add(jScrollPane, BorderLayout.WEST);
