@@ -43,6 +43,9 @@ public class TreeListAll {
 			jFrame.setLocation(400, 250);
 			jFrame.setLayout(new BorderLayout());
 			jFrame.add(TreeLeft.getui(), BorderLayout.WEST);
+			jFrame.add(TreeNouth.getui(), BorderLayout.NORTH);
+			jFrame.add(TreeCenter.getui(), BorderLayout.CENTER);
+
 			UIconstant.frames.put(UIconstant.TREEUI, jFrame);
 			jFrame.pack();
 		}

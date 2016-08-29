@@ -162,8 +162,8 @@ public class TreeLeft {
 			}
 		});
 
-		panel.add(jScrollPane, BorderLayout.WEST);
-		panel.add(button, BorderLayout.EAST);
+		panel.add(jScrollPane, BorderLayout.CENTER);
+		// panel.add(button, BorderLayout.EAST);
 		return panel;
 	}
 
