@@ -19,6 +19,7 @@ import mysqls.graph.ClassNode;
 import mysqls.graph.Graph;
 import mysqls.sql.SQLEditPane;
 import mysqls.sql.SQLlogPane;
+import mysqls.sql.databaseserver2.DBselectFrame;
 import mysqls.sql.databaseserver2.MainUI;
 import mysqls.sql.databaseserver2.TreeFrame;
 import mysqls.sql.entity.Table;
@@ -195,10 +196,23 @@ public class GraphFrame extends JInternalFrame {
 	}
 
 	/**
-	 * 模型导入数据库
+	 * 模型导入数据库,选择数据库
 	 */
 	public void graph2dbmenu() {
 		// TODO Auto-generated method stub
+		if (UIconstant.frames.get(UIconstant.MAIN) == null) {
+			servermenu();
+			return;
+
+		}
+
+		JFrame ui = DBselectFrame.getui();
+		for (JFrame jrame : UIconstant.frames.values()) {
+			if (jrame != null) {
+				jrame.setVisible(false);
+			}
+		}
+		ui.setVisible(true);
 
 	}
 
