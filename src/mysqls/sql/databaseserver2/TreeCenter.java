@@ -20,6 +20,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.StyledDocument;
 
 import mysqls.contanst.ConnectINFO;
+import mysqls.sql.ui.MYdialogSwing;
 
 /**
  * @author 长宏 sql执行和编辑
@@ -58,11 +59,13 @@ public class TreeCenter {
 								statement.execute(sql);
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
+								MYdialogSwing.showError(e1.getMessage());
 								e1.printStackTrace();
 							}
 						});
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
+						MYdialogSwing.showError(e1.getMessage());
 						e1.printStackTrace();
 					}
 				}
