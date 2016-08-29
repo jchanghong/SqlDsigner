@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 
 import mysqls.contanst.ConnectINFO;
+import mysqls.contanst.UIconstant;
 
 /**
  * @author 长宏
@@ -34,11 +35,17 @@ public class TreeListAll {
 	}
 
 	public static JFrame getui() {
-		JFrame jFrame = new JFrame();
-		jFrame.setSize(500, 400);
 
-		jFrame.setLayout(new BorderLayout());
-		jFrame.add(TreeLeft.getui(), BorderLayout.WEST);
+		JFrame jFrame = UIconstant.frames.get(UIconstant.TREEUI);
+		if (jFrame == null) {
+			jFrame = new JFrame();
+			jFrame.setSize(500, 400);
+
+			jFrame.setLayout(new BorderLayout());
+			jFrame.add(TreeLeft.getui(), BorderLayout.WEST);
+
+			jFrame.pack();
+		}
 
 		return jFrame;
 

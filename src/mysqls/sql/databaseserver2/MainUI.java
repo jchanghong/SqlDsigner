@@ -1,7 +1,7 @@
 /**
  *  实体关系图和sql生产的实现
  */
-package mysqls.sql.databaseserver;
+package mysqls.sql.databaseserver2;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -33,11 +33,11 @@ import javax.swing.WindowConstants;
 
 import mysqls.contanst.ConnectINFO;
 import mysqls.contanst.UIconstant;
-import mysqls.sql.databaseserver2.TreeListAll;
+import mysqls.framework.GraphFrame;
 import mysqls.sql.util.MyIOutil;
 
 /**
- * @author 长宏
+ * @author 长宏 链接服务器的主mune。
  *
  */
 public class MainUI {
@@ -114,8 +114,10 @@ public class MainUI {
 							String[] urls = str.split("\\|");
 							ConnectINFO.connection = DriverManager.getConnection(urls[0], urls[1], urls[2]);
 
+							GraphFrame.me.servermenu();
+
 							// Connector.runtext(ConnectINFO.connection);
-							MainUI.opendbUI();
+							// MainUI.opendbUI();
 						} catch (Exception e1) {
 
 							// TODO Auto-generated catch block
@@ -169,7 +171,7 @@ public class MainUI {
 								}
 								// Connector.runtext(ConnectINFO.connection);
 
-								MainUI.opendbUI();
+								GraphFrame.me.servermenu();
 								// jFrame.setExtendedState(Frame.ICONIFIED);
 							} catch (Exception e1) {
 								// TODO Auto-generated catch block
