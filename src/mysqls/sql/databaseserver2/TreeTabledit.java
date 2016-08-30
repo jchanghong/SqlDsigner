@@ -31,7 +31,7 @@ import mysqls.contanst.ConnectINFO;
  * @author 长宏 编辑数据
  *
  */
-public class TreeNouth {
+public class TreeTabledit {
 	private static JPanel jPanel;
 
 	public static void edittable(MYtreeNodeTable table) {
@@ -115,11 +115,11 @@ public class TreeNouth {
 					if (e.getType() == TableModelEvent.UPDATE) {
 
 						Object newdata = model.getValueAt(e.getLastRow(), e.getColumn());
-						String updatesql = TreeNouth.getupdqtesql(defaultTableModel.getDataVector().elementAt(last),
+						String updatesql = TreeTabledit.getupdqtesql(defaultTableModel.getDataVector().elementAt(last),
 								table, v1, newdata, cindex);
 						System.out.println(updatesql);
 						TreeFrame.sqList.add(updatesql);
-						TreeCenter.settext();
+						TreeSQLedit.settext();
 					} else if (e.getType() == TableModelEvent.DELETE) {
 						jTable.repaint();
 					} else if (e.getType() == TableModelEvent.INSERT) {
@@ -141,7 +141,7 @@ public class TreeNouth {
 							+ vector.elementAt(1) + ";";
 					System.out.println(deletesql);
 					TreeFrame.sqList.add(deletesql);
-					TreeCenter.settext();
+					TreeSQLedit.settext();
 					defaultTableModel.removeRow((int) map.get("rowindex"));
 				}
 			});
@@ -158,15 +158,15 @@ public class TreeNouth {
 					}
 					defaultTableModel.addRow(data);
 					// 插入语句
-					String insertsql = TreeNouth.getinsersql(v1, data, table);
+					String insertsql = TreeTabledit.getinsersql(v1, data, table);
 					System.out.println(insertsql);
 					TreeFrame.sqList.add(insertsql);
-					TreeCenter.settext();
+					TreeSQLedit.settext();
 				}
 			});
 			// return showTable;
-			TreeNouth.jPanel.removeAll();
-			TreeNouth.jPanel.add(new JScrollPane(jTable), BorderLayout.CENTER);
+			TreeTabledit.jPanel.removeAll();
+			TreeTabledit.jPanel.add(new JScrollPane(jTable), BorderLayout.CENTER);
 			TreeFrame.me.pack();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -234,10 +234,10 @@ public class TreeNouth {
 
 	public static JPanel getui() {
 
-		if (TreeNouth.jPanel == null) {
-			TreeNouth.jPanel = new JPanel();
+		if (TreeTabledit.jPanel == null) {
+			TreeTabledit.jPanel = new JPanel();
 		}
-		return TreeNouth.jPanel;
+		return TreeTabledit.jPanel;
 	}
 
 }

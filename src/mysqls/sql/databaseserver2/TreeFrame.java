@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,6 +28,11 @@ public class TreeFrame {
 	public static JFrame me;
 	private static JPanel right;// 右边
 	public static List<String> sqList;
+	public static Vector<Object> tablehead;// 表格
+	/**
+	 * 每个元素代表一个行，这个行肯定是已经改变过了，不是空行
+	 */
+	public static List<Vector<Object>> tablevalues;
 
 	/**
 	 * @return the right
@@ -71,11 +77,11 @@ public class TreeFrame {
 			constraints.weightx = 1.0;
 
 			rigtht.setLayout(bagLayout);
-			rigtht.add(TreeNouth.getui(), constraints);
+			rigtht.add(TreeTabledit.getui(), constraints);
 
 			constraints.gridwidth = GridBagConstraints.REMAINDER;
 			constraints.weighty = 0.1;
-			rigtht.add(TreeCenter.getui(), constraints);
+			rigtht.add(TreeSQLedit.getui(), constraints);
 
 			TreeFrame.right = rigtht;
 			jFrame.setLocation(400, 250);

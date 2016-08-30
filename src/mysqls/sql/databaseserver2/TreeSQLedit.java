@@ -26,26 +26,26 @@ import mysqls.sql.ui.MYdialogSwing;
  * @author 长宏 sql执行和编辑
  *
  */
-public class TreeCenter {
+public class TreeSQLedit {
 	private static JPanel jPanel;
 
 	public static JPanel getui() {
 
-		if (TreeCenter.jPanel == null) {
-			TreeCenter.jPanel = new JPanel(new BorderLayout());
+		if (TreeSQLedit.jPanel == null) {
+			TreeSQLedit.jPanel = new JPanel(new BorderLayout());
 
-			TreeCenter.gettextpanel();
-			TreeCenter.jPanel.add(new JScrollPane(TreeCenter.textPane), BorderLayout.CENTER);
+			TreeSQLedit.gettextpanel();
+			TreeSQLedit.jPanel.add(new JScrollPane(TreeSQLedit.textPane), BorderLayout.CENTER);
 			JPanel buttons = new JPanel();
 			buttons.setLayout(new GridLayout(1, 0));
-			JButton apply = new JButton("确定"), cancel = new JButton("取消");
+			JButton apply = new JButton("更改"), exe = new JButton("执行");
 			buttons.add(apply);
-			buttons.add(cancel);
+			buttons.add(exe);
 
-			TreeCenter.jPanel.add(buttons, BorderLayout.SOUTH);
+			TreeSQLedit.jPanel.add(buttons, BorderLayout.SOUTH);
 			// sqlEdit记录所要操作的sql语句
 
-			TreeCenter.settext();
+			TreeSQLedit.settext();
 			// 确定按钮执行所有的sql语句
 			apply.addActionListener(new ActionListener() {
 
@@ -72,19 +72,19 @@ public class TreeCenter {
 			});
 
 			// 取消按钮取消之前的操作
-			cancel.addActionListener(new ActionListener() {
+			exe.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					TreeCenter.textPane.setText("");
+					TreeSQLedit.textPane.setText("");
 					TreeFrame.sqList.clear();
 
 				}
 			});
 		}
 
-		return TreeCenter.jPanel;
+		return TreeSQLedit.jPanel;
 	}
 
 	private static JTextPane gettextpanel() {
@@ -128,7 +128,7 @@ public class TreeCenter {
 			}
 
 		};
-		TreeCenter.textPane = msqlpane;
+		TreeSQLedit.textPane = msqlpane;
 		return msqlpane;
 
 	}
@@ -140,8 +140,8 @@ public class TreeCenter {
 		TreeFrame.sqList.stream().forEach(a -> {
 			builder.append(a + "\n");
 		});
-		TreeCenter.textPane.setText(builder.toString());
-		SQLcolorSmall.setcolor(TreeCenter.textPane);
+		TreeSQLedit.textPane.setText(builder.toString());
+		SQLcolorSmall.setcolor(TreeSQLedit.textPane);
 
 		if (TreeFrame.me != null) {
 

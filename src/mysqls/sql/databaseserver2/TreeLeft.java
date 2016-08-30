@@ -8,9 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -21,6 +24,7 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+import mysqls.contanst.ConnectINFO;
 import mysqls.framework.GraphFrame;
 
 /**
@@ -85,7 +89,7 @@ public class TreeLeft {
 			if (object == jitemedit) {
 				MYtreeNodeTable table = (MYtreeNodeTable) node;
 				System.out.println("edit table:" + table.getName());
-				TreeNouth.edittable(table);
+				TreeTabledit.edittable(table);
 			}
 			if (object == jMenuload) {
 				MYtreeNodeDB db = (MYtreeNodeDB) node;
@@ -130,7 +134,7 @@ public class TreeLeft {
 					}
 					if (node instanceof MYtreeNodeColumn) {
 
-						TreeLeft.showpopmenu(popupMenu, 0);
+						TreeLeft.showpopmenu(popupMenu);
 					}
 					if (node instanceof MYtreeNodeTable) {
 
@@ -189,8 +193,35 @@ public class TreeLeft {
 	 */
 	private static void deletenode(MYtreeNode node, JTree jTree, DefaultMutableTreeNode node2ui) {
 		// TODO Auto-generated method stub
-		if (node instanceof MYtreeNodeColumn) {
+		final DefaultTreeModel model = (DefaultTreeModel) jTree.getModel();
+		if (node instanceof MYtreeNodeTable) {
+			MYtreeNodeTable table = (MYtreeNodeTable) node;
+			String dbname = table.getDb().getName();
+			try {
+				Statement statement = ConnectINFO.connection.createStatement();
+				statement.executeQuery("use " + dbname);
+				statement.execute("drop table " + table.getName());
+				JOptionPane.showMessageDialog(null, "删除成功!!!");
+				model.removeNodeFromParent(node2ui);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "删除失败!!!\n" + e.getMessage());
+				e.printStackTrace();
+			}
 			// node2ui.
+		}
+		if (node instanceof MYtreeNodeDB) {
+			MYtreeNodeDB db = (MYtreeNodeDB) node;
+			try {
+				Statement statement = ConnectINFO.connection.createStatement();
+				statement.execute("drop database " + db.getName());
+				JOptionPane.showMessageDialog(null, "删除成功!!!");
+				model.removeNodeFromParent(node2ui);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "删除失败!!!\n" + e.getMessage());
+				e.printStackTrace();
+			}
 		}
 
 	}
