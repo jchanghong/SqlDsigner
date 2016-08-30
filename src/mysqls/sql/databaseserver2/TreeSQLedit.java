@@ -8,6 +8,7 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JButton;
@@ -141,32 +142,52 @@ public class TreeSQLedit {
 	 *            执行sql语句
 	 */
 	public static void exesql(ActionEvent actionEvent) {
+
+		boolean nowrong = true;
+		if (TreeSQLedit.sql == null || TreeSQLedit.sql.trim().length() < 2) {
+			JOptionPane.showMessageDialog(null, "没有sql语句！！！");
+			return;
+
+		}
+		Statement statement = null;
 		try {
-
-			if (TreeSQLedit.sql == null || TreeSQLedit.sql.trim().length() < 2) {
-				JOptionPane.showMessageDialog(null, "没有sql语句！！！");
-				return;
-
-			}
-			Statement statement = ConnectINFO.connection.createStatement();
-			statement.execute("use " + TreeTabledit.table.getDb().getName());
-			for (String aString : TreeSQLedit.sql.split(";")) {
-				if (aString.trim().length() < 2) {
-					continue;
-				}
-				statement.execute(aString.trim());
-			}
-			TreeSQLedit.settext("");
-			JOptionPane.showMessageDialog(null, "执行sql成功！！！");
-			TreeFrame.keytodelete.clear();
-			TreeFrame.oldfirstvaluesList.clear();
-			TreeFrame.sqList.clear();
-			TreeFrame.tablevalues.clear();
-		} catch (Exception e) {
+			statement = ConnectINFO.connection.createStatement();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(null, "执行sql失败！！！");
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			nowrong = false;
 			e.printStackTrace();
 		}
+		try {
+			statement.execute("use " + TreeTabledit.table.getDb().getName());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			nowrong = false;
+			e.printStackTrace();
+		}
+		for (String aString : TreeSQLedit.sql.split(";")) {
+			if (aString.trim().length() < 2) {
+				continue;
+			}
+			try {
+				statement.execute(aString.trim());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, e.getMessage());
+				nowrong = false;
+			}
+		}
+		TreeSQLedit.settext("");
+		if (nowrong) {
+
+			JOptionPane.showMessageDialog(null, "执行sql成功！！！");
+		}
+		TreeFrame.keytodelete.clear();
+		TreeFrame.oldfirstvaluesList.clear();
+		TreeFrame.sqList.clear();
+		TreeFrame.tablevalues.clear();
 
 	}
 
