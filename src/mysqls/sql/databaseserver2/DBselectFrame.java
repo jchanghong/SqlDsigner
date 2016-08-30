@@ -222,6 +222,7 @@ public class DBselectFrame {
 					}
 				});
 
+		JOptionPane.showMessageDialog(null, "导入成功！！！！");
 	}
 
 	/**
