@@ -57,6 +57,8 @@ public class TreeCenter {
 						TreeFrame.sqList.stream().forEach(sql -> {
 							try {
 								statement.execute(sql);
+								TreeCenter.textPane.setText("");
+								TreeFrame.sqList.clear();
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								MYdialogSwing.showError(e1.getMessage());
