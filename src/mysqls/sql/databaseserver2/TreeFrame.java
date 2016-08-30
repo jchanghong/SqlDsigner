@@ -10,7 +10,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -28,11 +32,28 @@ public class TreeFrame {
 	public static JFrame me;
 	private static JPanel right;// 右边
 	public static List<String> sqList;
-	public static Vector<Object> tablehead;// 表格
 	/**
-	 * 每个元素代表一个行，这个行肯定是已经改变过了，不是空行
+	 * 记录下需要删除的行的第一列
 	 */
-	public static List<Vector<Object>> tablevalues;
+	public static Set<String> keytodelete;
+	/**
+	 * 表头
+	 */
+	public static Vector<String> tablehead;// 表格
+	/**
+	 * 每个元素代表一个行，这个行肯定是已经改变过了，不是空行 根据行得到整个行值
+	 */
+	public static Map<Integer, Vector<Object>> tablevalues;
+	/**
+	 * 根据行得到原来的第一列值，
+	 */
+	public static Map<Integer, Object> oldfirstvaluesList;
+	static {
+		TreeFrame.oldfirstvaluesList = new HashMap<>();
+		TreeFrame.keytodelete = new HashSet<>();
+		TreeFrame.tablehead = new Vector<>();
+		TreeFrame.tablevalues = new HashMap<>();
+	}
 
 	/**
 	 * @return the right
