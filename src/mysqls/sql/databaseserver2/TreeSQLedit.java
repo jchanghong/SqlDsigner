@@ -8,10 +8,10 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -38,14 +38,13 @@ public class TreeSQLedit {
 			TreeSQLedit.jPanel.add(new JScrollPane(TreeSQLedit.textPane), BorderLayout.CENTER);
 			JPanel buttons = new JPanel();
 			buttons.setLayout(new GridLayout(1, 0));
-			JButton apply = new JButton("更改"), exe = new JButton("执行");
+			JButton apply = new JButton("确定"), exe1 = new JButton("执行");
 			buttons.add(apply);
-			buttons.add(exe);
+			buttons.add(exe1);
 
 			TreeSQLedit.jPanel.add(buttons, BorderLayout.SOUTH);
 			// sqlEdit记录所要操作的sql语句
 
-			TreeSQLedit.settext();
 			// 确定按钮执行所有的sql语句
 			apply.addActionListener(new ActionListener() {
 
@@ -53,17 +52,11 @@ public class TreeSQLedit {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					try {
-						Statement statement = ConnectINFO.connection.createStatement();
-						TreeFrame.sqList.stream().forEach(sql -> {
-							try {
-								statement.execute(sql);
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								MYdialogSwing.showError(e1.getMessage());
-								e1.printStackTrace();
-							}
-						});
-					} catch (SQLException e1) {
+						String sql = TreeTabledit.getupdqtesql();
+						System.out.println(sql);
+						TreeSQLedit.settext(sql);
+
+					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						MYdialogSwing.showError(e1.getMessage());
 						e1.printStackTrace();
@@ -71,20 +64,28 @@ public class TreeSQLedit {
 				}
 			});
 
-			// 取消按钮取消之前的操作
-			exe.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					TreeSQLedit.textPane.setText("");
-					TreeFrame.sqList.clear();
-
-				}
-			});
+			// // 执行按钮执行之前的操作
+			exe1.addActionListener(TreeSQLedit::exesql);
 		}
-
 		return TreeSQLedit.jPanel;
+	}
+
+	private static String sql;
+
+	/**
+	 * @param sql
+	 */
+	protected static void settext(String sql) {
+		// TODO Auto-generated method stub
+
+		TreeSQLedit.sql = sql;
+		TreeSQLedit.textPane.setText(sql);
+		SQLcolorSmall.setcolor(TreeSQLedit.textPane);
+
+		if (TreeFrame.me != null) {
+
+			TreeFrame.me.pack();
+		}
 	}
 
 	private static JTextPane gettextpanel() {
@@ -135,18 +136,38 @@ public class TreeSQLedit {
 
 	private static JTextPane textPane;
 
-	public static void settext() {
-		StringBuilder builder = new StringBuilder();
-		TreeFrame.sqList.stream().forEach(a -> {
-			builder.append(a + "\n");
-		});
-		TreeSQLedit.textPane.setText(builder.toString());
-		SQLcolorSmall.setcolor(TreeSQLedit.textPane);
+	/**
+	 * @param sql
+	 *            执行sql语句
+	 */
+	public static void exesql(ActionEvent actionEvent) {
+		try {
 
-		if (TreeFrame.me != null) {
+			if (TreeSQLedit.sql == null || TreeSQLedit.sql.trim().length() < 2) {
+				JOptionPane.showMessageDialog(null, "没有sql语句！！！");
+				return;
 
-			TreeFrame.me.pack();
+			}
+			Statement statement = ConnectINFO.connection.createStatement();
+			statement.execute("use " + TreeTabledit.table.getDb().getName());
+			for (String aString : TreeSQLedit.sql.split(";")) {
+				if (aString.trim().length() < 2) {
+					continue;
+				}
+				statement.execute(aString.trim());
+			}
+			TreeSQLedit.settext("");
+			JOptionPane.showMessageDialog(null, "执行sql成功！！！");
+			TreeFrame.keytodelete.clear();
+			TreeFrame.oldfirstvaluesList.clear();
+			TreeFrame.sqList.clear();
+			TreeFrame.tablevalues.clear();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "执行sql失败！！！");
+			e.printStackTrace();
 		}
+
 	}
 
 }
