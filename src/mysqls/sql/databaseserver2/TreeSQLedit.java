@@ -38,9 +38,9 @@ public class TreeSQLedit {
 			TreeSQLedit.jPanel.add(new JScrollPane(TreeSQLedit.textPane), BorderLayout.CENTER);
 			JPanel buttons = new JPanel();
 			buttons.setLayout(new GridLayout(1, 0));
-			JButton apply = new JButton("更改"), exe = new JButton("执行");
+			JButton apply = new JButton("确定"), cancel = new JButton("取消");
 			buttons.add(apply);
-			buttons.add(exe);
+			buttons.add(cancel);
 
 			TreeSQLedit.jPanel.add(buttons, BorderLayout.SOUTH);
 			// sqlEdit记录所要操作的sql语句
@@ -57,6 +57,8 @@ public class TreeSQLedit {
 						TreeFrame.sqList.stream().forEach(sql -> {
 							try {
 								statement.execute(sql);
+								TreeSQLedit.textPane.setText("");
+								TreeFrame.sqList.clear();
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								MYdialogSwing.showError(e1.getMessage());
@@ -72,7 +74,7 @@ public class TreeSQLedit {
 			});
 
 			// 取消按钮取消之前的操作
-			exe.addActionListener(new ActionListener() {
+			cancel.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {

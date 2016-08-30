@@ -10,8 +10,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -33,6 +36,8 @@ import mysqls.contanst.ConnectINFO;
  */
 public class TreeTabledit {
 	private static JPanel jPanel;
+
+	private static boolean hasNew = true;
 
 	public static void edittable(MYtreeNodeTable table) {
 		try {
@@ -73,13 +78,24 @@ public class TreeTabledit {
 				defaultTableModel.addRow(v3);
 			}
 
+			// 增加一行全为null
+			Object[] data = new String[columnCount];
+			for (int i = 0; i < data.length; i++) {
+				data[i] = "null";
+			}
+
+			for (int col = 0; col < columnCount; col++) {
+				if (!jTable.getValueAt(jTable.getRowCount() - 1, col).equals("null"))
+					defaultTableModel.addRow(data);
+			}
+
 			// 弹出删除,插入选项
 			JPopupMenu jPopupMenu = new JPopupMenu();
 			JMenuItem[] jMenuItem = new JMenuItem[2];
 			jMenuItem[0] = new JMenuItem("删除此行");
-			jMenuItem[1] = new JMenuItem("插入一行");
+			// jMenuItem[1] = new JMenuItem("插入一行");
 			jPopupMenu.add(jMenuItem[0]);
-			jPopupMenu.add(jMenuItem[1]);
+			// jPopupMenu.add(jMenuItem[1]);
 
 			jTable.addMouseListener(new MouseAdapter() {
 				@Override
@@ -90,6 +106,7 @@ public class TreeTabledit {
 
 						int focusedRowIndex = jTable.rowAtPoint(e.getPoint());// 鼠标点击所在行
 						int focusedColIndex = jTable.columnAtPoint(e.getPoint());// 鼠标点击所在列
+
 						String colName = jTable.getColumnName(focusedColIndex);// 得到列名
 
 						Vector<String> vector = (Vector<String>) defaultTableModel.getDataVector()
@@ -112,18 +129,51 @@ public class TreeTabledit {
 					TableModel model = (TableModel) e.getSource();
 					int last = e.getLastRow();
 					int cindex = e.getColumn();
+					Object olddata = null;// 得到原值
+					ResultSet resultSet = null;
+
+					try {
+						resultSet = statement.executeQuery("select " + firstColumnName + " from " + table + " limit "
+								+ jTable.getSelectedRow() + ",1");
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						while (resultSet.next()) {
+							olddata = resultSet.getString(1);
+						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					if (e.getType() == TableModelEvent.UPDATE) {
 
 						Object newdata = model.getValueAt(e.getLastRow(), e.getColumn());
 						String updatesql = TreeTabledit.getupdqtesql(defaultTableModel.getDataVector().elementAt(last),
-								table, v1, newdata, cindex);
+								table, v1, newdata, cindex, olddata);
 						System.out.println(updatesql);
 						TreeFrame.sqList.add(updatesql);
 						TreeSQLedit.settext();
 					} else if (e.getType() == TableModelEvent.DELETE) {
 						jTable.repaint();
 					} else if (e.getType() == TableModelEvent.INSERT) {
-						jTable.repaint();
+
+						for (int col = 0; col < columnCount; col++) {
+							if (!jTable.getValueAt(jTable.getRowCount() - 1, col).equals("null")) {
+
+								List<Object> data2 = new ArrayList<>();
+								for (int i = 0; i < columnCount; i++) {
+									data2.add(jTable.getValueAt(last, i));
+								}
+
+								String insertsql = TreeTabledit.getinsersql(v1, data2, table);
+								System.out.println(insertsql);
+								TreeFrame.sqList.add(insertsql);
+								TreeSQLedit.settext();
+							}
+
+						}
 					}
 				}
 			});
@@ -137,8 +187,7 @@ public class TreeTabledit {
 					Vector<String> vector = (Vector<String>) map.get("v");
 					// 删除语句
 					String deletesql = "delete from " + table.getDb().getName() + "." + table.getName() + " where "
-							+ v1.elementAt(0) + "=" + vector.elementAt(0) + " and " + v1.elementAt(1) + "  = "
-							+ vector.elementAt(1) + ";";
+							+ v1.elementAt(0) + "=" + vector.elementAt(0);
 					System.out.println(deletesql);
 					TreeFrame.sqList.add(deletesql);
 					TreeSQLedit.settext();
@@ -147,23 +196,29 @@ public class TreeTabledit {
 			});
 
 			// 插入功能
-			jMenuItem[1].addActionListener(new ActionListener() {
+			// jMenuItem[1].addActionListener(new ActionListener() {
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					Object[] data = new String[columnCount];
-					for (int i = 0; i < data.length; i++) {
-						data[i] = "null";
-					}
-					defaultTableModel.addRow(data);
-					// 插入语句
-					String insertsql = TreeTabledit.getinsersql(v1, data, table);
-					System.out.println(insertsql);
-					TreeFrame.sqList.add(insertsql);
-					TreeSQLedit.settext();
-				}
-			});
+			// @Override
+			// public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			// Object[] data = new String[columnCount];
+			// for (int i = 0; i < data.length; i++) {
+			// data[i] = "null";
+			// }
+			// defaultTableModel.addRow(data);
+
+			// 插入语句
+			// List<Object> data2 = new ArrayList<>();
+			// for(int i=0;i<columnCount;i++){
+			// data2.add(jTable.getValueAt(last, i)) ;
+			// }
+			//
+			// String insertsql = TreeNouth.getinsersql(v1, data2, table);
+			// System.out.println(insertsql);
+			// TreeFrame.sqList.add(insertsql);
+			// TreeCenter.settext();
+			// }
+			// });
 			// return showTable;
 			TreeTabledit.jPanel.removeAll();
 			TreeTabledit.jPanel.add(new JScrollPane(jTable), BorderLayout.CENTER);
@@ -183,24 +238,24 @@ public class TreeTabledit {
 	 * @return
 	 */
 	protected static String getupdqtesql(Object elementAt, MYtreeNodeTable table, Vector<String> v1, Object newdata,
-			int cindex) {
+			int cindex, Object olddata) {
 		// TODO Auto-generated method stub
 		Vector<String> vector = (Vector<String>) elementAt;
 		StringBuilder builder = new StringBuilder();
-		builder.append("update " + table.getDb().getName() + "." + table.getName() + "  set ");
-		builder.append(v1.elementAt(cindex)).append("=" + newdata + " where ");
-		for (int i = 0; i < v1.size(); i++) {
-			if (i == cindex) {
-				continue;
-			}
-			builder.append(v1.elementAt(i));
-			builder.append("=" + vector.elementAt(i) + " ");
-			if (i != v1.size() - 1) {
-				builder.append("  and ");
+		builder.append(" UPDATE " + table.getDb().getName() + "." + table.getName() + " SET ");
+		builder.append(v1.elementAt(cindex)).append("='" + newdata + "' WHERE ");
+		// for (int i = 0; i < v1.size(); i++) {
+		// if (i == cindex) {
+		// continue;
+		// }
+		builder.append(v1.elementAt(0));
+		builder.append("='" + olddata + "'");
+		// if (i != v1.size() - 1) {
+		// builder.append(" and ");
+		//
+		// }
 
-			}
-
-		}
+		// }
 		return builder.toString();
 	}
 
@@ -209,22 +264,20 @@ public class TreeTabledit {
 	 * @param data
 	 * @return
 	 */
-	protected static String getinsersql(Vector<String> v1, Object[] data, MYtreeNodeTable table) {
+	protected static String getinsersql(Vector<String> v1, Object data2, MYtreeNodeTable table) {
 		// TODO Auto-generated method stub
 		StringBuilder builder = new StringBuilder();
 		builder.append("insert into " + table.getDb().getName() + "." + table.getName() + "(");
 		for (int i = 0; i < v1.size(); i++) {
-			builder.append(v1.elementAt(i));
+			builder.append(v1.elementAt(0));
 			if (i != v1.size() - 1) {
 				builder.append(",");
-
 			}
-
 		}
-		builder.append(")" + " valuse (");
-		for (int i = 0; i < data.length; i++) {
-			builder.append(data[i]);
-			if (i != data.length - 1) {
+		builder.append(")" + " values (");
+		for (int i = 0; i < v1.size(); i++) {
+			builder.append(data2);
+			if (i != v1.size() - 1) {
 				builder.append(",");
 			}
 		}
