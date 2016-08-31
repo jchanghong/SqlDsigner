@@ -9,10 +9,8 @@ import java.awt.GridBagLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
@@ -34,7 +32,8 @@ public class TreeFrame {
 	/**
 	 * 记录sql语句，判断哪些语句执行成功,清空的时候这个list只清空执行成功的语句
 	 */
-	public static List<String> sqList;
+	public static Set<String> sqList;
+	public static Map<Object, String> sqlmap;
 
 	/**
 	 * 记录下需要删除的行的第一列
@@ -53,7 +52,8 @@ public class TreeFrame {
 	 */
 	public static Map<Integer, Object> oldfirstvaluesList;
 	static {
-		TreeFrame.sqList = new ArrayList<>();
+		TreeFrame.sqlmap = new HashMap<>();
+		TreeFrame.sqList = new HashSet<>();
 		TreeFrame.oldfirstvaluesList = new HashMap<>();
 		TreeFrame.keytodelete = new HashSet<>();
 		TreeFrame.tablehead = new Vector<>();

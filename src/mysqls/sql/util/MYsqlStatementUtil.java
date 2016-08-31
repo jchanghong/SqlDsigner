@@ -6,6 +6,7 @@ package mysqls.sql.util;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import mysqls.framework.PersistenceService;
@@ -78,7 +79,7 @@ public abstract class MYsqlStatementUtil {
 	 *            得到显示的sql，\n.
 	 * @return
 	 */
-	public static String tostring(List<String> sqList) {
+	public static String tostring(Set<String> sqList) {
 		StringBuilder builder = new StringBuilder("");
 		sqList.stream().forEach(a -> {
 			builder.append(a + "\n");

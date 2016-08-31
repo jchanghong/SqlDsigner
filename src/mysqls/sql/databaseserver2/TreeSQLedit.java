@@ -10,8 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -24,7 +22,6 @@ import javax.swing.text.StyledDocument;
 
 import mysqls.contanst.ConnectINFO;
 import mysqls.sql.ui.MYdialogSwing;
-import mysqls.sql.util.MYsqlStatementUtil;
 
 /**
  * @author 长宏 sql执行和编辑
@@ -56,15 +53,17 @@ public class TreeSQLedit {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					try {
-						String sql = TreeTabledit.getupdqtesql();
-						for (String string : sql.split(";")) {
+						TreeFrame.sqList.clear();
+						TreeSQLedit.sql = TreeTabledit.getupdqtesql();
+						for (String string : TreeSQLedit.sql.split(";")) {
 
 							String temp = string.trim();
 							if (temp != null && temp.length() > 2) {
 								TreeFrame.sqList.add(temp);
 							}
 						}
-						TreeSQLedit.settext(MYsqlStatementUtil.tostring(TreeFrame.sqList));
+						// TreeSQLedit.settext(MYsqlStatementUtil.tostring(TreeFrame.sqList));
+						TreeSQLedit.settext(TreeSQLedit.sql);
 
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
@@ -175,11 +174,16 @@ public class TreeSQLedit {
 			nowrong = false;
 			e.printStackTrace();
 		}
-		List<String> templist = new ArrayList<>(TreeFrame.sqList);
-		for (String aString : templist) {
+
+		for (Object key : TreeFrame.sqlmap.keySet()) {
+			String vString = TreeFrame.sqlmap.get(key);
 			try {
-				statement.execute(aString);
-				TreeFrame.sqList.remove(aString);
+				statement.execute(vString);
+				TreeFrame.keytodelete.remove(key);
+				TreeFrame.oldfirstvaluesList.remove(key);
+				// TreeFrame.sqList.clear();
+				TreeFrame.tablevalues.remove(key);
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -187,15 +191,27 @@ public class TreeSQLedit {
 				nowrong = false;
 			}
 		}
-		TreeSQLedit.settext(MYsqlStatementUtil.tostring(TreeFrame.sqList));
+		// List<String> templist = new ArrayList<>(TreeFrame.sqList);
+		// for (String aString : templist) {
+		// try {
+		// statement.execute(aString);
+		//
+		// } catch (SQLException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// JOptionPane.showMessageDialog(null, e.getMessage());
+		// nowrong = false;
+		// }
+		// }
+		TreeSQLedit.settext(TreeTabledit.getupdqtesql());
 		if (nowrong) {
 
 			JOptionPane.showMessageDialog(null, "执行sql成功！！！");
 		}
-		TreeFrame.keytodelete.clear();
-		TreeFrame.oldfirstvaluesList.clear();
+		// TreeFrame.keytodelete.clear();
+		// TreeFrame.oldfirstvaluesList.clear();
 		// TreeFrame.sqList.clear();
-		TreeFrame.tablevalues.clear();
+		// TreeFrame.tablevalues.clear();
 
 	}
 

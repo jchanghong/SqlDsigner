@@ -93,6 +93,7 @@ public class TreeTabledit {
 			System.out.println("vector is " + defaultTableModel.getDataVector().elementAt(key));
 
 			TreeFrame.tablevalues.clear();
+			TreeFrame.sqList.clear();
 			TreeFrame.oldfirstvaluesList.clear();
 			TreeFrame.keytodelete.clear();
 			TreeFrame.tablehead = v1;
@@ -245,7 +246,9 @@ public class TreeTabledit {
 	 * @return
 	 */
 	public static String getupdqtesql() {
+		TreeFrame.sqlmap.clear();
 		// TODO Auto-generated method stub
+		// Map<Object, String> sqlmap = new HashMap<>();
 		StringBuilder builder = new StringBuilder();
 
 		for (Integer rowindex : TreeFrame.tablevalues.keySet()) {
@@ -258,9 +261,11 @@ public class TreeTabledit {
 
 			Object old = TreeFrame.oldfirstvaluesList.get(rowindex);
 			if (old == null || old.toString().equals("null")) {
+				TreeFrame.sqlmap.put(rowindex, TreeTabledit.getinsertsql(rowvaluse, old, rowindex));
 				builder.append(TreeTabledit.getinsertsql(rowvaluse, old, rowindex) + "\n");
 			} else {
 
+				TreeFrame.sqlmap.put(rowindex, TreeTabledit.getupdatesql(rowvaluse, old, rowindex));
 				builder.append(TreeTabledit.getupdatesql(rowvaluse, old, rowindex) + "\n");
 			}
 
@@ -274,6 +279,7 @@ public class TreeTabledit {
 					+ TreeTabledit.table.getName() + " where " + TreeFrame.tablehead.elementAt(0) + ""
 					+ TreeTabledit.isnull(key) + ";";
 
+			TreeFrame.sqlmap.put(key, deletesql);
 			builder.append(deletesql);
 		}
 		return builder.toString();
@@ -294,7 +300,7 @@ public class TreeTabledit {
 	 *            第一行的old值
 	 * @return
 	 */
-	private static Object getupdatesql(Vector<Object> rowvaluse, Object old, Integer rowindex) {
+	private static String getupdatesql(Vector<Object> rowvaluse, Object old, Integer rowindex) {
 		// TODO Auto-generated method stub
 		StringBuilder builder = new StringBuilder();
 		builder.append("update " + TreeTabledit.table.getDb().getName() + "." + TreeTabledit.table.getName() + " set ");
@@ -325,7 +331,7 @@ public class TreeTabledit {
 	 *            第一行的old值
 	 * @return
 	 */
-	private static Object getinsertsql(Vector<Object> rowvaluse, Object old, Integer rowindex) {
+	private static String getinsertsql(Vector<Object> rowvaluse, Object old, Integer rowindex) {
 		// TODO Auto-generated method stub
 		StringBuilder builder = new StringBuilder();
 		builder.append(
@@ -345,7 +351,7 @@ public class TreeTabledit {
 		for (int i = 0; i < rowvaluse.size(); i++) {
 
 			String vvv = (String) rowvaluse.elementAt(i);
-			if (vvv.equals("null")) {
+			if (vvv == null || vvv.equals("null")) {
 
 				builder.append("" + "NULL" + ",");
 			} else
