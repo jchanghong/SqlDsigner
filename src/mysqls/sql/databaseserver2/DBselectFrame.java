@@ -13,9 +13,7 @@ import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,6 +30,7 @@ import mysqls.contanst.UIconstant;
 import mysqls.framework.GraphFrame;
 import mysqls.graph.ClassNode;
 import mysqls.sql.entity.TableCompertor;
+import mysqls.sql.util.MYsqlStatementUtil;
 import mysqls.sql.util.SQLCreator;
 
 /**
@@ -209,20 +208,24 @@ public class DBselectFrame {
 			e.printStackTrace();
 		}
 
-		list.stream().map(aa -> aa.mTable).sorted(new TableCompertor()).map(bb -> SQLCreator.create(bb)).
+		StringBuilder builder = new StringBuilder();
+		list.stream().map(aa -> aa.mTable).sorted(new TableCompertor()).forEach(a -> {
+			builder.append(SQLCreator.create(a));
+		});
+		MYsqlStatementUtil.getsql2exe(builder.toString()).forEach(a -> {
 
-				flatMap(t -> Arrays.asList(t.split(";")).stream()).collect(Collectors.toList()).forEach(string -> {
-
-					System.out.println(string);
-					try {
-						DBselectFrame.statement.execute(string);
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				});
-
+			try {
+				System.out.println(a);
+				DBselectFrame.statement.execute(a);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, e.getMessage());
+				e.printStackTrace();
+			}
+		});
+		DBselectFrame.getui().setVisible(false);
 		JOptionPane.showMessageDialog(null, "导入成功！！！！");
+
 	}
 
 	/**

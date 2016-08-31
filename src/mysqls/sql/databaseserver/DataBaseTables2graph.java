@@ -144,6 +144,10 @@ abstract public class DataBaseTables2graph {
 				column.setName(columnName);
 				if (pkcolumns.contains(columnName)) {
 					column.setPrimarykey(true);
+					column.setUnique(true);
+				} else {
+					column.setPrimarykey(false);
+					column.setUnique(false);
 				}
 				// 获得指定列的数据类型名
 				String columnTypeName = data.getColumnTypeName(i);
@@ -161,7 +165,14 @@ abstract public class DataBaseTables2graph {
 				// boolean isCurrency = data.isCurrency(i);
 				// 是否为空
 				int isNullable = data.isNullable(i);
-				column.setNotnull(isAutoInctement);
+				if (ResultSetMetaData.columnNoNulls == isNullable) {
+
+					column.setNotnull(true);
+				} else {
+					column.setNotnull(false);
+
+				}
+
 				// 是否为只读
 				// boolean isReadOnly = data.isReadOnly(i);
 				// 能否出现在where中

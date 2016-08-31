@@ -31,7 +31,11 @@ public class TreeFrame {
 
 	public static JFrame me;
 	private static JPanel right;// 右边
+	/**
+	 * 记录sql语句，判断哪些语句执行成功,清空的时候这个list只清空执行成功的语句
+	 */
 	public static List<String> sqList;
+
 	/**
 	 * 记录下需要删除的行的第一列
 	 */
@@ -49,6 +53,7 @@ public class TreeFrame {
 	 */
 	public static Map<Integer, Object> oldfirstvaluesList;
 	static {
+		TreeFrame.sqList = new ArrayList<>();
 		TreeFrame.oldfirstvaluesList = new HashMap<>();
 		TreeFrame.keytodelete = new HashSet<>();
 		TreeFrame.tablehead = new Vector<>();
@@ -60,10 +65,6 @@ public class TreeFrame {
 	 */
 	public static JPanel getRight() {
 		return TreeFrame.right;
-	}
-
-	static {
-		TreeFrame.sqList = new ArrayList<>();
 	}
 
 	public static void main(String[] args) {

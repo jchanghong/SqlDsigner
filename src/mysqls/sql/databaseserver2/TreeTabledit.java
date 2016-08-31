@@ -41,6 +41,7 @@ public class TreeTabledit {
 	private static boolean hasNew = true;
 
 	public static void edittable(MYtreeNodeTable table) {
+		TreeSQLedit.settext("");
 		TreeTabledit.table = table;
 		try {
 
@@ -185,7 +186,7 @@ public class TreeTabledit {
 
 								String insertsql = TreeTabledit.getinsersql(v1, data2, table);
 								System.out.println(insertsql);
-								TreeFrame.sqList.add(insertsql);
+								// TreeFrame.sqList.add(insertsql);
 							}
 
 						}
@@ -238,7 +239,7 @@ public class TreeTabledit {
 	 * @param elementAt
 	 * @param table
 	 * @param v1
-	 *            根据frame里面的常量数据得到sql语句
+	 *            根据frame里面的常量数据得到sql语句，只有这个函数才是外部调用
 	 * @param newdata
 	 * @param cindex
 	 * @return
@@ -249,7 +250,8 @@ public class TreeTabledit {
 
 		for (Integer rowindex : TreeFrame.tablevalues.keySet()) {
 			Vector<Object> rowvaluse = TreeFrame.tablevalues.get(rowindex);
-			if (MYtableUtil.isallnull(rowvaluse) || rowvaluse.elementAt(0).equals("null")) {
+			// 全部是null，bu插入
+			if (MYtableUtil.isallnull(rowvaluse)) {
 				continue;
 
 			}

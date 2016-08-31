@@ -28,7 +28,7 @@ import mysqls.contanst.ConnectINFO;
 import mysqls.framework.GraphFrame;
 
 /**
- * @author 长宏 tree列表
+ * @author 长宏树形 tree列表
  *
  */
 public class TreeLeft {
@@ -93,6 +93,7 @@ public class TreeLeft {
 			}
 			if (object == jMenuload) {
 				MYtreeNodeDB db = (MYtreeNodeDB) node;
+				TreeFrame.me.setVisible(false);
 				GraphFrame.me.sql2graph(db.geTablesdata());
 			}
 			if (object == jItemresh) {

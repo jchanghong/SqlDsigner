@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -22,6 +24,7 @@ import javax.swing.text.StyledDocument;
 
 import mysqls.contanst.ConnectINFO;
 import mysqls.sql.ui.MYdialogSwing;
+import mysqls.sql.util.MYsqlStatementUtil;
 
 /**
  * @author 长宏 sql执行和编辑
@@ -46,7 +49,7 @@ public class TreeSQLedit {
 			TreeSQLedit.jPanel.add(buttons, BorderLayout.SOUTH);
 			// sqlEdit记录所要操作的sql语句
 
-			// 确定按钮执行所有的sql语句
+			// 确定按钮产生sql语句
 			apply.addActionListener(new ActionListener() {
 
 				@Override
@@ -54,8 +57,14 @@ public class TreeSQLedit {
 					// TODO Auto-generated method stub
 					try {
 						String sql = TreeTabledit.getupdqtesql();
-						System.out.println(sql);
-						TreeSQLedit.settext(sql);
+						for (String string : sql.split(";")) {
+
+							String temp = string.trim();
+							if (temp != null && temp.length() > 2) {
+								TreeFrame.sqList.add(temp);
+							}
+						}
+						TreeSQLedit.settext(MYsqlStatementUtil.tostring(TreeFrame.sqList));
 
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
@@ -144,7 +153,7 @@ public class TreeSQLedit {
 	public static void exesql(ActionEvent actionEvent) {
 
 		boolean nowrong = true;
-		if (TreeSQLedit.sql == null || TreeSQLedit.sql.trim().length() < 2) {
+		if (TreeFrame.sqList.size() < 0) {
 			JOptionPane.showMessageDialog(null, "没有sql语句！！！");
 			return;
 
@@ -166,12 +175,11 @@ public class TreeSQLedit {
 			nowrong = false;
 			e.printStackTrace();
 		}
-		for (String aString : TreeSQLedit.sql.split(";")) {
-			if (aString.trim().length() < 2) {
-				continue;
-			}
+		List<String> templist = new ArrayList<>(TreeFrame.sqList);
+		for (String aString : templist) {
 			try {
-				statement.execute(aString.trim());
+				statement.execute(aString);
+				TreeFrame.sqList.remove(aString);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -179,14 +187,14 @@ public class TreeSQLedit {
 				nowrong = false;
 			}
 		}
-		TreeSQLedit.settext("");
+		TreeSQLedit.settext(MYsqlStatementUtil.tostring(TreeFrame.sqList));
 		if (nowrong) {
 
 			JOptionPane.showMessageDialog(null, "执行sql成功！！！");
 		}
 		TreeFrame.keytodelete.clear();
 		TreeFrame.oldfirstvaluesList.clear();
-		TreeFrame.sqList.clear();
+		// TreeFrame.sqList.clear();
 		TreeFrame.tablevalues.clear();
 
 	}

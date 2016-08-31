@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import mysqls.framework.PersistenceService;
+import mysqls.sql.entity.DataType;
 import mysqls.sql.entity.DataTypeUI;
 import mysqls.sql.entity.EdgeData;
 import mysqls.sql.entity.Table;
@@ -115,7 +116,7 @@ public final class SqlToTable2 {
 
 	/**
 	 * @param string
-	 *            name int not null 这样的
+	 *            name int not null 这样的的格式
 	 * @return
 	 */
 	private static TableColumn getaColumn(String string) {
@@ -136,6 +137,7 @@ public final class SqlToTable2 {
 		String pprymary = "\\s*PRIMARY\\s+key\\s*";
 		String punik = "\\s+unique\\s*";
 		String pforien = "\\s+FOREIGN\\s+key\\s*";
+		String pautincrement = "\\s+AUTO_INCREMENT\\s*";
 		Pattern pattern = Pattern.compile(pnotnull, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(string);
 		if (matcher.find()) {
@@ -157,6 +159,12 @@ public final class SqlToTable2 {
 		matcher = pattern.matcher(string);
 		if (matcher.find()) {
 			column.setForeignKey(true);
+		}
+
+		pattern = Pattern.compile(pautincrement, Pattern.CASE_INSENSITIVE);
+		matcher = pattern.matcher(string);
+		if (matcher.find() && column.getType().equals(DataType.INT)) {
+			column.setAutoadd(true);
 		}
 		return column;
 	}

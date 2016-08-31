@@ -24,6 +24,7 @@ import mysqls.sql.databaseserver2.DBselectFrame;
 import mysqls.sql.databaseserver2.MainUI;
 import mysqls.sql.databaseserver2.TreeFrame;
 import mysqls.sql.entity.Table;
+import mysqls.sql.entity.TableCompertor;
 import mysqls.sql.sqlreader.StatementUtil;
 import mysqls.sql.util.SQLCreator;
 
@@ -90,6 +91,7 @@ public class GraphFrame extends JInternalFrame {
 		list.stream().forEach(a -> {
 			builder.append(SQLCreator.create(a));
 		});
+		// System.out.println("in sql2grph():\n" + builder.toString());
 		aPanel.aGraph = PersistenceService.readSQL(builder.toString(), aPanel.aGraph);
 
 		aPanel.updateui();
@@ -106,9 +108,10 @@ public class GraphFrame extends JInternalFrame {
 			return;
 		}
 		StringBuilder builder = new StringBuilder();
-		for (ClassNode classNode : list) {
-			builder.append(SQLCreator.create(classNode.mTable));
-		}
+		list.stream().map(a -> a.mTable).sorted(new TableCompertor()).forEach(b -> {
+
+			builder.append(SQLCreator.create(b));
+		});
 		msSqlEditPane.setsql(builder.toString());
 
 	}
