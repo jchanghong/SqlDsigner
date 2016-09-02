@@ -96,7 +96,7 @@ public class WelcomeTab extends JInternalFrame {
 		setComponentPopupMenu(null); // Removes the system pop-up menu full of
 
 		// disabled buttons.
-		ImagePanle.setbj(this, "mainIcon/bj2.jpg");
+		ImagePanle.setbj(this, "mainIcon/bj4.png");
 	}
 
 	private JPanel getLeftPanel() {
