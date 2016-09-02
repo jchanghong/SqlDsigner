@@ -23,6 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
+import mysqls.sql.ui.ImagePanle;
+
 /**
  * @author
  *
@@ -92,7 +94,9 @@ public class WelcomeTab extends JInternalFrame {
 		add(panel, BorderLayout.NORTH);
 		add(getFootTextPanel(), BorderLayout.SOUTH);
 		setComponentPopupMenu(null); // Removes the system pop-up menu full of
-										// disabled buttons.
+
+		// disabled buttons.
+		ImagePanle.setbj(this, "mainIcon/bj2.jpg");
 	}
 
 	private JPanel getLeftPanel() {

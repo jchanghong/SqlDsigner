@@ -16,10 +16,11 @@ public class UIconstant {
 
 	public static final String MAIN = "MAIN";
 	/**
-	 * 如何到main界面的,1是自己，2是数据库，3是tree frame
+	 * 如何到main界面的,1是自己，2是数据库，3是tree frame，4是mysqlvariable
 	 */
 	public static String WHY_Main = "1";
 	public static final String ALLdatable = "alldatables";
+	public static final String Framevariable = "VARIABLES";
 	public static final String ALLtable = "alltable";
 	public static final String viewTABLE = "view";
 	public static final String TREEUI = "viewTREE";
@@ -27,6 +28,7 @@ public class UIconstant {
 	static {
 		UIconstant.frames = new HashMap<>();
 		UIconstant.frames.put(UIconstant.MAIN, null);
+		UIconstant.frames.put(UIconstant.Framevariable, null);
 		UIconstant.frames.put(UIconstant.ALLdatable, null);
 		UIconstant.frames.put(UIconstant.ALLtable, null);
 		UIconstant.frames.put(UIconstant.viewTABLE, null);

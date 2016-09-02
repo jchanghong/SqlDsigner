@@ -24,6 +24,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
@@ -114,6 +115,9 @@ public class MainUI {
 							String[] urls = str.split("\\|");
 							ConnectINFO.connection = DriverManager.getConnection(urls[0], urls[1], urls[2]);
 
+							ConnectINFO.url = urls[0];
+							ConnectINFO.user = urls[1];
+							ConnectINFO.passworld = urls[2];
 							// GraphFrame.me.loaddatabasealltables();
 							MainUI.onclickOpen();
 
@@ -121,6 +125,7 @@ public class MainUI {
 							// MainUI.opendbUI();
 						} catch (Exception e1) {
 
+							JOptionPane.showMessageDialog(null, "链接失败\n" + e1.getMessage());
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						} finally {
@@ -349,6 +354,10 @@ public class MainUI {
 		if (why.equals("2")) {
 
 			GraphFrame.me.graph2dbmenu();
+
+		}
+		if (why.equals("4")) {
+			GraphFrame.me.mysqlvariablemenu();
 		} else {
 			GraphFrame.me.loaddatabasealltables();
 

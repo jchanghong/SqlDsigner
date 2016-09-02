@@ -152,7 +152,7 @@ public class EditorFrame extends JFrame {
 		createEditMenu(factory);
 		createViewMenu(factory);
 		createSQLmnu();// sqlmenu，
-		createdatabasemenu();// ,,,,
+		createdatabasemenu();// 数据库服务的enu
 		createHelpMenu(factory);
 	}
 
@@ -213,6 +213,18 @@ public class EditorFrame extends JFrame {
 			}
 		});
 		dbMenu.add(graph2db);
+
+		JMenuItem mysql = new JMenuItem("mysql状态变量");
+		mysql.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				GraphFrame frame = (GraphFrame) aTabbedPane.getSelectedComponent();
+				frame.mysqlvariablemenu();
+			}
+		});
+		dbMenu.add(mysql);
 
 	}
 
