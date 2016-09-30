@@ -1,5 +1,7 @@
 package mysqls;
 
+import mysqls.ui.ToolPanel;
+import mysqls.ui.Toolitem;
 import org.fife.ui.autocomplete.*;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
@@ -23,6 +25,10 @@ public class Main extends JFrame {
 //        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         textArea.setCodeFoldingEnabled(true);
         contentPane.add(new RTextScrollPane(textArea));
+        JPanel boot = new JPanel();
+      contentPane.add(boot,BorderLayout.SOUTH);
+//        contentPane.add(new JButton("jdjjdj"),BorderLayout.NORTH);
+        contentPane.add(new ToolPanel(boot),BorderLayout.NORTH);
 
         // A CompletionProvider is what knows of all possible completions, and
         // analyzes the contents of the text area at the caret position to
