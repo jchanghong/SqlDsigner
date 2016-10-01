@@ -11,13 +11,7 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.swing.JButton;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
@@ -57,6 +51,9 @@ public class TreeLeft {
 	public static JPanel me;
 
 	public static JPanel getui() {
+		Icon icon = new ImageIcon(TreeLeft.class.getClassLoader().getResource("database/treedata.png"));
+		UIManager.put("Tree.closedIcon", icon);
+		UIManager.put("Tree.openIcon", icon);
 		JPanel panel = new JPanel();
 		TreeLeft.me = panel;
 		JScrollPane jScrollPane = new JScrollPane();

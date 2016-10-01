@@ -15,7 +15,7 @@ public class Toolitem extends JPanel {
     JPanel maincenter;
 
 
-    public Toolitem(String action, String image,JPanel panel,JPanel mainparent) {
+    public Toolitem(String action, String image,JPanel panel,JPanel mainparent,ToolChangeLister lister) {
         super();
         this.action=action;
         this.imgae=image;
@@ -38,9 +38,11 @@ public class Toolitem extends JPanel {
                 super.mouseClicked(e);
                 System.out.println("jdjdjj");
 
+                lister.onchange(Toolitem.this);
                 mainparent.removeAll();
                 mainparent.add(panel);
                 mainparent.invalidate();
+//                mainparent.repaint();
                 mainparent.updateUI();
 
             }
@@ -54,6 +56,7 @@ public class Toolitem extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 Toolitem.this.setBackground(Color.blue);
+
                 super.mousePressed(e);
             }
 
@@ -70,6 +73,9 @@ public class Toolitem extends JPanel {
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
+                if (ToolPanel.current != null && ToolPanel.current == Toolitem.this) {
+                    return;
+                }
                 Toolitem.this.setOpaque(false);
                 Toolitem.this.updateUI();
 
@@ -110,4 +116,6 @@ public class Toolitem extends JPanel {
     public void setMaincenter(JPanel maincenter) {
         this.maincenter = maincenter;
     }
+
+
 }
