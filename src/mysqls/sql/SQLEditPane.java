@@ -15,7 +15,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.StyledDocument;
 
-import mysqls.framework.GraphFrame;
+import mysqls.ui_mainitem.GraphFrame;
 
 /**
  * @author jiang sql edit面板

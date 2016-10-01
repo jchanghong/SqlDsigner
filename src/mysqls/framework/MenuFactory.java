@@ -15,7 +15,7 @@ import javax.swing.KeyStroke;
  * 这个根据资源文件来设置menu文字，国际化 A class for creating menus from strings in a resource
  * bundle.
  */
-class MenuFactory {
+public class MenuFactory {
 	private ResourceBundle aBundle;
 	private final String aSystem;
 
@@ -23,7 +23,7 @@ class MenuFactory {
 	 * @param pBundle
 	 *            The bundle to use to fetch resources.
 	 */
-	MenuFactory(ResourceBundle pBundle) {
+	public MenuFactory(ResourceBundle pBundle) {
 		aBundle = pBundle;
 		aSystem = System.getProperty("os.name").toLowerCase();
 	}

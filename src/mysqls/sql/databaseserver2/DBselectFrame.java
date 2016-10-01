@@ -27,7 +27,7 @@ import javax.swing.WindowConstants;
 
 import mysqls.contanst.ConnectINFO;
 import mysqls.contanst.UIconstant;
-import mysqls.framework.GraphFrame;
+import mysqls.ui_mainitem.GraphFrame;
 import mysqls.graph.ClassNode;
 import mysqls.sql.entity.TableCompertor;
 import mysqls.sql.util.MYsqlStatementUtil;

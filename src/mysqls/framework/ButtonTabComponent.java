@@ -1,5 +1,7 @@
 package mysqls.framework;
 
+import mysqls.ui_frame.MainFrame;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
@@ -50,26 +52,26 @@ public class ButtonTabComponent extends JPanel {
 			}
 		}
 	};
-	private final EditorFrame aEditorFrame;
+	private final MainFrame aMainFrame;
 	private final JInternalFrame aJInternalFrame;
 	private final JTabbedPane aPane;
 
 	/**
-	 * @param pEditorFrame
-	 *            The EditorFrame that houses the JTabbedView.
+	 * @param pMainFrame
+	 *            The MainFrame that houses the JTabbedView.
 	 * @param pJInternalFrame
 	 *            The JInternalFrame that maps to this Button.
 	 * @param pJTabbedPane
 	 *            The JTabbedPane where this button will be placed.
 	 */
-	public ButtonTabComponent(EditorFrame pEditorFrame, JInternalFrame pJInternalFrame,
+	public ButtonTabComponent(MainFrame pMainFrame, JInternalFrame pJInternalFrame,
 			final JTabbedPane pJTabbedPane) {
 		// unset default FlowLayout' gaps
 		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		if (pEditorFrame == null) {
-			throw new NullPointerException("EditorFrame is null");
+		if (pMainFrame == null) {
+			throw new NullPointerException("MainFrame is null");
 		}
-		aEditorFrame = pEditorFrame;
+		aMainFrame = pMainFrame;
 		if (pJInternalFrame == null) {
 			throw new NullPointerException("GraphFrame is null");
 		}
@@ -127,7 +129,7 @@ public class ButtonTabComponent extends JPanel {
 		public void actionPerformed(ActionEvent pEvent) {
 			int i = aPane.indexOfTabComponent(ButtonTabComponent.this);
 			if (i != -1) {
-				aEditorFrame.close(aJInternalFrame);
+				aMainFrame.close(aJInternalFrame);
 			}
 		}
 

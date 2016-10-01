@@ -22,6 +22,7 @@ import javax.swing.text.StyledDocument;
 
 import mysqls.contanst.ConnectINFO;
 import mysqls.sql.ui.MYdialogSwing;
+import mysqls.ui_mainitem.TreeFrame;
 
 /**
  * @author 长宏 sql执行和编辑

@@ -34,8 +34,9 @@ import javax.swing.WindowConstants;
 
 import mysqls.contanst.ConnectINFO;
 import mysqls.contanst.UIconstant;
-import mysqls.framework.GraphFrame;
+import mysqls.ui_mainitem.GraphFrame;
 import mysqls.sql.util.MyIOutil;
+import mysqls.ui_mainitem.TreeFrame;
 
 /**
  * @author 长宏 链接服务器的主mune。

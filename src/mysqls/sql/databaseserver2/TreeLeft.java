@@ -25,7 +25,8 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import mysqls.contanst.ConnectINFO;
-import mysqls.framework.GraphFrame;
+import mysqls.ui_mainitem.GraphFrame;
+import mysqls.ui_mainitem.TreeFrame;
 
 /**
  * @author 长宏树形 tree列表

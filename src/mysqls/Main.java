@@ -1,7 +1,6 @@
 package mysqls;
 
-import mysqls.ui.ToolPanel;
-import mysqls.ui.Toolitem;
+import mysqls.ui_frame.ToolPanel;
 import org.fife.ui.autocomplete.*;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;

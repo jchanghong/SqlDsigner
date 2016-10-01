@@ -42,6 +42,8 @@ import mysqls.graph.Graph;
 import mysqls.graph.GraphElement;
 import mysqls.graph.Node;
 import mysqls.sql.entity.Table;
+import mysqls.ui_mainitem.GraphPanel;
+import mysqls.ui_frame.MainFrame;
 
 /**
  * A collapsible tool bar than contains various tools and optional command
@@ -346,10 +348,10 @@ public class ToolBar extends JPanel {
 	private void copyToClipboard() {
 		// Obtain the editor frame by going through the component graph
 		Container parent = getParent();
-		while (parent.getClass() != EditorFrame.class) {
+		while (parent.getClass() != MainFrame.class) {
 			parent = parent.getParent();
 		}
-		((EditorFrame) parent).copyToClipboard();
+		((MainFrame) parent).copyToClipboard();
 	}
 
 	private void createExpandButton() {

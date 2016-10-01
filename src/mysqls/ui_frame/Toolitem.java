@@ -1,4 +1,4 @@
-package mysqls.ui;
+package mysqls.ui_frame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,9 +9,18 @@ import java.awt.event.MouseEvent;
  * Created by jiang on 2016/9/30 0030.
  */
 public class Toolitem extends JPanel {
+    String action;
+    String imgae;
+    JPanel actionpanel;
+    JPanel maincenter;
+
 
     public Toolitem(String action, String image,JPanel panel,JPanel mainparent) {
         super();
+        this.action=action;
+        this.imgae=image;
+        this.actionpanel=panel;
+        this.maincenter=mainparent;
         setBackground(Color.gray);
         setLayout(new BorderLayout());
         JLabel button = new JLabel();
@@ -36,6 +45,17 @@ public class Toolitem extends JPanel {
 
             }
 
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                Toolitem.this.setBackground(Color.gray);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Toolitem.this.setBackground(Color.blue);
+                super.mousePressed(e);
+            }
 
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -59,4 +79,35 @@ public class Toolitem extends JPanel {
 
     }
 
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public String getImgae() {
+        return imgae;
+    }
+
+    public void setImgae(String imgae) {
+        this.imgae = imgae;
+    }
+
+    public JPanel getActionpanel() {
+        return actionpanel;
+    }
+
+    public void setActionpanel(JPanel actionpanel) {
+        this.actionpanel = actionpanel;
+    }
+
+    public JPanel getMaincenter() {
+        return maincenter;
+    }
+
+    public void setMaincenter(JPanel maincenter) {
+        this.maincenter = maincenter;
+    }
 }

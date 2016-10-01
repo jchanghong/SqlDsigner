@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import mysqls.contanst.ConnectINFO;
+import mysqls.ui_mainitem.TreeFrame;
 
 /**
  * @author 长宏 编辑数据

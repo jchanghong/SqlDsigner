@@ -10,6 +10,7 @@ import mysqls.graph.Edge;
 import mysqls.graph.Graph;
 import mysqls.graph.GraphElement;
 import mysqls.graph.Node;
+import mysqls.ui_mainitem.GraphPanel;
 
 /**
  * @author Martin P. Robillard

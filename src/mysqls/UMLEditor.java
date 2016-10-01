@@ -9,7 +9,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import mysqls.diagrams.ClassDiagramGraph;
-import mysqls.framework.EditorFrame;
+import mysqls.ui_frame.MainFrame;
 
 /**
  * 启动类，主要功能不在这里。
@@ -39,7 +39,7 @@ public final class UMLEditor {
 			@Override
 			public void run() {
 				UMLEditor.setLookAndFeel();// 设置界面感官。
-				EditorFrame frame = new EditorFrame(UMLEditor.class);
+				MainFrame frame = new MainFrame(UMLEditor.class);
 				frame.addGraphType("class_diagram", ClassDiagramGraph.class);
 				frame.setVisible(true);// 使界面可视。
 				frame.readArgs(arguments);// 读取命令。

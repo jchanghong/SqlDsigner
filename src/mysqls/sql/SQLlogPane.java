@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import mysqls.framework.GraphFrame;
+import mysqls.ui_mainitem.GraphFrame;
 
 /**
  * @author jiang sql日志面板

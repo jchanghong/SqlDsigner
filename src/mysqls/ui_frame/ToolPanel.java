@@ -1,4 +1,4 @@
-package mysqls.ui;
+package mysqls.ui_frame;
 
 import javax.swing.*;
 import java.awt.*;

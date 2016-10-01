@@ -20,7 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import mysqls.framework.GraphFrame;
+import mysqls.ui_mainitem.GraphFrame;
 import mysqls.sql.entity.Table;
 
 public class OperationTable {

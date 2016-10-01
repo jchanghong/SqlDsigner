@@ -71,7 +71,7 @@ public class UndoManager {
 	 * Pops most recent undone command and executes it. Holds changes so no new
 	 * commands are added during this. Adds the command to the redone stack.
 	 */
-	void redoCommand() {
+	public void redoCommand() {
 		aHoldChanges = true;
 		if (aUndoneCommands.empty()) {
 			return;

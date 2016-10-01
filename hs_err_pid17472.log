@@ -323,14 +323,14 @@ Dynamic libraries:
 
 VM Arguments:
 jvm_args: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:65483 -Dfile.encoding=UTF-8 
-java_command: mysqls.sql.databaseserver2.TreeFrame
-java_class_path (initial): C:\Users\³¤ºê\git\UMLforSQL\bin;C:\Program Files (x86)\MySQL\Connector.J 5.1\mysql-connector-java-5.1.39-bin.jar
+java_command: mysqls.ui_mainitem.TreeFrame
+java_class_path (initial): C:\Users\ï¿½ï¿½ï¿½ï¿½\git\UMLforSQL\bin;C:\Program Files (x86)\MySQL\Connector.J 5.1\mysql-connector-java-5.1.39-bin.jar
 Launcher Type: SUN_STANDARD
 
 Environment Variables:
 JAVA_HOME=C:\Program Files\Java\jdk1.8.0_91
 PATH=C:\Program Files\Java\jdk1.8.0_91\jre\bin;C:/Program Files/Java/jre1.8.0_101/bin/server;C:/Program Files/Java/jre1.8.0_101/bin;C:/Program Files/Java/jre1.8.0_101/lib/amd64;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 & MySQL Utilities 1.5\;C:\Program Files (x86)\MySQL\MySQL Fabric 1.5 & MySQL Utilities 1.5\Doctrine extensions for PHP\;C:\Program Files\Git\cmd;D:\ide\apache-maven-3.3.9-bin\apache-maven-3.3.9\bin;D:\ide\gradle-2.14.1\bin;D:\ide\eclipse;
-USERNAME=³¤ºê
+USERNAME=ï¿½ï¿½ï¿½ï¿½
 OS=Windows_NT
 PROCESSOR_IDENTIFIER=AMD64 Family 18 Model 1 Stepping 0, AuthenticAMD
 
