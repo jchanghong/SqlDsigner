@@ -1,15 +1,12 @@
 package mysqls.ui_mainitem;
 
-import mysqls.Main;
-import mysqls.contanst.ConnectINFO;
-import mysqls.ui_frame.ToolPanel;
+import mysqls.ui_util.sql_complement;
 import org.fife.ui.autocomplete.*;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 
 /**
@@ -50,34 +47,12 @@ public class SQLeditPanel extends JPanel {
         // CompletionProviders, instances of AutoCompletion cannot be shared
         // among multiple text components.
         AutoCompletion ac = new AutoCompletion(provider);
-
         ac.setAutoCompleteEnabled(true);
         ac.setAutoActivationEnabled(true);
-        ac.setAutoActivationDelay(100);
-        ac.addAutoCompletionListener(new AutoCompletionListener() {
-            @Override
-            public void autoCompleteUpdate(AutoCompletionEvent autoCompletionEvent) {
-//                System.out.println("shdhdh"+autoCompletionEvent.toString());
-
-            }
-        });
-
+        ac.setAutoActivationDelay(10);
         ac.install(textArea);
         setOpaque(false);
 
-    }
-
-    private  class Myproter extends DefaultCompletionProvider {
-        @Override
-        public boolean isAutoActivateOkay(JTextComponent tc) {
-//            return super.isAutoActivateOkay(tc);
-            String dd=   getAlreadyEnteredText(tc);
-            System.out.println(dd);
-            if (dd.equals("")) {
-                return  true;
-            }
-            return  false;
-        }
     }
     /**
      * Create a simple provider that adds some Java-related completions.
@@ -89,20 +64,21 @@ public class SQLeditPanel extends JPanel {
         // language semantics. It simply checks the text entered up to the
         // caret position for a match against known completions. This is all
         // that is needed in the majority of cases.
-        Myproter provider = new Myproter();
+        sql_complement provider = new sql_complement();
 
         // Add completions for all Java keywords. A BasicCompletion is just
         // a straightforward word completion.
-        provider.addCompletion(new BasicCompletion(provider, "abstract"));
-        provider.addCompletion(new BasicCompletion(provider, "assert"));
-        provider.addCompletion(new BasicCompletion(provider, "break"));
-        provider.addCompletion(new BasicCompletion(provider, "case"));
+        provider.addCompletion(new BasicCompletion(provider, "select"));
+        provider.addCompletion(new BasicCompletion(provider, "drop"));
+        provider.addCompletion(new BasicCompletion(provider, "table1"));
+        provider.addCompletion(new BasicCompletion(provider, "table2"));
         // ... etc ...
-        provider.addCompletion(new BasicCompletion(provider, "transient"));
-        provider.addCompletion(new BasicCompletion(provider, "try"));
-        provider.addCompletion(new BasicCompletion(provider, "void"));
-        provider.addCompletion(new BasicCompletion(provider, "volatile"));
-        provider.addCompletion(new BasicCompletion(provider, "while"));
+        provider.addCompletion(new BasicCompletion(provider, "c1"));
+        provider.addCompletion(new BasicCompletion(provider, "c2"));
+        provider.addCompletion(new BasicCompletion(provider, "c3"));
+        provider.addCompletion(new BasicCompletion(provider, "*"));
+        provider.addCompletion(new BasicCompletion(provider, "db1"));
+        provider.addCompletion(new BasicCompletion(provider, "db2"));
 
         // Add a couple of "shorthand" completions. These completions don't
         // require the input text to be the same thing as the replacement text.
