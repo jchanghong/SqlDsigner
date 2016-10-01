@@ -7,6 +7,7 @@ import mysqls.contanst.ConnectINFO;
 import mysqls.contanst.UIconstant;
 import mysqls.sql.util.MyIOutil;
 import mysqls.ui_frame.MainleftPanel;
+import mysqls.ui_util.UI_color;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,43 +16,47 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 /**
- * @author 长宏 链接服务器的主mune。
+ * @author 长宏 链接服务器的主面板。
  *
  */
-public class ConnectPanel {
-    private static JPanel panel = null;
-
-    public static JPanel getui() {
-        if (panel != null) {
-            return panel;
-        }
-
-
+public class ConnectPanel extends JPanel{
+    private static ConnectPanel panel = null;
+    private ConnectPanel() {
+        getui();
+    }
+    public static ConnectPanel getInstance() {
         if (panel == null) {
-            // TODO Auto-generated method stub
-            panel = new JPanel();
-            JLabel jLabel1 = new JLabel("选择数据库连接:");
+            panel = new ConnectPanel();
+        }
+        return panel;
+    }
+    /*设置ui*/
+    private  void getui() {
+        setBackground(Color.WHITE);
+        setOpaque(true);
+            JLabel jLabel1 = new JLabel("选择数据库类型：");
             JRadioButton mysql = new JRadioButton("mysql");
             JRadioButton oracle = new JRadioButton("oracle");
             JRadioButton sqlsever = new JRadioButton("SQL Sever");
             ButtonGroup dbsevergroup = new ButtonGroup();
-            JLabel uname = new JLabel("用户名");
-            JLabel pwd = new JLabel("密    码");
-            JLabel ipLabel = new JLabel("ip地址");
-            JLabel portLabel = new JLabel("端   口");
-            JTextField ipField = new JTextField("127.0.0.1", 10);// ip地址的输入
-            JTextField dbportField = new JTextField("3306", 10);// 端口号的输入
-            JTextField usernameField = new JTextField(10);
-            JPasswordField passwordField = new JPasswordField(10);
-            JLabel recentLink = new JLabel("最近连接");
-            JTextArea linkRecord = new JTextArea(7, 7);
-            linkRecord.setBounds(200, 50, 7, 0);
+            JLabel uname = new JLabel("用户名：");
+            JLabel pwd = new JLabel("密    码：");
+            JLabel ipLabel = new JLabel("ip地址：");
+            JLabel portLabel = new JLabel("端   口：");
+            JTextField ipField = new JTextField("127.0.0.1", 15);// ip地址的输入
+            JTextField dbportField = new JTextField("3306", 15);// 端口号的输入
+            JTextField usernameField = new JTextField(15);
+            JPasswordField passwordField = new JPasswordField(15);
+            JLabel recentLink = new JLabel("最近连接：");
+            JTextArea linkRecord = new JTextArea(7, 15);
+//            linkRecord.setBounds(200, 50, 7, 0);
             linkRecord.setEditable(false);
             ipField.setEditable(true);
             dbportField.setEditable(true);
@@ -77,7 +82,7 @@ public class ConnectPanel {
                 }
             }
             for (String string : allrecord) {
-                linkRecord.append(mysqls.sql.databaseserver2.MainUI.getrect2(string));
+                linkRecord.append(getrect2(string));
                 linkRecord.append("\n");
             }
             linkRecord.addMouseListener(new MouseAdapter() {
@@ -93,7 +98,7 @@ public class ConnectPanel {
                             String select = linkRecord.getSelectedText();
 
                             String str = null;
-                            str = mysqls.sql.databaseserver2.MainUI.geturl(select, allrecord);
+                            str = geturl(select, allrecord);
                             if (str == null) {
                                 return;
                             }
@@ -104,7 +109,6 @@ public class ConnectPanel {
                             ConnectINFO.getInstance().setUrl(urls[1]);
                             ConnectINFO.getInstance().setPassworld(urls[2]);
                             JOptionPane.showMessageDialog(null, "链接成功\n");
-                            MainleftPanel.getInstance().onconnect();
                         } catch (Exception e1) {
                             JOptionPane.showMessageDialog(null, "链接失败\n" + e1.getMessage());
                             // TODO Auto-generated catch block
@@ -139,22 +143,24 @@ public class ConnectPanel {
 
                         try {
 
-                            ConnectINFO.getInstance().setUrl(usernameField.getText());
+
+                            ConnectINFO.getInstance().setUser(usernameField.getText());
                             ConnectINFO.getInstance().setPassworld(passwordField.getText());
                             ConnectINFO.getInstance().setUrl("jdbc:" + ConnectINFO.getInstance().getDatabaseType() + "://" + ipField.getText() + ":"
                                     + dbportField.getText() + "/?characterEncoding=utf8&useSSL=true");
-                            ConnectINFO.getInstance().setConnection(DriverManager.getConnection(ConnectINFO.getInstance().getUrl(),
-                                    usernameField.getText(), passwordField.getText()));
-                            if (ConnectINFO.getInstance().getConnection() != null) {
+                            Connection c=DriverManager.getConnection(ConnectINFO.getInstance().getUrl(),
+                                    usernameField.getText(), passwordField.getText());
+
+                            if (c != null) {
+                                ConnectINFO.getInstance().setConnection(c);
                                 JOptionPane.showMessageDialog(null,"链接成功");
-                                MainleftPanel.getInstance().onconnect();
-                                mysqls.sql.databaseserver2.MainUI.savainfo(ConnectINFO.getInstance().getUrl(), ConnectINFO.getInstance().getUser(), ConnectINFO.getInstance().getPassworld());
+                                savainfo(ConnectINFO.getInstance().getUrl(), ConnectINFO.getInstance().getUser(), ConnectINFO.getInstance().getPassworld());
 
                             }
 
                         } catch (Exception e1) {
                             // TODO Auto-generated catch block
-                            JOptionPane.showMessageDialog(null,"链接失败");
+                            JOptionPane.showMessageDialog(null,"链接失败\n"+e1.getMessage());
                             e1.printStackTrace();
                         }
                     } catch (Exception e1) {
@@ -174,15 +180,26 @@ public class ConnectPanel {
             oracle.addActionListener(radioButtonListener);
             sqlsever.addActionListener(radioButtonListener);
 
-            JPanel jPanel = new JPanel(), jPanelNorth = new JPanel(new FlowLayout()),
+          JPanel   jPanelNorth = new JPanel(new FlowLayout()),
                     jPanelCenter = new JPanel(new GridLayout(4, 2, -25, 1)),
-                    jpanelEast = new JPanel(new BorderLayout()), jPanelSouth = new JPanel(new FlowLayout());
+                    jpanelEast = new JPanel(new BorderLayout()), jPanelSouth = new JPanel();
+        jpanelEast.setOpaque(false);
+        jPanelCenter.setOpaque(false);
+        jPanelNorth.setOpaque(false);
+        jPanelSouth.setOpaque(false);
 
-            jPanel.setLayout(new BorderLayout());
-            jPanel.add(jPanelNorth, BorderLayout.NORTH);
-            jPanel.add(jPanelCenter, BorderLayout.CENTER);
-            jPanel.add(jpanelEast, BorderLayout.EAST);
-            jPanel.add(jPanelSouth, BorderLayout.SOUTH);
+        JPanel mynouth = new JPanel(new BorderLayout());
+        mynouth.add(jPanelNorth,BorderLayout.CENTER);
+        mynouth.setOpaque(false);
+        Font font = new Font(Font.MONOSPACED, Font.BOLD, 30);
+        JLabel label = new JLabel("你可以双击最近链接列表的选项直接链接！！！");
+        label.setFont(font);
+        mynouth.add(label, BorderLayout.NORTH);
+            setLayout(new BorderLayout());
+            add(mynouth, BorderLayout.NORTH);
+            add(jPanelCenter, BorderLayout.CENTER);
+            add(jpanelEast, BorderLayout.EAST);
+            add(jPanelSouth, BorderLayout.SOUTH);
 
             jPanelNorth.add(jLabel1);
             jPanelNorth.add(mysql);
@@ -209,15 +226,9 @@ public class ConnectPanel {
             jPanelSouth.add(link);
             jPanelSouth.add(cancel);
 
-            panel.add(jPanel);
-            return panel;
+        UI_color.setcolorR(this);
         }
-
-        return panel;
-
-    }
-
-    private static void savainfo(String url, String user, String passworld) {
+    private  void savainfo(String url, String user, String passworld) {
         // TODO Auto-generated method stub
 
         String rec = url + "|" + user + "|" + passworld + "\n";
@@ -266,17 +277,17 @@ public class ConnectPanel {
      *            把mysql和user链接起来 格式；mysql2changhong
      * @param passworld
      */
-    private static String getrect(String url, String user) {
+    private  String getrect(String url, String user) {
         // TODO Auto-generated method stub
         String[] strings = url.split(":");
         return strings[1] + "2" + user;
 
     }
 
-    private static String getrect2(String urString) {
+    private  String getrect2(String urString) {
         // TODO Auto-generated method stub
         String[] strings = urString.split("\\|");
-        return mysqls.sql.databaseserver2.MainUI.getrect(strings[0], strings[1]);
+        return getrect(strings[0], strings[1]);
 
     }
 
@@ -285,7 +296,7 @@ public class ConnectPanel {
      *            mysql2changhong
      * @return url，user，pass
      */
-    private static String geturl(String rec, List<String> strings) {
+    private  String geturl(String rec, List<String> strings) {
 
         String[] all2 = rec.split("2");
         for (String string : strings) {
@@ -296,32 +307,5 @@ public class ConnectPanel {
 
         return null;
     }
-
-    private static void opendbUI() {
-        JFrame jFrame = TreeFrame.getui();
-        jFrame.setVisible(true);
-
-    }
-
-    public static void onclickOpen() {
-        String why = UIconstant.WHY_Main;
-        if (why.equals("1")) {
-
-            GraphFrame.me.loaddatabasealltables();
-        }
-        if (why.equals("2")) {
-
-            GraphFrame.me.graph2dbmenu();
-
-        }
-        if (why.equals("4")) {
-            GraphFrame.me.mysqlvariablemenu();
-        } else {
-            GraphFrame.me.loaddatabasealltables();
-
-        }
-
-    }
-
 }
 

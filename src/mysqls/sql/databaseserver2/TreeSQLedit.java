@@ -3,9 +3,7 @@
  */
 package mysqls.sql.databaseserver2;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -35,6 +33,7 @@ public class TreeSQLedit {
 
 		if (TreeSQLedit.jPanel == null) {
 			TreeSQLedit.jPanel = new JPanel(new BorderLayout());
+			jPanel.setBackground(Color.WHITE);
 
 			TreeSQLedit.gettextpanel();
 			TreeSQLedit.jPanel.add(new JScrollPane(TreeSQLedit.textPane), BorderLayout.CENTER);

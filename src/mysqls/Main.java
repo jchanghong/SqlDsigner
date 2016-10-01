@@ -1,5 +1,6 @@
 package mysqls;
 
+import mysqls.ui_frame.EmptyPanel;
 import mysqls.ui_frame.ToolPanel;
 import org.fife.ui.autocomplete.*;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -9,6 +10,8 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main extends JFrame {
 
@@ -121,7 +124,24 @@ public class Main extends JFrame {
                     String laf = UIManager.getSystemLookAndFeelClassName();
                     UIManager.setLookAndFeel(laf);
                 } catch (Exception e) { /* Never happens */ }
-                new Main().setVisible(true);
+//                new Main().setVisible(true);
+                JFrame frame = new JFrame();
+                JSplitPane jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, EmptyPanel.getInstance("ddddddd"), new JButton("ddd"));
+
+                frame.getContentPane().add(jSplitPane);
+                JButton button = new JButton("aa");
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        EmptyPanel.getInstance("444444");
+
+                    }
+                });
+                frame.add(button, BorderLayout.SOUTH);
+                frame.pack();
+                frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                frame.setVisible(true);
+
             }
         });
     }

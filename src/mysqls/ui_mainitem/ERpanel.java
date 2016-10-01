@@ -9,6 +9,7 @@ import mysqls.sql.SQLEditPane;
 import mysqls.sql.SQLlogPane;
 import mysqls.sql.databaseserver2.MYtreeNodeDB;
 import mysqls.sql.util.SQLCreator;
+import mysqls.ui_frame.EmptyPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,11 +32,21 @@ public class ERpanel extends JPanel implements ConnectINFOListener{
     }
 
     private ERpanel() {
-        ConnectINFO.addLister(this);
-
         setLayout(new BorderLayout());
+
+        ConnectINFO.addLister(this);
+        setOpaque(false);
         if (ConnectINFO.getInstance().getDatabaseName() == null) {
-            add(new JLabel("请选择数据库！！！"));
+            JLabel text ;
+            Icon icon = new ImageIcon(EmptyPanel.class.getClassLoader().getResource("database/datas.png"));
+            JLabel image = new JLabel(icon);
+            text = new JLabel("请先选择数据库！");
+            text.setHorizontalAlignment(SwingConstants.CENTER);
+            Font font = new Font(Font.MONOSPACED, Font.BOLD, 30);
+            text.setFont(font);
+            text.setVerticalAlignment(SwingConstants.CENTER);
+            add(image, BorderLayout.CENTER);
+            add(text, BorderLayout.NORTH);
             return;
         }
         MYtreeNodeDB db = new MYtreeNodeDB(ConnectINFO.getInstance().getDatabaseName());

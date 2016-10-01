@@ -50,13 +50,13 @@ public class TreeLeft {
 
 	public static JPanel me;
 
-	public static JPanel getui() {
+	public static JTree getui() {
 		Icon icon = new ImageIcon(TreeLeft.class.getClassLoader().getResource("database/treedata.png"));
 		UIManager.put("Tree.closedIcon", icon);
 		UIManager.put("Tree.openIcon", icon);
-		JPanel panel = new JPanel();
-		TreeLeft.me = panel;
-		JScrollPane jScrollPane = new JScrollPane();
+//		JPanel panel = new JPanel();
+//		TreeLeft.me = panel;
+//		JScrollPane jScrollPane = new JScrollPane();
 		MYtreeNodeRoot mYtreeNodeRoot = new MYtreeNodeRoot("root");
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode(mYtreeNodeRoot);
 		for (MYtreeNodeDB db : mYtreeNodeRoot.getdbs()) {
@@ -87,7 +87,8 @@ public class TreeLeft {
 			if (object == jitemedit) {
 				MYtreeNodeTable table = (MYtreeNodeTable) node;
 				System.out.println("edit table:" + table.getName());
-				TreeTabledit.edittable(table);
+				TreeTabledit.edittable(table,null);
+
 			}
 			if (object == jMenuload) {
 				MYtreeNodeDB db = (MYtreeNodeDB) node;
@@ -185,8 +186,7 @@ public class TreeLeft {
 		});
 
 		// jTree.setRootVisible(false);
-		jScrollPane = new JScrollPane(jTree);
-
+//		jScrollPane = new JScrollPane(jTree);
 		JButton button = new JButton("dddd");
 		button.addActionListener(e -> {
             // TODO Auto-generated method stub
@@ -194,9 +194,10 @@ public class TreeLeft {
             System.out.println(node.getUserObject().getClass().toString());
         });
 
-		panel.add(jScrollPane, BorderLayout.CENTER);
-		// panel.add(button, BorderLayout.EAST);
-		return panel;
+		return jTree;
+//		panel.add(jScrollPane, BorderLayout.CENTER);
+//		// panel.add(button, BorderLayout.EAST);
+//		return panel;
 	}
 
 	/**

@@ -94,6 +94,7 @@ public class GraphPanel extends JPanel {
 		setBackground(Color.WHITE);
 		addMouseListener(new GraphPanelMouseListener());
 		addMouseMotionListener(new GraphPanelMouseMotionListener());
+		setOpaque(false);
 	}
 
 	/**

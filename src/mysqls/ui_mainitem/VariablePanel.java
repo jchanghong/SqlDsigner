@@ -2,6 +2,7 @@ package mysqls.ui_mainitem;
 
 import mysqls.contanst.ConnectINFO;
 import mysqls.contanst.ConnectINFOListener;
+import mysqls.ui_frame.EmptyPanel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -33,11 +34,21 @@ public class VariablePanel extends JPanel implements ConnectINFOListener{
 
     private VariablePanel() {
         ConnectINFO.addLister(this);
+        setLayout(new BorderLayout());
         if (ConnectINFO.getInstance().getConnection() == null) {
-            add(new JLabel("请先链接数据库！！！"));
+            JLabel text ;
+            Icon icon = new ImageIcon(EmptyPanel.class.getClassLoader().getResource("database/datas.png"));
+            JLabel image = new JLabel(icon);
+            text = new JLabel("请先建立链接！");
+            text.setHorizontalAlignment(SwingConstants.CENTER);
+            Font font = new Font(Font.MONOSPACED, Font.BOLD, 30);
+            text.setFont(font);
+            text.setVerticalAlignment(SwingConstants.CENTER);
+            add(image, BorderLayout.CENTER);
+            add(text, BorderLayout.NORTH);
             return;
         }
-        add(getui());
+        getui();
 
     }
         private  String serch = "";
@@ -53,16 +64,15 @@ public class VariablePanel extends JPanel implements ConnectINFOListener{
          */
         private  JPanel getui() {
             // TODO Auto-generated method stub
-            JPanel re = new JPanel();
-            re.setLayout(new BorderLayout());
-            
+
+
             JPanel jPanel = new JPanel();
             jPanel.setLayout(new GridLayout(1, 0));
             JLabel serchlable = new JLabel("输入任意文字开始搜索：");
             final JTextField[] serch = {new JTextField(20)};
             jPanel.add(serchlable);
             jPanel.add(serch[0]);
-            serch[0].setText( this.serch);
+            serch[0].setText(this.serch);
             JTextArea variables = new JTextArea(10, 20);// 此文本域用来显示所有数据库
 
             JPanel edit = new JPanel();// edit 下面的
@@ -84,18 +94,21 @@ public class VariablePanel extends JPanel implements ConnectINFOListener{
                     JOptionPane.showMessageDialog(null, "不能为空！！！");
                     return;
                 }
-                 setnewvalues(edifid.getText(), edifidnewvalues.getText());
+                setnewvalues(edifid.getText(), edifidnewvalues.getText());
 
             });
-            re.add(jPanel, BorderLayout.NORTH);
-            re.add(new JScrollPane(variables), BorderLayout.CENTER);
-            re.add(edit, BorderLayout.SOUTH);
+            jPanel.setBackground(Color.WHITE);
+            add(jPanel, BorderLayout.NORTH);
+            variables.setBackground(Color.WHITE);
+            add(new JScrollPane(variables), BorderLayout.CENTER);
+            edit.setBackground(Color.WHITE);
+            add(edit, BorderLayout.SOUTH);
             try {
                 Statement statement = ConnectINFO.getInstance().getConnection().createStatement();
                 ResultSet set = statement.executeQuery("show variables");
                 while (set.next()) {
                     String e = set.getString("Variable_name") + "::" + set.getString("Value");
-                    VariablePanel.this.   variables.add(e);
+                    VariablePanel.this.variables.add(e);
                     // variables.append(e + "\n");
                 }
             } catch (SQLException e1) {
@@ -108,14 +121,14 @@ public class VariablePanel extends JPanel implements ConnectINFOListener{
                 public void removeUpdate(DocumentEvent e) {
                     // TODO Auto-generated method stub
                     String string = serch[0].getText();
-                     VariablePanel.this.serch = string;
+                    VariablePanel.this.serch = string;
                     if (string == null || string.length() < 1) {
                         StringBuilder builder = new StringBuilder();
-                         VariablePanel.this.variables.stream().forEach(a -> builder.append(a + "\n"));
+                        VariablePanel.this.variables.stream().forEach(a -> builder.append(a + "\n"));
                         variables.setText(builder.toString());
                     } else {
                         StringBuilder builder = new StringBuilder();
-                        VariablePanel.this.    variables.stream().filter(aa->myfilter(aa))
+                        VariablePanel.this.variables.stream().filter(aa -> myfilter(aa))
                                 .forEach(a -> builder.append(a + "\n"));
                         variables.setText(builder.toString());
                     }
@@ -125,14 +138,14 @@ public class VariablePanel extends JPanel implements ConnectINFOListener{
                 public void insertUpdate(DocumentEvent e) {
                     // TODO Auto-generated method stub
                     String string = serch[0].getText();
-                    VariablePanel.this. serch = string;
+                    VariablePanel.this.serch = string;
                     if (string == null || string.length() < 1) {
                         StringBuilder builder = new StringBuilder();
-                        VariablePanel.this.  variables.stream().forEach(a -> builder.append(a + "\n"));
+                        VariablePanel.this.variables.stream().forEach(a -> builder.append(a + "\n"));
                         variables.setText(builder.toString());
                     } else {
                         StringBuilder builder = new StringBuilder();
-                        VariablePanel.this.    variables.stream().filter(aa->myfilter(aa))
+                        VariablePanel.this.variables.stream().filter(aa -> myfilter(aa))
                                 .forEach(a -> builder.append(a + "\n"));
                         variables.setText(builder.toString());
                     }
@@ -154,12 +167,12 @@ public class VariablePanel extends JPanel implements ConnectINFOListener{
                     try {
                         Statement statement = ConnectINFO.getInstance().getConnection().createStatement();
                         ResultSet set = statement.executeQuery("show variables");
-                        VariablePanel.this.  variables.clear();
+                        VariablePanel.this.variables.clear();
                         while (set.next()) {
                             String eString = set.getString("Variable_name") + "====" + set.getString("Value");
-                            VariablePanel.this.   variables.add(eString);
+                            VariablePanel.this.variables.add(eString);
                             StringBuilder builder = new StringBuilder();
-                            VariablePanel.this.    variables.stream().forEach(a -> builder.append(a + "\n"));
+                            VariablePanel.this.variables.stream().forEach(a -> builder.append(a + "\n"));
                             variables.setText(builder.toString());
                             // variables.append(e + "\n");
                         }
@@ -172,7 +185,7 @@ public class VariablePanel extends JPanel implements ConnectINFOListener{
             variables.setEditable(false);
 
             StringBuilder builder = new StringBuilder();
-            VariablePanel.this.   variables.stream().forEach(a -> builder.append(a + "\n"));
+            VariablePanel.this.variables.stream().forEach(a -> builder.append(a + "\n"));
             variables.setText(builder.toString());
             // 实现鼠标双击选中文本并复制粘贴
             variables.addMouseListener(new MouseAdapter() {
@@ -189,8 +202,7 @@ public class VariablePanel extends JPanel implements ConnectINFOListener{
                     }
                 }
             });
-            return  re;
-
+            return null;
         }
 
         /**
@@ -233,8 +245,11 @@ public class VariablePanel extends JPanel implements ConnectINFOListener{
 
     @Override
     public void onchange(String name, Object news, Object oldies) {
-        removeAll();
-        add(getui());
+        if (name.equals("connection")) {
+            removeAll();
+            getui();
+
+        }
     }
 }
 

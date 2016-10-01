@@ -63,6 +63,7 @@ public class SQLeditPanel extends JPanel {
         });
 
         ac.install(textArea);
+        setOpaque(false);
 
     }
 

@@ -5,6 +5,7 @@ import mysqls.contanst.ConnectINFOListener;
 import mysqls.sql.databaseserver2.MYtreeNodeTable;
 import mysqls.sql.databaseserver2.TreeSQLedit;
 import mysqls.sql.databaseserver2.TreeTabledit;
+import mysqls.ui_frame.EmptyPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,20 +21,30 @@ public class TableEditpanel extends JPanel implements ConnectINFOListener{
         }
         return me;
     }
-
-    JPanel table;
-    JPanel sqlshow;
+    JPanel sqlshow=null;
     private TableEditpanel() {
         ConnectINFO.addLister(this);
         setLayout(new BorderLayout());
-        table= TreeTabledit.getui();
-        sqlshow= TreeSQLedit.getui();
+        setBackground(Color.WHITE);
+        sqlshow=TreeSQLedit.getui();
         if (ConnectINFO.getInstance().getTableName() == null) {
-            add(new JLabel("请先选择要编辑的表！！！"),BorderLayout.CENTER);
+            JLabel text ;
+            Icon icon = new ImageIcon(EmptyPanel.class.getClassLoader().getResource("database/datas.png"));
+            JLabel image = new JLabel(icon);
+            text = new JLabel("请先选择表！");
+            text.setHorizontalAlignment(SwingConstants.CENTER);
+            Font font = new Font(Font.MONOSPACED, Font.BOLD, 30);
+            text.setFont(font);
+            text.setVerticalAlignment(SwingConstants.CENTER);
+            add(image, BorderLayout.CENTER);
+            add(text, BorderLayout.NORTH);
+            return;
+
         } else {
-            add(table, BorderLayout.CENTER);
+            TreeTabledit.edittable(ConnectINFO.tablenode,this);
             add(sqlshow, BorderLayout.SOUTH);
         }
+        setOpaque(false);
 
     }
 
@@ -41,10 +52,10 @@ public class TableEditpanel extends JPanel implements ConnectINFOListener{
     public void onchange(String name, Object news, Object oldies) {
 
         if (name.equals("tablename")) {
+
             removeAll();
-            add(table, BorderLayout.CENTER);
             add(sqlshow, BorderLayout.SOUTH);
-            TreeTabledit.edittable(ConnectINFO.tablenode);
+            TreeTabledit.edittable(ConnectINFO.tablenode,this);
             validate();
             updateUI();
 

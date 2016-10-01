@@ -133,7 +133,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 //		setContentPane(aTabbedPane);
-		setContentPane(getmymainpanel());
+		getmymainpanel();
 
 		setJMenuBar(new JMenuBar());
 
@@ -147,18 +147,18 @@ public class MainFrame extends JFrame {
 
 
 //	主要的内容
-	private JPanel getmymainpanel() {
-		JPanel frame=new JPanel();
-		frame.setLayout(new BorderLayout());
+	private void getmymainpanel() {
+		getContentPane().setLayout(new BorderLayout());
 		BootPanel bootPanel=BootPanel.getInstance();
 		MainleftPanel mainleftPanel=MainleftPanel.getInstance();
-		MainCenterPanel centerPanel=new MainCenterPanel();
+		MainCenterPanel centerPanel=MainCenterPanel.getInstance();
 		ToolPanel toolPanel = new ToolPanel(centerPanel);
 		MainPanel mainPanel = new MainPanel(mainleftPanel, centerPanel);
-		frame.add(bootPanel, BorderLayout.SOUTH);
-		frame.add(toolPanel, BorderLayout.NORTH);
-		frame.add(mainPanel);
-		return frame;
+
+		getContentPane().add(bootPanel, BorderLayout.SOUTH);
+		getContentPane().add(toolPanel, BorderLayout.NORTH);
+		getContentPane().add(mainPanel,BorderLayout.CENTER);
+
 	}
 
 	/**

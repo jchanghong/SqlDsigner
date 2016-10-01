@@ -3,7 +3,7 @@
  */
 package mysqls.sql.databaseserver2;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -41,7 +41,7 @@ public class TreeTabledit {
 	public static MYtreeNodeTable table;
 	private static boolean hasNew = true;
 
-	public static void edittable(MYtreeNodeTable table) {
+	public static void edittable(MYtreeNodeTable table,JPanel parent) {
 		TreeSQLedit.settext("");
 		TreeTabledit.table = table;
 		try {
@@ -228,8 +228,9 @@ public class TreeTabledit {
 				}
 
 			});
-			TreeTabledit.jPanel.removeAll();
-			TreeTabledit.jPanel.add(new JScrollPane(jTable), BorderLayout.CENTER);
+			parent.add(jTable, BorderLayout.CENTER);
+			//TreeTabledit.jPanel.removeAll();
+//			TreeTabledit.jPanel.add(new JScrollPane(jTable), BorderLayout.CENTER);
 //			TreeFrame.me.pack();
 		} catch (Exception e2) {
 			// TODO: handle exception
@@ -398,6 +399,7 @@ public class TreeTabledit {
 
 		if (TreeTabledit.jPanel == null) {
 			TreeTabledit.jPanel = new JPanel();
+			jPanel.setBackground(Color.WHITE);
 		}
 		return TreeTabledit.jPanel;
 	}
