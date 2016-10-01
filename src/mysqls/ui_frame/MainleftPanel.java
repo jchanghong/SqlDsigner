@@ -34,7 +34,7 @@ public class MainleftPanel extends JPanel {
         removeAll();
         add(TreeLeft.getui());
         updateUI();
-        BootPanel.getInstance().onconnect();
+//        BootPanel.getInstance().onconnect();
 
     }
 
