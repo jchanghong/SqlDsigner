@@ -117,6 +117,7 @@ public class TreeLeft {
 		popupMenu.add(jMenuload);
 		jTree.addMouseListener(new MouseAdapter() {
 
+
 			/*
 			 * (non-Javadoc)
 			 *
@@ -157,10 +158,27 @@ public class TreeLeft {
 			 * @see java.awt.event.MouseAdapter#mouseClicked(java.awt.event.
 			 * MouseEvent)
 			 */
-			@Override // 双击
+			@Override // 双击,点击更新info变量
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
+
 				super.mouseClicked(e);
+				MYtreeNode node = TreeLeft.getmynode(e, jTree);
+				if (node instanceof MYtreeNodeDB) {
+					ConnectINFO.getInstance().setDatabaseName(node.getName());
+//					ConnectINFO.db = (MYtreeNodeDB) node;
+
+				}
+				if (node instanceof MYtreeNodeColumn) {
+
+				}
+				if (node instanceof MYtreeNodeTable) {
+					ConnectINFO.getInstance().setTableName(node.getName());
+					ConnectINFO.tablenode = (MYtreeNodeTable) node;
+				}
+				if (node instanceof MYtreeNodeRoot) {
+
+				}
 				if (e.getClickCount() == 2) {
 					// popupMenu.getComponent(1).setVisible(true);
 					// popupMenu.show(jTree, e.getX(), e.getY());
@@ -173,15 +191,11 @@ public class TreeLeft {
 		jScrollPane = new JScrollPane(jTree);
 
 		JButton button = new JButton("dddd");
-		button.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode) jTree.getLastSelectedPathComponent();
-				System.out.println(node.getUserObject().getClass().toString());
-			}
-		});
+		button.addActionListener(e -> {
+            // TODO Auto-generated method stub
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) jTree.getLastSelectedPathComponent();
+            System.out.println(node.getUserObject().getClass().toString());
+        });
 
 		panel.add(jScrollPane, BorderLayout.CENTER);
 		// panel.add(button, BorderLayout.EAST);
@@ -200,7 +214,7 @@ public class TreeLeft {
 			MYtreeNodeTable table = (MYtreeNodeTable) node;
 			String dbname = table.getDb().getName();
 			try {
-				Statement statement = ConnectINFO.connection.createStatement();
+				Statement statement = ConnectINFO.getInstance().getConnection().createStatement();
 				statement.executeQuery("use " + dbname);
 				statement.execute("drop table " + table.getName());
 				JOptionPane.showMessageDialog(null, "删除成功!!!");
@@ -215,7 +229,7 @@ public class TreeLeft {
 		if (node instanceof MYtreeNodeDB) {
 			MYtreeNodeDB db = (MYtreeNodeDB) node;
 			try {
-				Statement statement = ConnectINFO.connection.createStatement();
+				Statement statement = ConnectINFO.getInstance().getConnection().createStatement();
 				statement.execute("drop database " + db.getName());
 				JOptionPane.showMessageDialog(null, "删除成功!!!");
 				model.removeNodeFromParent(node2ui);
@@ -243,9 +257,7 @@ public class TreeLeft {
 
 			}
 			MYtreeNodeTable table = (MYtreeNodeTable) node;
-			table.getcolumns().stream().forEach(a -> {
-				model.insertNodeInto(new DefaultMutableTreeNode(a), node2ui, node2ui.getChildCount());
-			});
+			table.getcolumns().stream().forEach(a -> model.insertNodeInto(new DefaultMutableTreeNode(a), node2ui, node2ui.getChildCount()));
 			// jTree.repaint();
 			// TreeLeft.me.invalidate();
 			// 显示

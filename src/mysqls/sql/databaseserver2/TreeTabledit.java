@@ -49,7 +49,7 @@ public class TreeTabledit {
 			Map<String, Object> map = new HashMap<>();
 			// 显示表的内容
 			String colMessage = null;
-			Statement statement = ConnectINFO.connection.createStatement();
+			Statement statement = ConnectINFO.getInstance().getConnection().createStatement();
 			statement.execute("use " + table.getDb().getName());
 			Vector<String> v1 = new Vector<String>();
 			Vector<String> v2 = new Vector<String>();
@@ -230,7 +230,7 @@ public class TreeTabledit {
 			});
 			TreeTabledit.jPanel.removeAll();
 			TreeTabledit.jPanel.add(new JScrollPane(jTable), BorderLayout.CENTER);
-			TreeFrame.me.pack();
+//			TreeFrame.me.pack();
 		} catch (Exception e2) {
 			// TODO: handle exception
 			e2.printStackTrace();

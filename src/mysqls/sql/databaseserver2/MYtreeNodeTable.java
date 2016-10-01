@@ -38,9 +38,7 @@ public class MYtreeNodeTable extends MYtreeNode {
 
 	public List<MYtreeNodeColumn> getcolumns() {
 		List<MYtreeNodeColumn> list = DataBaseUtil.getcolumn(db.getName(), name);
-		list.stream().forEach(aa -> {
-			aa.setTable(MYtreeNodeTable.this);
-		});
+		list.stream().forEach(aa -> aa.setTable(MYtreeNodeTable.this));
 		return list;
 
 	}

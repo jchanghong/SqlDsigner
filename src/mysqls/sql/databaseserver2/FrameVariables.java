@@ -48,11 +48,13 @@ public class FrameVariables {
 	}
 
 	public static void main(String[] args) {
-		String url = "jdbc:mysql://localhost:3306/changhong";
+		String url = "jdbc:mysql://localhost:3306/mysql";
 		try {
 			Connection connection = DriverManager.getConnection(url, "root", "0000");
-			ConnectINFO.connection = connection;
+//			ConnectINFO.connection = connection;
+			ConnectINFO.getInstance().setConnection(connection);
 		} catch (SQLException e) {
+
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -125,7 +127,7 @@ public class FrameVariables {
 		jFrame.add(new JScrollPane(variables), BorderLayout.CENTER);
 		jFrame.add(edit, BorderLayout.SOUTH);
 		try {
-			Statement statement = ConnectINFO.connection.createStatement();
+			Statement statement = ConnectINFO.getInstance().getConnection().createStatement();
 			ResultSet set = statement.executeQuery("show variables");
 			while (set.next()) {
 				String e = set.getString("Variable_name") + "::" + set.getString("Value");
@@ -186,7 +188,7 @@ public class FrameVariables {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
-					Statement statement = ConnectINFO.connection.createStatement();
+					Statement statement = ConnectINFO.getInstance().getConnection().createStatement();
 					ResultSet set = statement.executeQuery("show variables");
 					FrameVariables.variables.clear();
 					while (set.next()) {
@@ -233,7 +235,7 @@ public class FrameVariables {
 	protected static void setnewvalues(String text, String text2) {
 		// TODO Auto-generated method stub
 		try {
-			Statement statement = ConnectINFO.connection.createStatement();
+			Statement statement = ConnectINFO.getInstance().getConnection().createStatement();
 			statement.execute("set global " + text + "=" + text2);
 
 			JOptionPane.showMessageDialog(null, "设置成功");
@@ -245,7 +247,7 @@ public class FrameVariables {
 
 	}
 
-	public static boolean myfilter(String aString) {
+	private static boolean myfilter(String aString) {
 		if (FrameVariables.serch == null || FrameVariables.serch.length() < 1) {
 			return true;
 		}

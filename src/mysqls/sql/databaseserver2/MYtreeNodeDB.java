@@ -32,7 +32,7 @@ public class MYtreeNodeDB extends MYtreeNode {
 	}
 
 	public List<Table> geTablesdata() {
-		return DataBaseTables2graph.getAlltables(name, ConnectINFO.connection);
+		return DataBaseTables2graph.getAlltables(name, ConnectINFO.getInstance().getConnection());
 
 	}
 

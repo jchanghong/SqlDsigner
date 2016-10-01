@@ -55,12 +55,12 @@ public class DBselectFrame {
 				database.add(new JScrollPane(showdatabases));
 				JLabel tips = new JLabel("输入数据库名:");// 提示用户选择
 				JTextField jTextField = new JTextField(10);// 用户输入操作
-				jTextField.setText(ConnectINFO.databaseName);
+				jTextField.setText(ConnectINFO.getInstance().getDatabaseName());
 				JButton create = new JButton("创建");
 				JButton open = new JButton("确认导入");
 				JButton delete = new JButton("删除");
 
-				Statement stat = ConnectINFO.connection.createStatement();
+				Statement stat = ConnectINFO.getInstance().getConnection().createStatement();
 
 				// 显示所有的数据库
 				ResultSet resultSet = stat.executeQuery("SHOW DATABASES");
@@ -80,7 +80,8 @@ public class DBselectFrame {
 							String text = showdatabases.getSelectedText();
 							jTextField.setText(text);
 
-							ConnectINFO.databaseName = text;
+//							ConnectINFO.databaseName = text;
+							ConnectINFO.getInstance().setDatabaseName(text);
 
 						}
 					}
@@ -103,8 +104,10 @@ public class DBselectFrame {
 								showdatabases.setText("");
 								stat.executeUpdate("create database " + jTextField.getText());// 执行用户输入的创建数据库的命令
 								JOptionPane.showMessageDialog(null, "创建成功！！！");
-								ConnectINFO.databaseName = jTextField.getText();
+//								ConnectINFO.databaseName = jTextField.getText();
+								ConnectINFO.getInstance().setDatabaseName(jTextField.getText());
 								ResultSet resultSet = stat.executeQuery("SHOW DATABASES");// 显示已有的数据库
+
 								while (resultSet.next()) {
 									showdatabases.append(resultSet.getString(1));
 									showdatabases.append("\n");
@@ -135,7 +138,7 @@ public class DBselectFrame {
 									showdatabases.append("\n");
 								}
 								jTextField.setText("");
-								ConnectINFO.databaseName = "";
+//								ConnectINFO.databaseName = "";
 							} catch (SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -200,7 +203,7 @@ public class DBselectFrame {
 			return;
 		}
 		try {
-			DBselectFrame.statement = ConnectINFO.connection.createStatement();
+			DBselectFrame.statement = ConnectINFO.getInstance().getConnection().createStatement();
 			DBselectFrame.statement.execute("use " + text + "; ");
 
 		} catch (SQLException e) {

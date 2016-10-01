@@ -90,9 +90,7 @@ public class GraphFrame extends JInternalFrame {
 	public void sql2graph(List<Table> list) {
 
 		StringBuilder builder = new StringBuilder();
-		list.stream().forEach(a -> {
-			builder.append(SQLCreator.create(a));
-		});
+		list.stream().forEach(a -> builder.append(SQLCreator.create(a)));
 		// System.out.println("in sql2grph():\n" + builder.toString());
 		aPanel.aGraph = PersistenceService.readSQL(builder.toString(), aPanel.aGraph);
 
@@ -210,7 +208,7 @@ public class GraphFrame extends JInternalFrame {
 	 */
 	public void graph2dbmenu() {
 		// TODO Auto-generated method stub
-		if (ConnectINFO.connection == null) {
+		if (ConnectINFO.getInstance().getConnection() == null) {
 			UIconstant.WHY_Main = "2";
 			servermenu();
 			return;
@@ -232,7 +230,7 @@ public class GraphFrame extends JInternalFrame {
 	 * treelist列表
 	 */
 	public void loaddatabasealltables() {
-		if (ConnectINFO.connection == null) {
+		if (ConnectINFO.getInstance().getConnection() == null) {
 			UIconstant.WHY_Main = "3";
 			servermenu();
 			return;
@@ -279,7 +277,7 @@ public class GraphFrame extends JInternalFrame {
 	 */
 	public void mysqlvariablemenu() {
 		// TODO Auto-generated method stub
-		if (ConnectINFO.connection == null) {
+		if (ConnectINFO.getInstance().getConnection() == null) {
 			UIconstant.WHY_Main = "4";
 			servermenu();
 			return;

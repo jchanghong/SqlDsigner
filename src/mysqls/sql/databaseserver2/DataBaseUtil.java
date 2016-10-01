@@ -25,7 +25,7 @@ public abstract class DataBaseUtil {
 	public static List<MYtreeNodeDB> getdbs() {
 		List<MYtreeNodeDB> dbs = new ArrayList<>();
 		try {
-			Statement stat = ConnectINFO.connection.createStatement();
+			Statement stat = ConnectINFO.getInstance().getConnection().createStatement();
 
 			// 显示所有的数据库
 			ResultSet resultSet = stat.executeQuery("SHOW DATABASES");
@@ -43,7 +43,7 @@ public abstract class DataBaseUtil {
 	public static List<MYtreeNodeTable> gettables(String dbname) {
 		List<MYtreeNodeTable> tables = new ArrayList<>();
 		try {
-			DatabaseMetaData metaData = ConnectINFO.connection.getMetaData();
+			DatabaseMetaData metaData = ConnectINFO.getInstance().getConnection().getMetaData();
 			ResultSet resultSet = metaData.getTables(dbname, null, null, new String[] { "TABLE" });
 			while (resultSet.next()) {
 				tables.add(new MYtreeNodeTable(resultSet.getString("TABLE_NAME")));
@@ -62,7 +62,7 @@ public abstract class DataBaseUtil {
 		String sql = "select * from " + tablename + ";";
 		try {
 
-			Statement statement = ConnectINFO.connection.createStatement();
+			Statement statement = ConnectINFO.getInstance().getConnection().createStatement();
 			statement.execute("use " + dbname + ";");
 			ResultSet resultSet = statement.executeQuery(sql);
 			ResultSetMetaData data = resultSet.getMetaData();

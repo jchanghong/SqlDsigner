@@ -114,11 +114,11 @@ public class MainUI {
 								return;
 							}
 							String[] urls = str.split("\\|");
-							ConnectINFO.connection = DriverManager.getConnection(urls[0], urls[1], urls[2]);
+							ConnectINFO.getInstance().setConnection(DriverManager.getConnection(urls[0], urls[1], urls[2]));
 
-							ConnectINFO.url = urls[0];
-							ConnectINFO.user = urls[1];
-							ConnectINFO.passworld = urls[2];
+							ConnectINFO.getInstance().setUrl(urls[0]);
+							ConnectINFO.getInstance().setUser(urls[1]);
+							ConnectINFO.getInstance().setPassworld(urls[2]);
 							// GraphFrame.me.loaddatabasealltables();
 							MainUI.onclickOpen();
 
@@ -144,7 +144,7 @@ public class MainUI {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					if (mysql.isSelected()) {
-						ConnectINFO.databaseType = "mysql";
+						ConnectINFO.getInstance().setDatabaseType("mysql");
 					} else if (oracle.isSelected()) {
 						// 后续加入oracle的驱动语句
 					} else if (sqlsever.isSelected()) {
@@ -166,16 +166,16 @@ public class MainUI {
 
 							try {
 
-								ConnectINFO.user = usernameField.getText();
-								ConnectINFO.passworld = passwordField.getText();
-								ConnectINFO.url = "jdbc:" + ConnectINFO.databaseType + "://" + ipField.getText() + ":"
-										+ dbportField.getText() + "/?characterEncoding=utf8&useSSL=true";
-								ConnectINFO.connection = DriverManager.getConnection(ConnectINFO.url,
-										usernameField.getText(), passwordField.getText());
-								if (ConnectINFO.connection != null) {
-									MainUI.savainfo(ConnectINFO.url, ConnectINFO.user, ConnectINFO.passworld);
-
-								}
+//								ConnectINFO.user = usernameField.getText();
+//								ConnectINFO.passworld = passwordField.getText();
+//								ConnectINFO.url = "jdbc:" + ConnectINFO.databaseType + "://" + ipField.getText() + ":"
+//										+ dbportField.getText() + "/?characterEncoding=utf8&useSSL=true";
+//								ConnectINFO.connection = DriverManager.getConnection(ConnectINFO.url,
+//										usernameField.getText(), passwordField.getText());
+//								if (ConnectINFO.connection != null) {
+//									MainUI.savainfo(ConnectINFO.url, ConnectINFO.user, ConnectINFO.passworld);
+//
+//								}
 								// Connector.runtext(ConnectINFO.connection);
 
 								//
@@ -260,7 +260,7 @@ public class MainUI {
 
 	}
 
-	private static void savainfo(String url, String user, String passworld) {
+	public static void savainfo(String url, String user, String passworld) {
 		// TODO Auto-generated method stub
 
 		String rec = url + "|" + user + "|" + passworld + "\n";
@@ -309,14 +309,14 @@ public class MainUI {
 	 *            把mysql和user链接起来 格式；mysql2changhong
 	 * @param passworld
 	 */
-	private static String getrect(String url, String user) {
+	public static String getrect(String url, String user) {
 		// TODO Auto-generated method stub
 		String[] strings = url.split(":");
 		return strings[1] + "2" + user;
 
 	}
 
-	private static String getrect2(String urString) {
+	public static String getrect2(String urString) {
 		// TODO Auto-generated method stub
 		String[] strings = urString.split("\\|");
 		return MainUI.getrect(strings[0], strings[1]);
@@ -328,7 +328,7 @@ public class MainUI {
 	 *            mysql2changhong
 	 * @return url，user，pass
 	 */
-	private static String geturl(String rec, List<String> strings) {
+	public static String geturl(String rec, List<String> strings) {
 
 		String[] all2 = rec.split("2");
 		for (String string : strings) {

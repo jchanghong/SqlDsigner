@@ -1,5 +1,7 @@
 package mysqls.ui_frame;
 
+import mysqls.contanst.ConnectINFO;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,9 +10,21 @@ import java.awt.*;
  * 下面的面板
  */
 public class BootPanel extends JPanel {
+    private static BootPanel me=null;
+    public static BootPanel getInstance() {
+        if (me == null) {
+            me=new BootPanel();
+        }
+        return me;
+    }
 
-    public BootPanel() {
+    private BootPanel() {
         setBackground(Color.blue);
         add(new JLabel("mysql"));
+    }
+
+    public void onconnect() {
+        removeAll();
+        add(new JLabel(ConnectINFO.getInstance().getUser() + "  " + ConnectINFO.getInstance().getDatabaseName()));
     }
 }

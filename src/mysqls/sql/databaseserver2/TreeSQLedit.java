@@ -160,7 +160,7 @@ public class TreeSQLedit {
 		}
 		Statement statement = null;
 		try {
-			statement = ConnectINFO.connection.createStatement();
+			statement = ConnectINFO.getInstance().getConnection().createStatement();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null, e.getMessage());

@@ -41,8 +41,8 @@ public class MainPanel extends JPanel{
         JFrame frame = new JFrame("dd");
         frame.setLayout(new BorderLayout());
 
-        BootPanel bootPanel=new BootPanel();
-        MainleftPanel mainleftPanel=new MainleftPanel();
+        BootPanel bootPanel=BootPanel.getInstance();
+        MainleftPanel mainleftPanel=MainleftPanel.getInstance();
         MainCenterPanel centerPanel=new MainCenterPanel();
         ToolPanel toolPanel = new ToolPanel(centerPanel);
         MainPanel mainPanel = new MainPanel(mainleftPanel, centerPanel);

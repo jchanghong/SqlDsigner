@@ -74,7 +74,7 @@ public class TreeFrame {
 		String url = "jdbc:mysql://localhost:3306/changhong";
 		try {
 			Connection connection = DriverManager.getConnection(url, "root", "0000");
-			ConnectINFO.connection = connection;
+			ConnectINFO.getInstance().setConnection(connection);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
