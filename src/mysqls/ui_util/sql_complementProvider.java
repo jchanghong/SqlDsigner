@@ -1,7 +1,5 @@
 package mysqls.ui_util;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
-import com.sun.org.apache.bcel.internal.generic.LASTORE;
 import mysqls.contanst.ConnectINFO;
 import mysqls.contanst.ConnectINFOListener;
 import mysqls.sql.databaseserver2.MYtreeNodeDB;
@@ -62,37 +60,40 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
         if (isemptyORstatement(last)) {
             return getCompletion_parent(comp,moprations);
         }
-        if (last.equalsIgnoreCase("where"))
-        if (lastisselect(text)) {
+        if (last.equalsIgnoreCase("where") || last.equalsIgnoreCase("like")) {
+
             return getCompletion_parent(comp,columns);
         }
-        if (lastisfrom(text)) {
+        if (lastisselect(last)) {
+            return getCompletion_parent(comp,columns);
+        }
+        if (lastisfrom(last)) {
             return getCompletion_parent(comp, tables);
         }
-        if (lastisOP(text)) {
+        if (lastisOP(last)) {
             return getCompletion_parent(comp,mobjectname);
 
         }
-        if (lastisObject(text)) {
+        if (lastisObject(last)) {
             return getCompletion_parent(comp,completions);
 
         }
-        if (lastisDB(text)) {
+        if (lastisDB(last)) {
             return getCompletion_parent(comp,completions);
 
         }
-        if (lastistable(text)) {
+        if (lastistable(last)) {
             return getCompletion_parent(comp,completions);
 
         }
-        if (lastiscolumns(text)) {
+        if (lastiscolumns(last)) {
             return getCompletion_parent(comp,completions);
         }
         return getCompletion_parent(comp,completions);
     }
 
     private boolean lastisfrom(String text) {
-        if (getlaststring(text).equalsIgnoreCase("from")) {
+        if (text.equalsIgnoreCase("from")) {
             return true;
         }
         return false;
@@ -112,7 +113,7 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
     private boolean lastisOP(String text) {
 
         for (Completion mopration : moprations) {
-            if (mopration.getReplacementText().equalsIgnoreCase(getlaststring(text))) {
+            if (mopration.getReplacementText().equalsIgnoreCase(text)) {
                 return true;
             }
         }
@@ -145,7 +146,7 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
     }
 
     private boolean lastisselect(String text) {
-        if (getlaststring(text).equalsIgnoreCase("select")) {
+        if (text.equalsIgnoreCase("select")) {
             return true;
         }
         return false;
