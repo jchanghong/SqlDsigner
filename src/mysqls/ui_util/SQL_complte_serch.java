@@ -10,7 +10,7 @@ import java.util.*;
  * Created by jiang on 2016/10/2 0002.
  */
 public class SQL_complte_serch {
-    private static List<Completion> empty = new ArrayList<>();
+    public static List<Completion> empty = new ArrayList<>();
     private static List<Completion>  dbs = new ArrayList<>();
     private static List<Completion> tables = new ArrayList<>();
     private static List<Completion> columns = new ArrayList<>();
@@ -24,37 +24,7 @@ public class SQL_complte_serch {
         }
         List<Completion> retVal = new ArrayList<Completion>();
 
-        if (text!=null) {
 
-            int index = Collections.binarySearch(completions, text, comparator);
-            if (index<0) { // No exact match
-                index = -index - 1;
-            }
-            else {
-                // If there are several overloads for the function being
-                // completed, Collections.binarySearch() will return the index
-                // of one of those overloads, but we must return all of them,
-                // so search backward until we find the first one.
-                int pos = index - 1;
-                while (pos>0 &&
-                        comparator.compare(completions.get(pos), text)==0) {
-                    retVal.add(completions.get(pos));
-                    pos--;
-                }
-            }
-
-            while (index<completions.size()) {
-                Completion c = completions.get(index);
-                if (Util.startsWithIgnoreCase(c.getInputText(), text)) {
-                    retVal.add(c);
-                    index++;
-                }
-                else {
-                    break;
-                }
-            }
-
-        }
 
         return retVal;
     }

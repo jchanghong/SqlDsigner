@@ -25,9 +25,7 @@ public class MYtreeNodeDB extends MYtreeNode {
 
 	public List<MYtreeNodeTable> geTables() {
 		List<MYtreeNodeTable> list = DataBaseUtil.gettables(name);
-		list.stream().forEach(aa -> {
-			aa.setDb(MYtreeNodeDB.this);
-		});
+		list.stream().forEach(aa -> aa.setDb(MYtreeNodeDB.this));
 		return list;
 	}
 

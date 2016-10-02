@@ -40,10 +40,10 @@ public final class UMLEditor {
 			public void run() {
 				UMLEditor.setLookAndFeel();// 设置界面感官。
 				MainFrame frame = new MainFrame(UMLEditor.class);
-				frame.addGraphType("class_diagram", ClassDiagramGraph.class);
+//				frame.addGraphType("class_diagram", ClassDiagramGraph.class);
 				frame.setVisible(true);// 使界面可视。
-				frame.readArgs(arguments);// 读取命令。
-				frame.addWelcomeTab();
+//				frame.readArgs(arguments);// 读取命令。
+//				frame.addWelcomeTab();
 				frame.setIcon();
 			}
 		});

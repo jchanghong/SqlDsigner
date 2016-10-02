@@ -100,9 +100,9 @@ public class MainFrame extends JFrame {
 		aAppFactory = new MenuFactory(aAppResources);
 		aVersionResources = ResourceBundle.getBundle(appClassName + "Version");
 		aEditorResources = ResourceBundle.getBundle("mysqls.framework.EditorStrings");
-		MenuFactory factory = new MenuFactory(aEditorResources);
+//		MenuFactory factory = new MenuFactory(aEditorResources);
 
-		aRecentFiles.deserialize(Preferences.userNodeForPackage(UMLEditor.class).get("recent", "").trim());
+//		aRecentFiles.deserialize(Preferences.userNodeForPackage(UMLEditor.class).get("recent", "").trim());
 
 		setTitle(aAppResources.getString("app.name"));
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -122,27 +122,27 @@ public class MainFrame extends JFrame {
 			}
 		});
 
-		aTabbedPane = new JTabbedPane();
-		aTabbedPane.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent pEven) {
-				boolean noGraphFrame = noCurrentGraphFrame();
-				for (JMenuItem menuItem : aDiagramRelevantMenus) {
-					menuItem.setEnabled(!noGraphFrame);
-				}
-			}
-		});
+//		aTabbedPane = new JTabbedPane();
+//		aTabbedPane.addChangeListener(new ChangeListener() {
+//			@Override
+//			public void stateChanged(ChangeEvent pEven) {
+//				boolean noGraphFrame = noCurrentGraphFrame();
+//				for (JMenuItem menuItem : aDiagramRelevantMenus) {
+//					menuItem.setEnabled(!noGraphFrame);
+//				}
+//			}
+//		});
 //		setContentPane(aTabbedPane);
 		getmymainpanel();
 
-		setJMenuBar(new JMenuBar());
-
-		createFileMenu(factory);
-		createEditMenu(factory);
-		createViewMenu(factory);
-		createSQLmnu();// sqlmenu，
-		createdatabasemenu();// 数据库服务的enu
-		createHelpMenu(factory);
+//		setJMenuBar(new JMenuBar());
+//
+//		createFileMenu(factory);
+//		createEditMenu(factory);
+//		createViewMenu(factory);
+//		createSQLmnu();// sqlmenu，
+//		createdatabasemenu();// 数据库服务的enu
+//		createHelpMenu(factory);
 	}
 
 

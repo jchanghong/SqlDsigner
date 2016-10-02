@@ -81,7 +81,7 @@ public class DBselectFrame {
 							jTextField.setText(text);
 
 //							ConnectINFO.databaseName = text;
-							ConnectINFO.getInstance().setDatabaseName(text);
+//							ConnectINFO.getInstance().setDatabaseName(text);
 
 						}
 					}
@@ -105,7 +105,7 @@ public class DBselectFrame {
 								stat.executeUpdate("create database " + jTextField.getText());// 执行用户输入的创建数据库的命令
 								JOptionPane.showMessageDialog(null, "创建成功！！！");
 //								ConnectINFO.databaseName = jTextField.getText();
-								ConnectINFO.getInstance().setDatabaseName(jTextField.getText());
+//								ConnectINFO.getInstance().setDatabaseName(jTextField.getText());
 								ResultSet resultSet = stat.executeQuery("SHOW DATABASES");// 显示已有的数据库
 
 								while (resultSet.next()) {

@@ -163,8 +163,8 @@ public class TreeLeft {
 				super.mouseClicked(e);
 				MYtreeNode node = TreeLeft.getmynode(e, jTree);
 				if (node instanceof MYtreeNodeDB) {
+					ConnectINFO.db = (MYtreeNodeDB) node;
 					ConnectINFO.getInstance().setDatabaseName(node.getName());
-//					ConnectINFO.db = (MYtreeNodeDB) node;
 
 				}
 				if (node instanceof MYtreeNodeColumn) {
