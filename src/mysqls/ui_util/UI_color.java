@@ -8,9 +8,10 @@ import java.awt.*;
  */
 public class UI_color {
 
+    /*背景颜色*/
     public static void setcolorR(JComponent jPanel) {
         if (jPanel.getComponents().length == 0) {
-            jPanel.setBackground(Color.WHITE);
+            jPanel.setBackground(Color.black);
             jPanel.setOpaque(false);
             return;
         }
@@ -20,4 +21,18 @@ public class UI_color {
 
 
     }
+
+    /*字体颜色*/
+    public static void setcolorR2(JComponent jPanel) {
+        if (jPanel.getComponents().length == 0) {
+           jPanel.setForeground(Color.white);
+            return;
+        }
+        for (Component con : jPanel.getComponents()) {
+            setcolorR2((JComponent) con);
+        }
+
+
+    }
+
 }

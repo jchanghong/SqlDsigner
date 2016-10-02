@@ -4,14 +4,13 @@ package mysqls.ui_mainitem;
  */
 
 import mysqls.contanst.ConnectINFO;
-import mysqls.contanst.UIconstant;
 import mysqls.sql.util.MyIOutil;
-import mysqls.ui_frame.MainleftPanel;
+import mysqls.ui_frame.EmptyPanel;
+import mysqls.ui_util.UIFont;
 import mysqls.ui_util.UI_color;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -27,9 +26,28 @@ import java.util.Scanner;
  *
  */
 public class ConnectPanel extends JPanel{
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        setOpaque(false);
+        ImageIcon icon = new ImageIcon(EmptyPanel.class.getClassLoader().getResource("mainIcon/bj6.jpg"));
+        //如果设置了背景图片则显示
+        if(icon != null)
+        {
+            int width = this.getWidth();
+            int height = this.getHeight();
+                    g.drawImage(icon.getImage(), 0, 0, width, height, this);
+
+        }
+    }
+
     private static ConnectPanel panel = null;
     private ConnectPanel() {
-        getui();
+        setLayout(new GridLayout(2,2));
+        add(getui(), BorderLayout.WEST);
+        add(new JLabel(" "));
+        add(new JLabel(" "));
+        add(new JLabel(" "));
     }
     public static ConnectPanel getInstance() {
         if (panel == null) {
@@ -38,9 +56,9 @@ public class ConnectPanel extends JPanel{
         return panel;
     }
     /*设置ui*/
-    private  void getui() {
-        setBackground(Color.WHITE);
-        setOpaque(true);
+    private  JPanel getui() {
+        JPanel jPanel = new JPanel(new BorderLayout());
+        jPanel.setBackground(Color.WHITE);
             JLabel jLabel1 = new JLabel("选择数据库类型：");
             JRadioButton mysql = new JRadioButton("mysql");
             JRadioButton oracle = new JRadioButton("oracle");
@@ -55,9 +73,10 @@ public class ConnectPanel extends JPanel{
             JTextField usernameField = new JTextField(15);
             JPasswordField passwordField = new JPasswordField(15);
             JLabel recentLink = new JLabel("最近连接：");
-            JTextArea linkRecord = new JTextArea(7, 15);
+        recentLink.setBorder(BorderFactory.createEmptyBorder());
+            JLabel linkRecord = new JLabel();
 //            linkRecord.setBounds(200, 50, 7, 0);
-            linkRecord.setEditable(false);
+//            linkRecord.setEditable(false);
             ipField.setEditable(true);
             dbportField.setEditable(true);
             usernameField.setEditable(true);
@@ -81,10 +100,15 @@ public class ConnectPanel extends JPanel{
                     e2.printStackTrace();
                 }
             }
+        StringBuilder builder = new StringBuilder();
             for (String string : allrecord) {
-                linkRecord.append(getrect2(string));
-                linkRecord.append("\n");
+                builder.append(getrect2(string)+"\n");
+//                linkRecord.append(getrect2(string));
+//                linkRecord.append("\n");
             }
+        if (allrecord.size() > 0) {
+            linkRecord.setText(getrect2(allrecord.get(0)));
+        }
             linkRecord.addMouseListener(new MouseAdapter() {
 
                 @Override
@@ -95,7 +119,7 @@ public class ConnectPanel extends JPanel{
                         Scanner scanner = null;
                         try {
 
-                            String select = linkRecord.getSelectedText();
+                            String select = linkRecord.getText();
 
                             String str = null;
                             str = geturl(select, allrecord);
@@ -180,8 +204,8 @@ public class ConnectPanel extends JPanel{
             oracle.addActionListener(radioButtonListener);
             sqlsever.addActionListener(radioButtonListener);
 
-          JPanel   jPanelNorth = new JPanel(new FlowLayout()),
-                    jPanelCenter = new JPanel(new GridLayout(4, 2, -25, 1)),
+          JPanel   jPanelNorth = new JPanel(new GridLayout(1,0)),
+                    jPanelCenter = new JPanel(new GridLayout(0, 1)),
                     jpanelEast = new JPanel(new BorderLayout()), jPanelSouth = new JPanel();
         jpanelEast.setOpaque(false);
         jPanelCenter.setOpaque(false);
@@ -193,13 +217,15 @@ public class ConnectPanel extends JPanel{
         mynouth.setOpaque(false);
         Font font = new Font(Font.MONOSPACED, Font.BOLD, 30);
         JLabel label = new JLabel("你可以双击最近链接列表的选项直接链接！！！");
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setFont(font);
         mynouth.add(label, BorderLayout.NORTH);
-            setLayout(new BorderLayout());
-            add(mynouth, BorderLayout.NORTH);
-            add(jPanelCenter, BorderLayout.CENTER);
-            add(jpanelEast, BorderLayout.EAST);
-            add(jPanelSouth, BorderLayout.SOUTH);
+
+           jPanel. add(mynouth, BorderLayout.NORTH);
+        jPanel.   add(jPanelCenter, BorderLayout.CENTER);
+//        jPanel.    add(jpanelEast, BorderLayout.EAST);
+        jPanel.   add(jPanelSouth, BorderLayout.SOUTH);
+
 
             jPanelNorth.add(jLabel1);
             jPanelNorth.add(mysql);
@@ -209,24 +235,24 @@ public class ConnectPanel extends JPanel{
             dbsevergroup.add(mysql);
             dbsevergroup.add(oracle);
             dbsevergroup.add(sqlsever);
+        jPanelCenter.add(gethpanel(ipLabel,ipField));
+        jPanelCenter.add(gethpanel(portLabel   ,dbportField));
+        jPanelCenter.add(gethpanel(uname   ,usernameField));
+        jPanelCenter.add(gethpanel(pwd   ,passwordField));
+        jPanelCenter.add(gethpanel(recentLink   ,linkRecord));
 
-            jPanelCenter.add(ipLabel);
-            jPanelCenter.add(ipField);
-            jPanelCenter.add(portLabel);
-            jPanelCenter.add(dbportField);
-            jPanelCenter.add(uname);
-            jPanelCenter.add(usernameField);
-            jPanelCenter.add(pwd);
-            jPanelCenter.add(passwordField);
-
-            jpanelEast.add(recentLink, BorderLayout.NORTH);
-            jpanelEast.add(linkRecord, BorderLayout.CENTER);
+//            jpanelEast.add(recentLink, BorderLayout.NORTH);
+//            jpanelEast.add(linkRecord, BorderLayout.CENTER);
 
             jPanelSouth.setLayout(new GridLayout(1, 0));
             jPanelSouth.add(link);
             jPanelSouth.add(cancel);
 
-        UI_color.setcolorR(this);
+        UI_color.setcolorR(jPanel);
+        UI_color.setcolorR2(jPanel);
+        UIFont.setfontR(jPanel);
+        jPanel.setOpaque(false);
+        return  jPanel;
         }
     private  void savainfo(String url, String user, String passworld) {
         // TODO Auto-generated method stub
@@ -306,6 +332,19 @@ public class ConnectPanel extends JPanel{
         }
 
         return null;
+    }
+    JPanel gethpanel(JComponent left,JComponent rigth) {
+        JPanel jPanel = new JPanel();
+        jPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.weightx=0;
+        constraints.gridx=1;
+        jPanel.setOpaque(false);
+        jPanel.add(left,constraints);
+        constraints.weightx=1;
+        constraints.gridx=constraints.RELATIVE;
+        jPanel.add(rigth,constraints);
+        return jPanel;
     }
 }
 
