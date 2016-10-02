@@ -1,9 +1,8 @@
 package mysqls.ui_mainitem;
 
-import mysqls.contanst.ConnectINFO;
-import mysqls.contanst.ConnectINFOListener;
 import mysqls.sql.databaseserver2.MYtreeNode;
 import mysqls.sql.databaseserver2.MYtreeNodeRoot;
+import mysqls.ui_util.MYlist_cell_render;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,9 +21,12 @@ public class ObjectSerchPanel extends JPanel {
 
     private JList<MYtreeNode> jList;
     DefaultListModel<MYtreeNode> listModel;
+    ListCellRenderer cellRenderer;
     private ObjectSerchPanel() {
         listModel = new DefaultListModel<>();
+        cellRenderer = new MYlist_cell_render();
         jList = new JList(listModel);
+        jList.setCellRenderer(cellRenderer);
         listModel.addElement(new MYtreeNodeRoot("eeee"));
         listModel.addElement(new MYtreeNodeRoot("eeee"));
         listModel.addElement(new MYtreeNodeRoot("eeee"));
