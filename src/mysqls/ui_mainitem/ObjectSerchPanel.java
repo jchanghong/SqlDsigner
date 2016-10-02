@@ -6,14 +6,10 @@ import mysqls.sql.databaseserver2.*;
 import mysqls.ui_frame.EmptyPanel;
 
 import javax.swing.*;
-import javax.swing.MYtreelist_cell_render;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreePath;
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +30,7 @@ public class ObjectSerchPanel extends JPanel implements ConnectINFOListener{
     DefaultListModel<MYtreeNode> listModel;
     ListCellRenderer cellRenderer;
     private ObjectSerchPanel() {
+        setBackground(Color.WHITE);
         ConnectINFO.addLister(this);
 //        setdata();
         if (ConnectINFO.getInstance().getConnection() == null) {

@@ -33,6 +33,7 @@ public class VariablePanel extends JPanel implements ConnectINFOListener{
     }
 
     private VariablePanel() {
+        setBackground(Color.WHITE);
         ConnectINFO.addLister(this);
         setLayout(new BorderLayout());
         if (ConnectINFO.getInstance().getConnection() == null) {
