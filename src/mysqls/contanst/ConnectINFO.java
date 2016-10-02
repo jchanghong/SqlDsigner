@@ -35,12 +35,19 @@ public class ConnectINFO {
 	private Set<ConnectINFOListener> listenerSet = new HashSet<>();
 	public static   final String historyFilename = "changhong.exe";
 	private    Connection connection=null;
+	public static String CONNECTION="connection";
 	private   String url=null;
+	public static String URL="url";
 	private   String user=null;
+	public static String USER="user";
 	private   String passworld=null;
+	public static String PASSWORLD="passworld";
 	private   String databaseType=null;// 数据库类型
+	public static String DATABASETYPE="databasetype";
 	private   String databaseName = null;
+	public static String DATABASENAME="databasename";
 	private   String tableName = null;
+	public static String TABLENAME="tablename";
 	public static MYtreeNodeTable tablenode=null;
 	public static MYtreeNodeDB db=null;
 

@@ -62,40 +62,37 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
         if (isemptyORstatement(last)) {
             return getCompletion_parent(comp,moprations);
         }
-        if (last.equalsIgnoreCase("where") || last.equalsIgnoreCase("like")) {
-
+        if (last.equalsIgnoreCase("where"))
+        if (lastisselect(text)) {
             return getCompletion_parent(comp,columns);
         }
-        if (lastisselect(last)) {
-            return getCompletion_parent(comp,columns);
-        }
-        if (lastisfrom(last)) {
+        if (lastisfrom(text)) {
             return getCompletion_parent(comp, tables);
         }
-        if (lastisOP(last)) {
+        if (lastisOP(text)) {
             return getCompletion_parent(comp,mobjectname);
 
         }
-        if (lastisObject(last)) {
+        if (lastisObject(text)) {
             return getCompletion_parent(comp,completions);
 
         }
-        if (lastisDB(last)) {
+        if (lastisDB(text)) {
             return getCompletion_parent(comp,completions);
 
         }
-        if (lastistable(last)) {
+        if (lastistable(text)) {
             return getCompletion_parent(comp,completions);
 
         }
-        if (lastiscolumns(last)) {
+        if (lastiscolumns(text)) {
             return getCompletion_parent(comp,completions);
         }
         return getCompletion_parent(comp,completions);
     }
 
     private boolean lastisfrom(String text) {
-        if (text.equalsIgnoreCase("from")) {
+        if (getlaststring(text).equalsIgnoreCase("from")) {
             return true;
         }
         return false;
@@ -115,7 +112,7 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
     private boolean lastisOP(String text) {
 
         for (Completion mopration : moprations) {
-            if (mopration.getReplacementText().equalsIgnoreCase(text)) {
+            if (mopration.getReplacementText().equalsIgnoreCase(getlaststring(text))) {
                 return true;
             }
         }
@@ -148,7 +145,7 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
     }
 
     private boolean lastisselect(String text) {
-        if (text.equalsIgnoreCase("select")) {
+        if (getlaststring(text).equalsIgnoreCase("select")) {
             return true;
         }
         return false;
