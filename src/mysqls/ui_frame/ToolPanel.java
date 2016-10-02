@@ -3,7 +3,6 @@ package mysqls.ui_frame;
 import mysqls.ui_mainitem.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 /**
@@ -30,6 +29,7 @@ public class ToolPanel extends JPanel implements ToolChangeLister{
         add(new Toolitem("查找对象", "database/data_find.png", ObjectSerchPanel.getInstance(),main,this),BorderLayout.NORTH);
         add(new Toolitem("编辑数据", "database/table_edit.png", TableEditpanel.getInstance(),main,this),BorderLayout.NORTH);
         add(new Toolitem("云", "database/yun.jpg", EmptyPanel.getInstance("还没有开始做呢。。。"),main,this),BorderLayout.NORTH);
+        add(new Toolitem("设置", "database/configure.png", EmptyPanel.getInstance("还没有开始做呢。。。"),main,this),BorderLayout.NORTH);
 
     }
 
