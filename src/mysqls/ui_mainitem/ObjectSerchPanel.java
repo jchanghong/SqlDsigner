@@ -2,9 +2,9 @@ package mysqls.ui_mainitem;
 
 import mysqls.sql.databaseserver2.MYtreeNode;
 import mysqls.sql.databaseserver2.MYtreeNodeRoot;
-import mysqls.ui_util.MYlist_cell_render;
 
 import javax.swing.*;
+import javax.swing.MYtreelist_cell_render;
 import java.awt.*;
 
 /**
@@ -24,17 +24,45 @@ public class ObjectSerchPanel extends JPanel {
     ListCellRenderer cellRenderer;
     private ObjectSerchPanel() {
         listModel = new DefaultListModel<>();
-        cellRenderer = new MYlist_cell_render();
+        cellRenderer = new MYtreelist_cell_render();
         jList = new JList(listModel);
         jList.setCellRenderer(cellRenderer);
         listModel.addElement(new MYtreeNodeRoot("eeee"));
-        listModel.addElement(new MYtreeNodeRoot("eeee"));
-        listModel.addElement(new MYtreeNodeRoot("eeee"));
-        listModel.addElement(new MYtreeNodeRoot("eeee"));
-        listModel.addElement(new MYtreeNodeRoot("eeee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eeeddde"));  listModel.addElement(new MYtreeNodeRoot("eeee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eeeddde"));  listModel.addElement(new MYtreeNodeRoot("eeee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eeeddde"));  listModel.addElement(new MYtreeNodeRoot("eeee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eeeddde"));  listModel.addElement(new MYtreeNodeRoot("eeee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eeeddde"));  listModel.addElement(new MYtreeNodeRoot("eeee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eeeddde"));  listModel.addElement(new MYtreeNodeRoot("eeee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eeeddde"));  listModel.addElement(new MYtreeNodeRoot("eeee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eedee"));
+        listModel.addElement(new MYtreeNodeRoot("eeeddde"));
 
         setLayout(new BorderLayout());
-        add(jList);
+        add(new JScrollPane(jList));
 
     }
 }

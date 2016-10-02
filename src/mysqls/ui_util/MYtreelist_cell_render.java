@@ -1,18 +1,72 @@
-package mysqls.ui_util;
+/*
+ * Copyright (c) 1998, 2013, Oracle and/or its affiliates. All rights reserved.
+ * ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 
-import mysqls.ui_frame.EmptyPanel;
+package javax.swing;
+
 import sun.swing.DefaultLookup;
 
-import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.Serializable;
 
+
 /**
- * Created by 长宏 on 2016/10/2 0002.
+ * Renders an item in a list.
+ * <p>
+ * <strong><a name="override">Implementation Note:</a></strong>
+ * This class overrides
+ * <code>invalidate</code>,
+ * <code>validate</code>,
+ * <code>revalidate</code>,
+ * <code>repaint</code>,
+ * <code>isOpaque</code>,
+ * and
+ * <code>firePropertyChange</code>
+ * solely to improve performance.
+ * If not overridden, these frequently called methods would execute code paths
+ * that are unnecessary for the default list cell renderer.
+ * If you write your own renderer,
+ * take care to weigh the benefits and
+ * drawbacks of overriding these methods.
+ *
+ * <p>
+ *
+ * <strong>Warning:</strong>
+ * Serialized objects of this class will not be compatible with
+ * future Swing releases. The current serialization support is
+ * appropriate for short term storage or RMI between applications running
+ * the same version of Swing.  As of 1.4, support for long term storage
+ * of all JavaBeans&trade;
+ * has been added to the <code>java.beans</code> package.
+ * Please see {@link java.beans.XMLEncoder}.
+ *
+ * @author Philip Milne
+ * @author Hans Muller
  */
-public class MYlist_cell_render  extends JPanel
+public class MYtreelist_cell_render extends JLabel
         implements ListCellRenderer<Object>, Serializable
 {
 
@@ -30,13 +84,11 @@ public class MYlist_cell_render  extends JPanel
      * Constructs a default renderer object for an item
      * in a list.
      */
-    public MYlist_cell_render() {
+    public MYtreelist_cell_render() {
         super();
         setOpaque(true);
         setBorder(getNoFocusBorder());
         setName("List.cellRenderer");
-        setLayout(new BorderLayout());
-
     }
 
     private Border getNoFocusBorder() {
@@ -61,9 +113,6 @@ public class MYlist_cell_render  extends JPanel
             boolean isSelected,
             boolean cellHasFocus)
     {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-
         setComponentOrientation(list.getComponentOrientation());
 
         Color bg = null;
@@ -81,28 +130,24 @@ public class MYlist_cell_render  extends JPanel
         }
 
         if (isSelected) {
-         panel.   setBackground(bg == null ? list.getSelectionBackground() : bg);
-           panel. setForeground(fg == null ? list.getSelectionForeground() : fg);
+            setBackground(bg == null ? list.getSelectionBackground() : bg);
+            setForeground(fg == null ? list.getSelectionForeground() : fg);
         }
         else {
-        panel.  setBackground(list.getBackground());
-          panel. setForeground(list.getForeground());
+            setBackground(list.getBackground());
+            setForeground(list.getForeground());
         }
-        Icon icon = new ImageIcon(EmptyPanel.class.getClassLoader().getResource("database/datas.png"));
-        JLabel image = new JLabel(icon);
 
         if (value instanceof Icon) {
-//            setIcon((Icon)value);
-//            setText("");
+            setIcon((Icon)value);
+            setText("");
         }
         else {
-          panel.  add(image, BorderLayout.WEST);
-          panel.  add(new JLabel(value.toString()),BorderLayout.CENTER);
-//            setIcon(null);
-//            setText((value == null) ? "" : value.toString());
+            setIcon(null);
+            setText((value == null) ? "" : value.toString());
         }
 
-      panel.  setEnabled(list.isEnabled());
+        setEnabled(list.isEnabled());
         setFont(list.getFont());
 
         Border border = null;
@@ -116,9 +161,9 @@ public class MYlist_cell_render  extends JPanel
         } else {
             border = getNoFocusBorder();
         }
-       panel. setBorder(border);
+        setBorder(border);
 
-        return panel;
+        return this;
     }
 
     /**
@@ -277,6 +322,23 @@ public class MYlist_cell_render  extends JPanel
     @Override
     public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {}
 
-
+    /**
+     * A subclass of MYtreelist_cell_render that implements UIResource.
+     * MYtreelist_cell_render doesn't implement UIResource
+     * directly so that applications can safely override the
+     * cellRenderer property with MYtreelist_cell_render subclasses.
+     * <p>
+     * <strong>Warning:</strong>
+     * Serialized objects of this class will not be compatible with
+     * future Swing releases. The current serialization support is
+     * appropriate for short term storage or RMI between applications running
+     * the same version of Swing.  As of 1.4, support for long term storage
+     * of all JavaBeans&trade;
+     * has been added to the <code>java.beans</code> package.
+     * Please see {@link java.beans.XMLEncoder}.
+     */
+    public static class UIResource extends MYtreelist_cell_render
+            implements javax.swing.plaf.UIResource
+    {
+    }
 }
-
