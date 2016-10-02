@@ -1,11 +1,18 @@
 
 package mysqls.ui_mainitem;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import mysqls.commands.*;
+import mysqls.diagrams.ClassDiagramGraph;
+import mysqls.framework.*;
+import mysqls.graph.*;
+import mysqls.sql.entity.TableColumn;
+import mysqls.sql.util.SQLCreator;
+import mysqls.ui_frame.EmptyPanel;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -19,26 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
-
-import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import mysqls.commands.AddEdgeCommand;
-import mysqls.commands.AddNodeCommand;
-import mysqls.commands.CompoundCommand;
-import mysqls.commands.DeleteNodeCommand;
-import mysqls.commands.RemoveEdgeCommand;
-import mysqls.diagrams.ClassDiagramGraph;
-import mysqls.framework.*;
-import mysqls.graph.AssociationEdge;
-import mysqls.graph.ClassNode;
-import mysqls.graph.Edge;
-import mysqls.graph.Graph;
-import mysqls.graph.GraphElement;
-import mysqls.graph.Node;
-import mysqls.sql.entity.TableColumn;
-import mysqls.sql.util.SQLCreator;
 
 /**
  * A panel to draw a graph.增加实体关系图
@@ -282,8 +269,17 @@ public class GraphPanel extends JPanel {
 		Rectangle2D bounds = getBounds();
 		Rectangle2D graphBounds = aGraph.getBounds();
 		if (!aHideGrid) {
-			Grid.draw(g2, new Rectangle2D.Double(0, 0, Math.max(bounds.getMaxX() / aZoom, graphBounds.getMaxX()),
-					Math.max(bounds.getMaxY() / aZoom, graphBounds.getMaxY())));
+//			Grid.draw(g2, new Rectangle2D.Double(0, 0, Math.max(bounds.getMaxX() / aZoom, graphBounds.getMaxX()),
+//					Math.max(bounds.getMaxY() / aZoom, graphBounds.getMaxY())));
+			ImageIcon icon = new ImageIcon(EmptyPanel.class.getClassLoader().getResource("mainIcon/bj6.jpg"));
+			//如果设置了背景图片则显示
+			if(icon != null)
+			{
+				int width = this.getWidth();
+				int height = this.getHeight();
+				g2.drawImage(icon.getImage(), 0, 0, width, height, this);
+
+			}
 		}
 		aGraph.draw(g2, new Grid());
 
