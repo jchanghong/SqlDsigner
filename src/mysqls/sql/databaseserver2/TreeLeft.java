@@ -3,24 +3,18 @@
  */
 package mysqls.sql.databaseserver2;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
+import mysqls.contanst.ConnectINFO;
+import mysqls.ui_mainitem.GraphFrame;
+import mysqls.ui_mainitem.TreeFrame;
+import mysqls.ui_util.MYdefaulttree_cellrender;
+
+import javax.swing.*;
+import javax.swing.tree.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
-
-import mysqls.contanst.ConnectINFO;
-import mysqls.ui_mainitem.GraphFrame;
-import mysqls.ui_mainitem.TreeFrame;
 
 /**
  * @author 长宏树形 tree列表
@@ -51,12 +45,6 @@ public class TreeLeft {
 	public static JPanel me;
 
 	public static JTree getui() {
-		Icon icon = new ImageIcon(TreeLeft.class.getClassLoader().getResource("database/treedata.png"));
-		UIManager.put("Tree.closedIcon", icon);
-		UIManager.put("Tree.openIcon", icon);
-//		JPanel panel = new JPanel();
-//		TreeLeft.me = panel;
-//		JScrollPane jScrollPane = new JScrollPane();
 		MYtreeNodeRoot mYtreeNodeRoot = new MYtreeNodeRoot("root");
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode(mYtreeNodeRoot);
 		for (MYtreeNodeDB db : mYtreeNodeRoot.getdbs()) {
@@ -73,7 +61,9 @@ public class TreeLeft {
 			}
 		}
 		DefaultTreeModel model = new DefaultTreeModel(root);
+
 		JTree jTree = new JTree(model);
+        jTree.setCellRenderer(new MYdefaulttree_cellrender());
 		JPopupMenu popupMenu = new JPopupMenu();
 		JMenuItem jItemresh = new JMenuItem("刷新");
 		JMenuItem jItemdelete = new JMenuItem("删除");

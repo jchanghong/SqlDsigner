@@ -42,7 +42,7 @@ public class ConnectINFO {
 	public static String USER="user";
 	private   String passworld=null;
 	public static String PASSWORLD="passworld";
-	private   String databaseType=null;// 数据库类型
+	private   String databaseType="mysql";// 数据库类型
 	public static String DATABASETYPE="databasetype";
 	private   String databaseName = null;
 	public static String DATABASENAME="databasename";

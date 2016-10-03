@@ -45,7 +45,7 @@ public class MainleftPanel extends JPanel implements ConnectINFOListener {
     }
     @Override
     public void onchange(String name, Object news, Object oldies) {
-        if (name.equals("connection")) {
+        if (name.equals(ConnectINFO.CONNECTION)) {
             if (jTree != null) {
                 return;
             }
