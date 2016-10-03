@@ -83,6 +83,7 @@ public class NoteNode extends RectangularNode {
 		pGraphics2D.setColor(oldColor);
 		pGraphics2D.draw(fold);
 
+
 		aText.draw(pGraphics2D, getBounds(),false);
 	}
 
