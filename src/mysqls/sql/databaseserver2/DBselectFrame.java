@@ -55,7 +55,7 @@ public class DBselectFrame {
 				database.add(new JScrollPane(showdatabases));
 				JLabel tips = new JLabel("输入数据库名:");// 提示用户选择
 				JTextField jTextField = new JTextField(10);// 用户输入操作
-				jTextField.setText(ConnectINFO.getInstance().getDatabaseName());
+				jTextField.setText(ConnectINFO.getInstance().getDatabase().getName());
 				JButton create = new JButton("创建");
 				JButton open = new JButton("确认导入");
 				JButton delete = new JButton("删除");

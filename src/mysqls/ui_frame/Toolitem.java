@@ -36,8 +36,6 @@ public class Toolitem extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                System.out.println("jdjdjj");
-
                 lister.onchange(Toolitem.this);
                 mainparent.removeAll();
                 mainparent.add(panel);

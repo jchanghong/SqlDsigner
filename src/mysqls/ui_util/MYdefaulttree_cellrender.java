@@ -11,7 +11,7 @@ import java.awt.*;
  * Created by jiang on 2016/10/3 0003.
  */
 public class MYdefaulttree_cellrender extends DefaultTreeCellRenderer {
-    static Font font = new Font("Default", Font.ITALIC, 18);
+    static Font font = new Font("TimesRoman", Font.PLAIN, 16);
   static   Icon icondb = new ImageIcon(TreeLeft.class.getClassLoader().getResource("database/treedata.png"));
    static Icon icontable = new ImageIcon(TreeLeft.class.getClassLoader().getResource("database/treetable.png"));
    static Icon iconcolumn = new ImageIcon(TreeLeft.class.getClassLoader().getResource("database/treec.jpg"));

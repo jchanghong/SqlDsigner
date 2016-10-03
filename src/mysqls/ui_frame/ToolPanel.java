@@ -4,16 +4,52 @@ import mysqls.ui_mainitem.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by jiang on 2016/9/30 0030.
  * 工具面板。
  */
 public class ToolPanel extends JPanel implements ToolChangeLister{
-    public  static Toolitem current=null;
+    static private ToolPanel me=null;
 
-    public ToolPanel(JPanel main) {
+    public Toolitem getCurrent() {
+        return current;
+    }
 
+    public void setCurrent(Toolitem current) {
+        this.current = current;
+    }
+
+    public java.util.List<Toolitem> getToolitemList() {
+        return toolitemList;
+    }
+
+    public void setToolitemList(List<Toolitem> toolitemList) {
+        this.toolitemList = toolitemList;
+    }
+
+    /**
+ * 如果main为null，请确保对象已经建立
+ * */
+    public static ToolPanel getInstance(JPanel main) {
+        if (me == null) {
+            me = new ToolPanel(main);
+        }
+        return me;
+
+    }
+    public  static    Toolitem current=null;
+    java.util.List<Toolitem> toolitemList = new ArrayList<>();
+
+    public JPanel getMain() {
+        return main;
+    }
+
+    private  JPanel main;
+    private ToolPanel(JPanel main) {
+        this.main = main;
         setBorder(BorderFactory.createMatteBorder(0,0,2,0,Color.gray));
         JPanel jPanel = new JPanel();
         jPanel.add(new JLabel("还没有做呢"));
@@ -32,7 +68,8 @@ public class ToolPanel extends JPanel implements ToolChangeLister{
         add(new Toolitem("设置", "database/configure.png", Option_shezhiPanel.getInstance(),main,this),BorderLayout.NORTH);
 
     }
-
+/**
+* 这个事件就是告诉你，toolitem被点击了，其他item要更新*/
     @Override
     public void onchange(Toolitem toolitem) {
         if (current != null) {
@@ -41,5 +78,38 @@ public class ToolPanel extends JPanel implements ToolChangeLister{
             current.updateUI();
         }
         current=toolitem;
+        current.setOpaque(true);
+        current.updateUI();
+    }
+
+    public void changeTo(String toolitemname) {
+        if (current.getAction().equals(toolitemname)) {
+            return;
+        }
+        Toolitem change = toolitemList.stream().filter(a->a.getAction().equals(toolitemname)).findAny().orElse(null);
+        if (change == null) {
+            return;
+        } else {
+            onchange(change);
+            main.removeAll();
+            main.add(getpanel(toolitemname));
+            main.invalidate();
+            main.updateUI();
+        }
+    }
+
+    private Component getpanel(String toolitemname) {
+        if (toolitemname.equals("SQL开发")) {
+         return  SQLeditPanel.getInstance();
+        }
+        return ConnectPanel.getInstance();
+    }
+
+    /**
+ * 重载更新list*/
+    @Override
+    public void add(Component comp, Object constraints) {
+            toolitemList.add((Toolitem) comp);
+        super.add(comp, constraints);
     }
 }

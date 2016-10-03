@@ -228,7 +228,7 @@ public class TreeTabledit {
 				}
 
 			});
-			parent.add(jTable, BorderLayout.CENTER);
+			parent.add(new JScrollPane(jTable), BorderLayout.CENTER);
 			//TreeTabledit.jPanel.removeAll();
 //			TreeTabledit.jPanel.add(new JScrollPane(jTable), BorderLayout.CENTER);
 //			TreeFrame.me.pack();

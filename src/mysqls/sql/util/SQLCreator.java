@@ -23,6 +23,9 @@ public class SQLCreator {
 
 	public static String create(Table table) {
 		StringBuilder builder = new StringBuilder();
+		if (table.getColumnlist().size() == 0) {
+			return "";
+		}
 
 		// 先删除表
 		builder.append("DROP TABLE IF EXISTS " + table.getName() + ";\n");

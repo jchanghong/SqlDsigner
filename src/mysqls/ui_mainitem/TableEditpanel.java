@@ -27,7 +27,7 @@ public class TableEditpanel extends JPanel implements ConnectINFOListener{
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
         sqlshow=TreeSQLedit.getui();
-        if (ConnectINFO.getInstance().getTableName() == null) {
+        if (ConnectINFO.getInstance().getTable() == null) {
             JLabel text ;
             Icon icon = new ImageIcon(EmptyPanel.class.getClassLoader().getResource("database/datas.png"));
             JLabel image = new JLabel(icon);
@@ -41,7 +41,7 @@ public class TableEditpanel extends JPanel implements ConnectINFOListener{
             return;
 
         } else {
-            TreeTabledit.edittable(ConnectINFO.tablenode,this);
+            TreeTabledit.edittable(ConnectINFO.getInstance().getTable(),this);
             add(sqlshow, BorderLayout.SOUTH);
         }
         setOpaque(false);
@@ -55,7 +55,7 @@ public class TableEditpanel extends JPanel implements ConnectINFOListener{
 
             removeAll();
             add(sqlshow, BorderLayout.SOUTH);
-            TreeTabledit.edittable(ConnectINFO.tablenode,this);
+            TreeTabledit.edittable(ConnectINFO.getInstance().getTable(),this);
             validate();
             updateUI();
 

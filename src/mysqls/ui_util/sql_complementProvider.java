@@ -229,7 +229,7 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
     private void setcolumns() {
         completions.removeAll(columns);
         columns.clear();
-        MYtreeNodeDB db=ConnectINFO.db;
+        MYtreeNodeDB db=ConnectINFO.getInstance().getDatabase();
         for (MYtreeNodeTable table : db.geTables()) {
 
             table.getcolumns().stream().forEach(aa->columns.add(getaitem(aa.getName())));
@@ -241,7 +241,7 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
     private void settables() {
         completions.removeAll(tables);
         tables.clear();
-        MYtreeNodeDB db=ConnectINFO.db;
+        MYtreeNodeDB db=ConnectINFO.getInstance().getDatabase();
         db.geTables().stream().forEach(aa->tables.add(getaitem(aa.getName())));
         tables.sort(this.comparator);
         addCompletions(tables);
@@ -251,7 +251,7 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
     private void setdbs() {
         completions.removeAll(dbs);
         dbs.clear();
-        MYtreeNodeDB db=ConnectINFO.db;
+        MYtreeNodeDB db=ConnectINFO.getInstance().getDatabase();
         dbs.add(getaitem(db.getName()));
         addCompletions(dbs);
     }

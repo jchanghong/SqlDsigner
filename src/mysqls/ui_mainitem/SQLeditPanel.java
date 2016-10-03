@@ -19,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by jiang on 2016/10/1 0001.
@@ -113,13 +114,15 @@ public class SQLeditPanel extends JPanel implements ActionListener {
         updateUI();
 
     }
-
+/**
+ *  事务里面执行
+ * */
     private ResultSet exeSQL(String trim) {
         if (ConnectINFO.getInstance().getConnection() == null) {
             JOptionPane.showMessageDialog(null, "请先链接数据库！！！");
             return null;
         }
-        if (ConnectINFO.db == null) {
+        if (ConnectINFO.getInstance().getDatabase() == null) {
             JOptionPane.showMessageDialog(null, "请先选择数据库！！！");
             return null;
 
@@ -127,15 +130,11 @@ public class SQLeditPanel extends JPanel implements ActionListener {
         java.util.List<String> sqList = new ArrayList<>();
         for (String string : trim.split(";")) {
 
-            if (string.length() < 4) {
-                continue;
-            }
             String temp = string.trim();
             if (temp != null && temp.length() > 2) {
                 sqList.add(temp);
             }
         }
-        boolean nowrong = true;
         if (sqList.size() < 1) {
             JOptionPane.showMessageDialog(null, "没有sql语句！！！");
             return null;
@@ -143,45 +142,78 @@ public class SQLeditPanel extends JPanel implements ActionListener {
         }
         Statement statement = null;
         try {
-            statement = ConnectINFO.getInstance().getConnection().createStatement();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            JOptionPane.showMessageDialog(null, e.getMessage());
-            nowrong = false;
-            e.printStackTrace();
-        }
-        try {
-            statement.execute("use " + ConnectINFO.db.getName());
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            JOptionPane.showMessageDialog(null, e.getMessage());
-            nowrong = false;
-            e.printStackTrace();
-        }
+            /*有select语句*/
+            String select=getselectstatement(sqList);
+          if (select!=null){
+              statement = ConnectINFO.getInstance().getConnection().createStatement();
+              statement.execute("use " + ConnectINFO.getInstance().getDatabase().getName());
+              return statement.executeQuery(select);
+          }
 
-        for (String sql : sqList) {
+        } catch (SQLException e) {
             try {
-                if (sql.startsWith("select")) {
-                    return statement.executeQuery(sql);
-                } else {
-                    statement.execute(sql);
-                }
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-//                JOptionPane.showMessageDialog(null, e.getMessage());
-                nowrong = false;
+                ConnectINFO.getInstance().getConnection().rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                JOptionPane.showMessageDialog(null, e1.getMessage());
             }
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            e.printStackTrace();
         }
-        if (nowrong) {
-
-            JOptionPane.showMessageDialog(null, "执行sql成功！！！");
-        } else {
-            JOptionPane.showMessageDialog(null, "有些sql语句执行失败！！！");
-
-        }
+        exeupdate(sqList);
         return null;
 
+
+    }
+/**
+ * 事务里面执行update*/
+    private void exeupdate(List<String> sqList) {
+        Statement statement=null;
+        boolean ok=true;
+        StringBuilder builder = new StringBuilder();
+        try {
+            statement = ConnectINFO.getInstance().getConnection().createStatement();
+            statement.execute("use " + ConnectINFO.getInstance().getDatabase().getName());
+            for (String sql : sqList) {
+                statement.execute(sql);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            builder.append(e.getMessage() + "\n");
+            ok=false;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    ok=false;
+                    e.printStackTrace();
+                    builder.append(e.getMessage() + "\n");
+                }
+            }
+        }
+        if (ok) {
+            JOptionPane.showMessageDialog(null,"执行成功！！！");
+        } else {
+            JOptionPane.showMessageDialog(null,"有些语句有错误！！！"+"\n"+builder.toString());
+
+        }
+
+    }
+
+    private String getselectstatement(List<String> sqList) {
+        for (String s : sqList) {
+            if (s.startsWith("select")) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    public void setsql(String string) {
+        if (textArea != null) {
+            textArea.setText(string);
+        }
 
     }
 }

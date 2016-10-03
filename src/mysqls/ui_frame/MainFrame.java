@@ -152,7 +152,7 @@ public class MainFrame extends JFrame {
 		BootPanel bootPanel=BootPanel.getInstance();
 		MainleftPanel mainleftPanel=MainleftPanel.getInstance();
 		MainCenterPanel centerPanel=MainCenterPanel.getInstance();
-		ToolPanel toolPanel = new ToolPanel(centerPanel);
+		ToolPanel toolPanel = ToolPanel.getInstance(centerPanel);
 		MainPanel mainPanel = new MainPanel(mainleftPanel, centerPanel);
 
 		getContentPane().add(bootPanel, BorderLayout.SOUTH);

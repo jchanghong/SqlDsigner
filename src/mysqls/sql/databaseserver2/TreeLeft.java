@@ -151,25 +151,24 @@ public class TreeLeft {
 				// TODO Auto-generated method stub
 
 				super.mouseClicked(e);
-				MYtreeNode node = TreeLeft.getmynode(e, jTree);
-				if (node instanceof MYtreeNodeDB) {
-					ConnectINFO.db = (MYtreeNodeDB) node;
-					ConnectINFO.getInstance().setDatabaseName(node.getName());
 
-				}
-				if (node instanceof MYtreeNodeColumn) {
-
-				}
-				if (node instanceof MYtreeNodeTable) {
-					ConnectINFO.getInstance().setTableName(node.getName());
-					ConnectINFO.tablenode = (MYtreeNodeTable) node;
-				}
-				if (node instanceof MYtreeNodeRoot) {
-
-				}
 				if (e.getClickCount() == 2) {
-					// popupMenu.getComponent(1).setVisible(true);
-					// popupMenu.show(jTree, e.getX(), e.getY());
+					MYtreeNode node = TreeLeft.getmynode(e, jTree);
+					if (node instanceof MYtreeNodeDB) {
+
+						ConnectINFO.getInstance().setDatabase((MYtreeNodeDB) node);
+
+					}
+					if (node instanceof MYtreeNodeColumn) {
+
+					}
+					if (node instanceof MYtreeNodeTable) {
+						ConnectINFO.getInstance().setTable((MYtreeNodeTable) node);
+					}
+					if (node instanceof MYtreeNodeRoot) {
+
+					}
+
 				}
 			}
 

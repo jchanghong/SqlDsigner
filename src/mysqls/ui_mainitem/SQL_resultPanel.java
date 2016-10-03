@@ -30,7 +30,7 @@ public class SQL_resultPanel extends JPanel {
     public void setResultSet(ResultSet resultSet) {
         removeAll();
         this.resultSet = resultSet;
-        add(getajTable(), BorderLayout.CENTER);
+        add(new JScrollPane(getajTable()), BorderLayout.CENTER);
         updateUI();
     }
 

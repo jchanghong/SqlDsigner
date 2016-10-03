@@ -132,7 +132,7 @@ public class ConnectPanel extends JPanel{
                             ConnectINFO.getInstance().setConnection(DriverManager.getConnection(urls[0], urls[1], urls[2]));
 
                             ConnectINFO.getInstance().setUrl(urls[0]);
-                            ConnectINFO.getInstance().setUrl(urls[1]);
+                            ConnectINFO.getInstance().setUser(urls[1]);
                             ConnectINFO.getInstance().setPassworld(urls[2]);
                             JOptionPane.showMessageDialog(null, "链接成功\n");
                         } catch (Exception e1) {
@@ -169,19 +169,19 @@ public class ConnectPanel extends JPanel{
 
                         try {
 
+                            String url = "jdbc:" + ConnectINFO.getInstance().getDatabaseType() + "://" + ipField.getText() + ":"
+                                    + dbportField.getText() + "/?characterEncoding=utf8&useSSL=true";
 
-                            ConnectINFO.getInstance().setUser(usernameField.getText());
-                            ConnectINFO.getInstance().setPassworld(passwordField.getText());
-                            ConnectINFO.getInstance().setUrl("jdbc:" + ConnectINFO.getInstance().getDatabaseType() + "://" + ipField.getText() + ":"
-                                    + dbportField.getText() + "/?characterEncoding=utf8&useSSL=true");
-                            Connection c=DriverManager.getConnection(ConnectINFO.getInstance().getUrl(),
+                            Connection c=DriverManager.getConnection(url,
                                     usernameField.getText(), passwordField.getText());
 
                             if (c != null) {
+                                ConnectINFO.getInstance().setUser(usernameField.getText());
+                                ConnectINFO.getInstance().setPassworld(passwordField.getText());
+                                ConnectINFO.getInstance().setUrl(url);
                                 ConnectINFO.getInstance().setConnection(c);
                                 JOptionPane.showMessageDialog(null,"链接成功");
                                 savainfo(ConnectINFO.getInstance().getUrl(), ConnectINFO.getInstance().getUser(), ConnectINFO.getInstance().getPassworld());
-
                             }
 
                         } catch (Exception e1) {
@@ -248,7 +248,7 @@ public class ConnectPanel extends JPanel{
         UI_color.setcolorR2(jPanel);
         UIFont.setfontR(jPanel);
         jPanel.setOpaque(false);
-        Font font = new Font(Font.MONOSPACED, Font.BOLD, 30);
+        Font font = new Font(Font.MONOSPACED, Font.BOLD, 20);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setFont(font);
         label.setForeground(Color.BLUE);

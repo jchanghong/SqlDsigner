@@ -23,6 +23,7 @@ public class BootPanel extends JPanel implements ConnectINFOListener {
 
     private JLabel label = null;
 
+
     private BootPanel() {
         setLayout(new BorderLayout());
         ConnectINFO.addLister(this);
@@ -40,11 +41,27 @@ public class BootPanel extends JPanel implements ConnectINFOListener {
 
     @Override
     public void onchange(String name, Object news, Object oldies) {
-        if (name.equals("databasename")) {
+        if (name.equals(ConnectINFO.USER)||name.equals(ConnectINFO.TABLE)) {
 //            removeAll();
-            label.setText(ConnectINFO.getInstance().getUser() + "  " + ConnectINFO.getInstance().getDatabaseName());
+            ConnectINFO INFO=ConnectINFO.getInstance();
+            String dbname=INFO.getTable()!=null?INFO.getTable().getDb().getName():null;
+            label.setText(getstatustext(INFO.getUser(),dbname,INFO.getTable()!=null?INFO.getTable().getName():null));
             updateUI();
         }
+        if (name.equals(ConnectINFO.DATABASE)) {
+            ConnectINFO INFO=ConnectINFO.getInstance();
+            label.setText(getstatustext(INFO.getUser(),INFO.getDatabase().getName(),null));
+            updateUI();
+
+        }
+
+    }
+
+    private String getstatustext(String user, String databaseName, String tableName) {
+        String u=user!=null?"用户："+user:"";
+        String db = databaseName != null ? "数据库：" + databaseName : "";
+        String table = tableName != null ? "表名：" + tableName : "";
+        return "当前状态："+u+db+table;
 
     }
 }
