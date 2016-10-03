@@ -1,12 +1,12 @@
 
 package mysqls.graph;
 
+import mysqls.framework.Grid;
+import mysqls.framework.MultiLineString;
+
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
-
-import mysqls.framework.Grid;
-import mysqls.framework.MultiLineString;
 
 /**
  * An interface node in a class diagram that can be composed of three
@@ -15,8 +15,8 @@ import mysqls.framework.MultiLineString;
  */
 public class InterfaceNode extends RectangularNode {
 	protected static final int DEFAULT_COMPARTMENT_HEIGHT = 20;
-	protected static final int DEFAULT_WIDTH = 100;
-	protected static final int DEFAULT_HEIGHT = 60;
+	protected static final int DEFAULT_WIDTH = 160;
+	protected static final int DEFAULT_HEIGHT = 100;
 
 	protected MultiLineString aName;
 	protected MultiLineString aMethods;
@@ -36,26 +36,27 @@ public class InterfaceNode extends RectangularNode {
 
 	@Override
 	public void draw(Graphics2D pGraphics2D) {
-		super.draw(pGraphics2D);
+//		super.draw(pGraphics2D);
 		Color old=pGraphics2D.getColor();
 		double midHeight = computeMiddle(pGraphics2D).getHeight();
 		double bottomHeight = computeBottom(pGraphics2D).getHeight();
 		Rectangle2D top = new Rectangle2D.Double(getBounds().getX(), getBounds().getY(), getBounds().getWidth(),
 				getBounds().getHeight() - midHeight - bottomHeight);
-		RoundRectangle2D mytop=new RoundRectangle2D.Double(top.getX()-5,top.getY()-5,top.getWidth()+10,top.getHeight()+10,10,10);
+		RoundRectangle2D mytop=new RoundRectangle2D.Double(top.getX(),top.getY(),top.getWidth(),top.getHeight(),10,10);
 //		pGraphics2D.draw(top);
 		pGraphics2D.setColor(Color.BLUE);
 		pGraphics2D.fill(mytop);
+
+		aName.draw(pGraphics2D, top,true);
+		Rectangle2D mid = new Rectangle2D.Double(top.getX(), top.getMaxY()-5, top.getWidth(), midHeight+5);
+		pGraphics2D.setColor(Color.WHITE);
+		pGraphics2D.fill(mid);
+
+		Rectangle2D bot = new Rectangle2D.Double(top.getX(), mid.getMaxY(), top.getWidth(), 10);
+		RoundRectangle2D mybot = new RoundRectangle2D.Double(bot.getX(), bot.getY()-5, bot.getWidth(), bot.getHeight()+5, 10, 10);
+		pGraphics2D.fill(mybot);
 		pGraphics2D.setColor(old);
-		aName.draw(pGraphics2D, top);
-		Rectangle2D mid = new Rectangle2D.Double(top.getX(), top.getMaxY(), top.getWidth(), midHeight);
-		RoundRectangle2D mymid=new RoundRectangle2D.Double(mid.getX()-5,mid.getY()-5,mid.getWidth()+10,mid.getHeight()+10,10,10);
-		pGraphics2D.draw(mymid);
-
-
-		Rectangle2D bot = new Rectangle2D.Double(top.getX(), mid.getMaxY(), top.getWidth(), bottomHeight);
-		pGraphics2D.draw(bot);
-		aMethods.draw(pGraphics2D, bot);
+//		aMethods.draw(pGraphics2D, bot);
 	}
 
 	/**

@@ -1,20 +1,20 @@
 
 package mysqls.framework;
 
-import java.awt.Dimension;
-import java.awt.Graphics2D;
+import mysqls.ui_frame.EmptyPanel;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
 /**
  * 这个其实就是为了得到string的大小，方便画图. 增加。得到每行的string
  */
 public class MultiLineString implements Cloneable {
+
 
 	/**
 	 * @return 一行一个值。以后可能还会变格式
@@ -140,7 +140,8 @@ public class MultiLineString implements Cloneable {
 
 	private JLabel getLabel() {
 		JLabel label = new JLabel(convertToHtml().toString());
-
+		Font font=new Font("Default", Font.PLAIN, 20);
+		label.setFont(font);
 		if (aJustification == Align.LEFT) {
 			label.setHorizontalAlignment(SwingConstants.LEFT);
 		} else if (aJustification == Align.CENTER) {
@@ -214,10 +215,29 @@ public class MultiLineString implements Cloneable {
 	 *            the graphics context
 	 * @param pRectangle
 	 *            the rectangle into which to place this multi-line string
+	 *            最后一个是真，说明就是一行
 	 */
-	public void draw(Graphics2D pGraphics2D, Rectangle2D pRectangle) {
-		JLabel label = getLabel();
-		label.setFont(pGraphics2D.getFont());
+	public void draw(Graphics2D pGraphics2D, Rectangle2D pRectangle,boolean isname) {
+//		Font font=new Font("Default", Font.PLAIN, 20);
+//		JLabel mylable=new JLabel();
+//		mylable.setFont(font);
+//		List<String> list=getMuilineString();
+//		int height= (int) (pRectangle.getHeight()/list.size());
+//		Rectangle2D rec=new Rectangle2D.Double(0,0,pRectangle.getWidth(),0);
+//		for (int i = 0; i < list.size(); i++) {
+//			rec.setFrame(0,height*(i),rec.getWidth(),height);
+//            mylable.setText(list.get(i));
+//			mylable.setBounds((int) rec.getX(), (int) rec.getY(), (int) rec.getWidth(), (int) rec.getHeight());
+//            pGraphics2D.translate(rec.getX(), rec.getY());
+//            mylable.paint(pGraphics2D);
+//            pGraphics2D.translate(-rec.getX(), -rec.getY());
+//
+//        }
+        JLabel label = getLabel();
+        if (isname) {
+            Icon icon = new ImageIcon(EmptyPanel.class.getClassLoader().getResource("database/treedata.png"));
+            label.setIcon(icon);
+        }
 		label.setBounds(0, 0, (int) pRectangle.getWidth(), (int) pRectangle.getHeight());
 		pGraphics2D.translate(pRectangle.getX(), pRectangle.getY());
 		label.paint(pGraphics2D);

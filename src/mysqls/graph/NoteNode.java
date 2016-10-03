@@ -1,14 +1,12 @@
 
 package mysqls.graph;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Rectangle2D;
-
 import mysqls.framework.Grid;
 import mysqls.framework.MultiLineString;
+
+import java.awt.*;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Rectangle2D;
 
 /**
  * A note node in a UML diagram.
@@ -85,7 +83,7 @@ public class NoteNode extends RectangularNode {
 		pGraphics2D.setColor(oldColor);
 		pGraphics2D.draw(fold);
 
-		aText.draw(pGraphics2D, getBounds());
+		aText.draw(pGraphics2D, getBounds(),false);
 	}
 
 	@Override

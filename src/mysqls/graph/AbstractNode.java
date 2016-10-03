@@ -1,13 +1,11 @@
 
 package mysqls.graph;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import mysqls.framework.Grid;
+
+import java.awt.*;
 import java.beans.DefaultPersistenceDelegate;
 import java.beans.Encoder;
-
-import mysqls.framework.Grid;
 
 /**
  * A class that supplies convenience implementations for a number of methods in
@@ -44,23 +42,23 @@ public abstract class AbstractNode implements Node {
 
 	@Override
 	public void draw(Graphics2D pGraphics2D) {
-		Shape shape = getShape();
-		if (shape == null) {
-			return;
-		}
+//		Shape shape = getShape();
+//		if (shape == null) {
+//			return;
+//		}
 		/*
 		 * Area shadow = new Area(shape);
 		 * shadow.transform(AffineTransform.getTranslateInstance(SHADOW_GAP,
 		 * SHADOW_GAP)); shadow.subtract(new Area(shape));
 		 */
-		Color oldColor = pGraphics2D.getColor();
+//		Color oldColor = pGraphics2D.getColor();
 //		pGraphics2D.translate(AbstractNode.SHADOW_GAP, AbstractNode.SHADOW_GAP);
-		pGraphics2D.setColor(Color.WHITE);
-		pGraphics2D.fill(shape);
+//		pGraphics2D.setColor(Color.WHITE);
+//		pGraphics2D.fill(shape);
 //		pGraphics2D.translate(-AbstractNode.SHADOW_GAP, -AbstractNode.SHADOW_GAP);
 //		pGraphics2D.setColor(pGraphics2D.getBackground());
 //		pGraphics2D.fill(shape);
-		pGraphics2D.setColor(oldColor);
+//		pGraphics2D.setColor(oldColor);
 	}
 
 	/**

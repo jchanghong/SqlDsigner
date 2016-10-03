@@ -1,13 +1,13 @@
 
 package mysqls.graph;
 
-import java.awt.Graphics2D;
+import mysqls.framework.MultiLineString;
+import mysqls.sql.entity.Table;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import mysqls.framework.MultiLineString;
-import mysqls.sql.entity.Table;
 
 /**
  * 主要的类，这里只是显示用，就是画图，实际数据在table类里面
@@ -42,7 +42,7 @@ public class ClassNode extends InterfaceNode {
 		Rectangle2D top = new Rectangle2D.Double(getBounds().getX(), getBounds().getY(), getBounds().getWidth(),
 				getBounds().getHeight() - midHeight - bottomHeight);
 		Rectangle2D mid = new Rectangle2D.Double(top.getX(), top.getMaxY(), top.getWidth(), midHeight);
-		aAttributes.draw(pGraphics2D, mid);
+		aAttributes.draw(pGraphics2D, mid,false);
 	}
 
 	/**
