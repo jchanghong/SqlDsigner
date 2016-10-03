@@ -54,12 +54,12 @@ public abstract class AbstractNode implements Node {
 		 * SHADOW_GAP)); shadow.subtract(new Area(shape));
 		 */
 		Color oldColor = pGraphics2D.getColor();
-		pGraphics2D.translate(AbstractNode.SHADOW_GAP, AbstractNode.SHADOW_GAP);
-		pGraphics2D.setColor(AbstractNode.SHADOW_COLOR);
+//		pGraphics2D.translate(AbstractNode.SHADOW_GAP, AbstractNode.SHADOW_GAP);
+		pGraphics2D.setColor(Color.WHITE);
 		pGraphics2D.fill(shape);
-		pGraphics2D.translate(-AbstractNode.SHADOW_GAP, -AbstractNode.SHADOW_GAP);
-		pGraphics2D.setColor(pGraphics2D.getBackground());
-		pGraphics2D.fill(shape);
+//		pGraphics2D.translate(-AbstractNode.SHADOW_GAP, -AbstractNode.SHADOW_GAP);
+//		pGraphics2D.setColor(pGraphics2D.getBackground());
+//		pGraphics2D.fill(shape);
 		pGraphics2D.setColor(oldColor);
 	}
 

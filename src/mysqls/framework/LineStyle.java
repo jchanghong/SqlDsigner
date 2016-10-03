@@ -11,8 +11,8 @@ public final class LineStyle {
 	public static final LineStyle SOLID = new LineStyle();
 	public static final LineStyle DOTTED = new LineStyle();
 
-	private static final Stroke SOLID_STROKE = new BasicStroke();
-	private static final Stroke DOTTED_STROKE = new BasicStroke(1.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER,
+	private static final Stroke SOLID_STROKE = new BasicStroke(4);
+	private static final Stroke DOTTED_STROKE = new BasicStroke(4.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER,
 			10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
 
 	private LineStyle() {

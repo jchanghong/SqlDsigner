@@ -1,10 +1,7 @@
 
 package mysqls.graph;
 
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -80,6 +77,8 @@ public abstract class SegmentedLabeledEdge extends AbstractEdge {
 		Point2D[] points = getPoints();
 
 		Stroke oldStroke = pGraphics2D.getStroke();
+		Paint old=pGraphics2D.getPaint();
+		pGraphics2D.setPaint(Color.white);
 		pGraphics2D.setStroke(obtainLineStyle().getStroke());
 		pGraphics2D.draw(getSegmentPath());
 		pGraphics2D.setStroke(oldStroke);
@@ -92,6 +91,7 @@ public abstract class SegmentedLabeledEdge extends AbstractEdge {
 				obtainMiddleLabel(), true);
 		SegmentedLabeledEdge.drawString(pGraphics2D, points[points.length - 2], points[points.length - 1],
 				obtainEndArrowHead(), obtainEndLabel(), false);
+		pGraphics2D.setPaint(old);
 	}
 
 	/**
