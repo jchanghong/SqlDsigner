@@ -8,7 +8,7 @@ public class Main extends JFrame {
     public Main() {
 
       setSize(400,400);
-        setContentPane(new TESTPAINT());
+//        setContentPane(new TESTPAINT());
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);

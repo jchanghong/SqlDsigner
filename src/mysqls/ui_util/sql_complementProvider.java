@@ -32,6 +32,8 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
         addCompletion(getaitem("where"));
         addCompletion(getaitem("from"));
         addCompletion(getaitem("like"));
+        addCompletion(getaitem("not"));
+        addCompletion(getaitem("exists"));
         setops();
         setopjectname();
     }

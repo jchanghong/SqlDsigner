@@ -9,6 +9,8 @@ import mysqls.ui_mainitem.TreeFrame;
 import mysqls.ui_util.MYdefaulttree_cellrender;
 
 import javax.swing.*;
+import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeExpansionListener;
 import javax.swing.tree.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -43,7 +45,7 @@ public class TreeLeft {
 	}
 
 	public static JPanel me;
-
+static TreePath pre=null;
 	public static JTree getui() {
 		MYtreeNodeRoot mYtreeNodeRoot = new MYtreeNodeRoot("root");
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode(mYtreeNodeRoot);
@@ -64,6 +66,21 @@ public class TreeLeft {
 
 		JTree jTree = new JTree(model);
         jTree.setCellRenderer(new MYdefaulttree_cellrender());
+		jTree.addTreeExpansionListener(new TreeExpansionListener() {
+			@Override
+			public void treeExpanded(TreeExpansionEvent event) {
+				if (pre != null) {
+					jTree.collapsePath(pre);
+				}
+				pre = event.getPath();
+
+			}
+
+			@Override
+			public void treeCollapsed(TreeExpansionEvent event) {
+
+			}
+		});
 		JPopupMenu popupMenu = new JPopupMenu();
 		JMenuItem jItemresh = new JMenuItem("刷新");
 		JMenuItem jItemdelete = new JMenuItem("删除");

@@ -80,7 +80,9 @@ public class SQLeditPanel extends JPanel implements ActionListener {
         jSplitPane.setBottomComponent(sql_resultPanel);
         jSplitPane.setResizeWeight(1.0);
         jSplitPane.setDividerLocation(1.0);
+
         add(jSplitPane, BorderLayout.CENTER);
+        add(new SQL_edit_right_tishiPanel(), BorderLayout.EAST);
 
     }
 
