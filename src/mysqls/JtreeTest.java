@@ -32,14 +32,10 @@ public class JtreeTest extends JFrame {
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String temp = "文件" + i++;
-                DefaultMutableTreeNode node1 = new DefaultMutableTreeNode(temp);
+                ProgressMonitor progressMonitor = new ProgressMonitor(JtreeTest.this, "message", "note", 0, 100);
+                progressMonitor.setProgress(50);
+                progressMonitor.setMillisToDecideToPopup(0);
 
-                JtreeTest.this.treeModel.insertNodeInto(node1, root, root.getChildCount());
-
-                JtreeTest.this.tree.updateUI();
-
-                System.out.println(temp);
             }
         });
         this.getContentPane().add(btn, BorderLayout.NORTH);
