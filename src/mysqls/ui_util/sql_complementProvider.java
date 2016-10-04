@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by jiang on 2016/10/1 0001.
  */
-public class sql_complementProvider extends DefaultCompletionProvider implements ConnectINFOListener{
+public class sql_complementProvider extends DefaultCompletionProvider implements ConnectINFOListener {
     private List<Completion> moprations = new ArrayList<>();
     private List<Completion> mobjectname = new ArrayList<>();
 
@@ -42,8 +42,8 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
         if (mobjectname.size() > 0) {
             return;
         }
-        List<String> list= Arrays.asList("table","database","view","triger","function");
-        list.stream().forEach(aa->mobjectname.add(getaitem(aa)));
+        List<String> list = Arrays.asList("table", "database", "view", "triger", "function");
+        list.stream().forEach(aa -> mobjectname.add(getaitem(aa)));
         addCompletions(mobjectname);
     }
 
@@ -55,50 +55,47 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
 
     @Override
     protected List<Completion> getCompletionsImpl(JTextComponent comp) {
-        String text=comp.getText().trim();
+        String text = comp.getText().trim();
         System.out.println(getlaststring(text));
         String last = getlaststring(text);
         /*如果前面是空或者；号结尾*/
         if (isemptyORstatement(last)) {
-            return getCompletion_parent(comp,moprations);
+            return getCompletion_parent(comp, moprations);
         }
         if (last.equalsIgnoreCase("where") || last.equalsIgnoreCase("like")) {
 
-            return getCompletion_parent(comp,columns);
+            return getCompletion_parent(comp, columns);
         }
         if (lastisselect(last)) {
-            return getCompletion_parent(comp,columns);
+            return getCompletion_parent(comp, columns);
         }
         if (lastisfrom(last)) {
             return getCompletion_parent(comp, tables);
         }
         if (lastisOP(last)) {
-            return getCompletion_parent(comp,mobjectname);
+            return getCompletion_parent(comp, mobjectname);
 
         }
         if (lastisObject(last)) {
-            return getCompletion_parent(comp,completions);
+            return getCompletion_parent(comp, completions);
 
         }
         if (lastisDB(last)) {
-            return getCompletion_parent(comp,completions);
+            return getCompletion_parent(comp, completions);
 
         }
         if (lastistable(last)) {
-            return getCompletion_parent(comp,completions);
+            return getCompletion_parent(comp, completions);
 
         }
         if (lastiscolumns(last)) {
-            return getCompletion_parent(comp,completions);
+            return getCompletion_parent(comp, completions);
         }
-        return getCompletion_parent(comp,completions);
+        return getCompletion_parent(comp, completions);
     }
 
     private boolean lastisfrom(String text) {
-        if (text.equalsIgnoreCase("from")) {
-            return true;
-        }
-        return false;
+        return text.equalsIgnoreCase("from");
     }
 
     /*如果前面是空或者；号结尾*/
@@ -106,10 +103,7 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
         if (text.length() < 1) {
             return true;
         }
-        if (text.endsWith(";")) {
-            return true;
-        }
-        return false;
+        return text.endsWith(";");
     }
 
     private boolean lastisOP(String text) {
@@ -148,43 +142,38 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
     }
 
     private boolean lastisselect(String text) {
-        if (text.equalsIgnoreCase("select")) {
-            return true;
-        }
-        return false;
+        return text.equalsIgnoreCase("select");
     }
 
-    private List<Completion> getCompletion_parent(JTextComponent comp,List<Completion> list) {
+    private List<Completion> getCompletion_parent(JTextComponent comp, List<Completion> list) {
         List<Completion> retVal = new ArrayList<Completion>();
         String text = getAlreadyEnteredText(comp);
 
 
-        if (text!=null) {
+        if (text != null) {
 
             int index = Collections.binarySearch(list, text, comparator);
-            if (index<0) { // No exact match
+            if (index < 0) { // No exact match
                 index = -index - 1;
-            }
-            else {
+            } else {
                 // If there are several overloads for the function being
                 // completed, Collections.binarySearch() will return the index
                 // of one of those overloads, but we must return all of them,
                 // so search backward until we find the first one.
                 int pos = index - 1;
-                while (pos>0 &&
-                        comparator.compare(list.get(pos), text)==0) {
+                while (pos > 0 &&
+                        comparator.compare(list.get(pos), text) == 0) {
                     retVal.add(list.get(pos));
                     pos--;
                 }
             }
 
-            while (index<list.size()) {
+            while (index < list.size()) {
                 Completion c = list.get(index);
                 if (Util.startsWithIgnoreCase(c.getInputText(), text)) {
                     retVal.add(c);
                     index++;
-                }
-                else {
+                } else {
                     break;
                 }
             }
@@ -231,10 +220,10 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
     private void setcolumns() {
         completions.removeAll(columns);
         columns.clear();
-        MYtreeNodeDB db=ConnectINFO.getInstance().getDatabase();
+        MYtreeNodeDB db = ConnectINFO.getInstance().getDatabase();
         for (MYtreeNodeTable table : db.geTables()) {
 
-            table.getcolumns().stream().forEach(aa->columns.add(getaitem(aa.getName())));
+            table.getcolumns().stream().forEach(aa -> columns.add(getaitem(aa.getName())));
         }
         columns.sort(this.comparator);
         addCompletions(columns);
@@ -243,8 +232,8 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
     private void settables() {
         completions.removeAll(tables);
         tables.clear();
-        MYtreeNodeDB db=ConnectINFO.getInstance().getDatabase();
-        db.geTables().stream().forEach(aa->tables.add(getaitem(aa.getName())));
+        MYtreeNodeDB db = ConnectINFO.getInstance().getDatabase();
+        db.geTables().stream().forEach(aa -> tables.add(getaitem(aa.getName())));
         tables.sort(this.comparator);
         addCompletions(tables);
 
@@ -253,7 +242,7 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
     private void setdbs() {
         completions.removeAll(dbs);
         dbs.clear();
-        MYtreeNodeDB db=ConnectINFO.getInstance().getDatabase();
+        MYtreeNodeDB db = ConnectINFO.getInstance().getDatabase();
         dbs.add(getaitem(db.getName()));
         addCompletions(dbs);
     }
@@ -263,8 +252,8 @@ public class sql_complementProvider extends DefaultCompletionProvider implements
         if (moprations.size() > 0) {
             return;
         }
-        List<String> list= Arrays.asList("select","drop","create","update");
-        list.stream().forEach(aa->moprations.add(getaitem(aa)));
+        List<String> list = Arrays.asList("select", "drop", "create", "update");
+        list.stream().forEach(aa -> moprations.add(getaitem(aa)));
         moprations.sort(this.comparator);
         addCompletions(moprations);
 

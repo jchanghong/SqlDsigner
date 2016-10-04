@@ -1,5 +1,5 @@
 /**
- *  实体关系图和sql生产的实现
+ * 实体关系图和sql生产的实现
  */
 package mysqls.sql.entity;
 
@@ -13,25 +13,25 @@ import java.beans.SimpleBeanInfo;
  */
 public class TableBeanInfo extends SimpleBeanInfo {
 
-	public TableBeanInfo() {
-		try {
-			PropertyDescriptor nanme = new PropertyDescriptor("name", Table.class);
-			PropertyDescriptor list = new PropertyDescriptor("columnlist", Table.class);
-			list.setPropertyEditorClass(TableColistEditor.class);
-			propertyDescriptors = new PropertyDescriptor[] { nanme, list };
-		} catch (IntrospectionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    public TableBeanInfo() {
+        try {
+            PropertyDescriptor nanme = new PropertyDescriptor("name", Table.class);
+            PropertyDescriptor list = new PropertyDescriptor("columnlist", Table.class);
+            list.setPropertyEditorClass(TableColistEditor.class);
+            propertyDescriptors = new PropertyDescriptor[]{nanme, list};
+        } catch (IntrospectionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
-	@Override
-	public PropertyDescriptor[] getPropertyDescriptors() {
-		// TODO Auto-generated method stub
-		super.getPropertyDescriptors();
-		return propertyDescriptors;
-	}
+    @Override
+    public PropertyDescriptor[] getPropertyDescriptors() {
+        // TODO Auto-generated method stub
+        super.getPropertyDescriptors();
+        return propertyDescriptors;
+    }
 
-	private PropertyDescriptor[] propertyDescriptors;
+    private PropertyDescriptor[] propertyDescriptors;
 
 }

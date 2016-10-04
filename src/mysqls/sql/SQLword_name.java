@@ -8,11 +8,12 @@ import java.util.List;
  */
 public class SQLword_name {
 
-	public static final List<String> LIST;
-	static {
-		LIST = new ArrayList<>();
-		SQLword_name.LIST.add("table");
-		SQLword_name.LIST.add("view");
-		SQLword_name.LIST.add("database");
-	}
+    public static final List<String> LIST;
+
+    static {
+        LIST = new ArrayList<>();
+        SQLword_name.LIST.add("table");
+        SQLword_name.LIST.add("view");
+        SQLword_name.LIST.add("database");
+    }
 }

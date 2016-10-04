@@ -7,13 +7,14 @@ public class Main extends JFrame {
 
     public Main() {
 
-      setSize(400,400);
+        setSize(400, 400);
 //        setContentPane(new TESTPAINT());
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
     }
+
     public static void main(String[] args) {
         // Instantiate GUI on the EDT.
         SwingUtilities.invokeLater(new Runnable() {

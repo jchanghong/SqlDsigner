@@ -9,19 +9,17 @@ import mysqls.graph.GraphElement;
  * @author Martin P. Robillard
  */
 abstract class GraphElementRelatedCommand implements Command {
-	protected GraphElement aElement;
-	protected Graph aGraph;
+    protected GraphElement aElement;
+    protected Graph aGraph;
 
-	/**
-	 * Creates the command.
-	 *
-	 * @param pGraph
-	 *            The target graph.
-	 * @param pElement
-	 *            The related element
-	 */
-	protected GraphElementRelatedCommand(Graph pGraph, GraphElement pElement) {
-		aGraph = pGraph;
-		aElement = pElement;
-	}
+    /**
+     * Creates the command.
+     *
+     * @param pGraph   The target graph.
+     * @param pElement The related element
+     */
+    protected GraphElementRelatedCommand(Graph pGraph, GraphElement pElement) {
+        aGraph = pGraph;
+        aElement = pElement;
+    }
 }

@@ -1,25 +1,12 @@
 package mysqls.ui_mainitem;
 
-import mysqls.contanst.ConnectINFO;
-import mysqls.sql.databaseserver2.TreeSQLedit;
-import mysqls.sql.databaseserver2.TreeTabledit;
-
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.*;
-import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by 长宏 on 2016/10/2 0002.
@@ -36,6 +23,7 @@ public class SQL_resultPanel extends JPanel {
 
     private ResultSet resultSet;
     private JTable table;
+
     public SQL_resultPanel() {
         setBackground(Color.WHITE);
         setLayout(new BorderLayout());
@@ -77,7 +65,7 @@ public class SQL_resultPanel extends JPanel {
             }
             return jTable;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
             e.printStackTrace();
         }
         return new JTable(null, new Object[]{"no", "no"});

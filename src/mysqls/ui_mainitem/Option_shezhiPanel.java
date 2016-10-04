@@ -72,16 +72,18 @@ public class Option_shezhiPanel extends JPanel {
         }
         return panel;
     }
-   private JTextField usernameField ;
-   private JPasswordField passwordField ;
+
+    private JTextField usernameField;
+    private JPasswordField passwordField;
+
     /*设置ui*/
     private JPanel getui() {
         JPanel jPanel = new JPanel(new BorderLayout());
         jPanel.setBackground(Color.WHITE);
         JLabel uname = new JLabel("用户名：");
         JLabel pwd = new JLabel("密    码：");
-         usernameField = new JTextField(15);
-         passwordField = new JPasswordField(15);
+        usernameField = new JTextField(15);
+        passwordField = new JPasswordField(15);
         usernameField.setEditable(true);
         passwordField.setEditable(true);
         JButton link = new JButton("登录");
@@ -124,7 +126,7 @@ public class Option_shezhiPanel extends JPanel {
         jPanel.setOpaque(false);
         jPanel.add(left);
         constraints.weightx = 1;
-        constraints.gridx = constraints.RELATIVE;
+        constraints.gridx = GridBagConstraints.RELATIVE;
         jPanel.add(rigth);
         return jPanel;
     }

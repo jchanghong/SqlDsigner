@@ -9,35 +9,33 @@ import mysqls.graph.Node;
  * @author Martin P. Robillard
  */
 public class AddNodeCommand extends GraphElementRelatedCommand {
-	/**
-	 * Creates the command.
-	 *
-	 * @param pGraph
-	 *            The graph the node was added to.
-	 * @param pNode
-	 *            The node added.
-	 */
-	public AddNodeCommand(Graph pGraph, Node pNode) {
-		super(pGraph, pNode);
-	}
+    /**
+     * Creates the command.
+     *
+     * @param pGraph The graph the node was added to.
+     * @param pNode  The node added.
+     */
+    public AddNodeCommand(Graph pGraph, Node pNode) {
+        super(pGraph, pNode);
+    }
 
-	/**
-	 * @see uestc.uml.sql.commands.Command#undo()
-	 */
-	@Override
-	public void undo() {
-		assert aElement instanceof Node;
-		aGraph.removeNode((Node) aElement);
-		aGraph.layout();
-	}
+    /**
+     * @see uestc.uml.sql.commands.Command#undo()
+     */
+    @Override
+    public void undo() {
+        assert aElement instanceof Node;
+        aGraph.removeNode((Node) aElement);
+        aGraph.layout();
+    }
 
-	/**
-	 * Performs the command and adds/deletes the node.
-	 */
-	@Override
-	public void execute() {
-		assert aElement instanceof Node;
-		aGraph.insertNode((Node) aElement);
-		aGraph.layout();
-	}
+    /**
+     * Performs the command and adds/deletes the node.
+     */
+    @Override
+    public void execute() {
+        assert aElement instanceof Node;
+        aGraph.insertNode((Node) aElement);
+        aGraph.layout();
+    }
 }

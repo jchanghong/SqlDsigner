@@ -11,13 +11,13 @@ import java.awt.event.MouseEvent;
  * Created by 长宏 on 2016/10/2 0002.
  * 操作面板,具体内容由需要用的面板提供
  */
-public class OP_Panel extends JPanel{
+public class OP_Panel extends JPanel {
     public OP_Panel() {
         setLayout(new GridLayout(1, 0));
         setBackground(Color.WHITE);
     }
 
-    public void additem(String opname ,String image,ActionListener opliseter) {
+    public void additem(String opname, String image, ActionListener opliseter) {
         JPanel itempanel = new JPanel();
         itempanel.setLayout(new BorderLayout());
 
@@ -39,20 +39,20 @@ public class OP_Panel extends JPanel{
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
                 itempanel.setOpaque(true);
-                itempanel. updateUI();
+                itempanel.updateUI();
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-               itempanel. setOpaque(false);
+                itempanel.setOpaque(false);
                 itempanel.updateUI();
             }
 
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                opliseter.actionPerformed(new ActionEvent(label,0,opname));
+                opliseter.actionPerformed(new ActionEvent(label, 0, opname));
             }
         });
         add(itempanel);

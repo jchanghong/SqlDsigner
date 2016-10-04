@@ -6,9 +6,6 @@ import mysqls.framework.PersistenceService;
 import mysqls.framework.ToolBar;
 import mysqls.graph.ClassNode;
 import mysqls.graph.Graph;
-import mysqls.sql.SQLEditPane;
-import mysqls.sql.SQLlogPane;
-import mysqls.sql.databaseserver2.DBselectFrame;
 import mysqls.sql.databaseserver2.MYtreeNodeDB;
 import mysqls.sql.entity.TableCompertor;
 import mysqls.sql.util.MYsqlStatementUtil;
@@ -23,7 +20,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
 import java.util.List;
 
 /**
@@ -31,14 +27,14 @@ import java.util.List;
  * 下面的面板
  */
 public class ERpanel extends JPanel implements ConnectINFOListener, ActionListener {
-    private OP_Panel op_panel=null;
-    private static ERpanel me=null;
-    private  GraphPanel aPanel=null;
-    private  Graph pGraph = null;
+    private OP_Panel op_panel = null;
+    private static ERpanel me = null;
+    private GraphPanel aPanel = null;
+    private Graph pGraph = null;
 
     public static ERpanel getInstance() {
         if (me == null) {
-            me=new ERpanel();
+            me = new ERpanel();
         }
         return me;
     }
@@ -49,7 +45,7 @@ public class ERpanel extends JPanel implements ConnectINFOListener, ActionListen
         ConnectINFO.addLister(this);
         setOpaque(false);
         if (ConnectINFO.getInstance().getDatabase() == null) {
-            JLabel text ;
+            JLabel text;
             Icon icon = new ImageIcon(EmptyPanel.class.getClassLoader().getResource("database/datas.png"));
             JLabel image = new JLabel(icon);
             text = new JLabel("请先选择数据库！");
@@ -67,23 +63,24 @@ public class ERpanel extends JPanel implements ConnectINFOListener, ActionListen
         pGraph = PersistenceService.readSQL(builder.toString(), aPanel.aGraph);
         ToolBar sideBar = new ToolBar(pGraph);
         aPanel = new GraphPanel(pGraph, sideBar);
-        op_panel=new OP_Panel();
+        op_panel = new OP_Panel();
         setop_panel(op_panel);
-        add(op_panel,BorderLayout.NORTH);
+        add(op_panel, BorderLayout.NORTH);
         add(sideBar, BorderLayout.EAST);
-        add(aPanel,BorderLayout.CENTER);
+        add(aPanel, BorderLayout.CENTER);
     }
 
-  final   static String STOSQL = "图形到SQL";
-   final static String SUPDATE = "还没有想好1";
-   final static String SEXESQL = "直接把模型加载到当前数据库";
-   final static String OTHER = "还没有想好！";
+    final static String STOSQL = "图形到SQL";
+    final static String SUPDATE = "还没有想好1";
+    final static String SEXESQL = "直接把模型加载到当前数据库";
+    final static String OTHER = "还没有想好！";
+
     private void setop_panel(OP_Panel op_panel) {
-        op_panel.additem(STOSQL,"22x22/copy.png",this);
-        op_panel.additem(SUPDATE,"22x22/cut.png",this);
-        op_panel.additem(SEXESQL,"22x22/redo.png",this);
-        op_panel.additem(OTHER,"22x22/cut.png",this);
-        op_panel.additem(OTHER,"22x22/cut.png",this);
+        op_panel.additem(STOSQL, "22x22/copy.png", this);
+        op_panel.additem(SUPDATE, "22x22/cut.png", this);
+        op_panel.additem(SEXESQL, "22x22/redo.png", this);
+        op_panel.additem(OTHER, "22x22/cut.png", this);
+        op_panel.additem(OTHER, "22x22/cut.png", this);
 
     }
 
@@ -93,16 +90,16 @@ public class ERpanel extends JPanel implements ConnectINFOListener, ActionListen
         if (name.equals(ConnectINFO.DATABASE)) {
             if (aPanel == null) {
                 removeAll();
-                MYtreeNodeDB db =ConnectINFO.getInstance().getDatabase();
+                MYtreeNodeDB db = ConnectINFO.getInstance().getDatabase();
                 StringBuilder builder = new StringBuilder();
                 db.geTablesdata().stream().forEach(a -> builder.append(SQLCreator.create(a)));
                 pGraph = PersistenceService.readSQL(builder.toString(), null);
 //        aPanel.updateui();
                 ToolBar sideBar = new ToolBar(pGraph);
                 aPanel = new GraphPanel(pGraph, sideBar);
-                op_panel=new OP_Panel();
+                op_panel = new OP_Panel();
                 setop_panel(op_panel);
-                add(op_panel,BorderLayout.NORTH);
+                add(op_panel, BorderLayout.NORTH);
                 add(sideBar, BorderLayout.EAST);
                 add(aPanel, BorderLayout.CENTER);
                 validate();
@@ -143,7 +140,7 @@ public class ERpanel extends JPanel implements ConnectINFOListener, ActionListen
     }
 
     private void updated() {
-        JOptionPane.showMessageDialog(null,"4");
+        JOptionPane.showMessageDialog(null, "4");
     }
 
     private void doopther() {
@@ -156,37 +153,40 @@ public class ERpanel extends JPanel implements ConnectINFOListener, ActionListen
 //        } catch (SQLException e) {
 //            e.printStackTrace();
 //        }
-        JOptionPane.showMessageDialog(null,"3");
+        JOptionPane.showMessageDialog(null, "3");
     }
+
     /**
      * 图形到sql之间的转发，内部框架知道每个pannel。所以这个功能应该在这个类里面实现比较合适
      */
     private void this2sql() {
         ToolPanel.getInstance(null).changeTo("SQL开发");
-            List<ClassNode> list = aPanel.getClassNOdes();
-            if (list.size() < 1) {
-                JOptionPane.showMessageDialog(null, "没有sql图形！！！！");
-                return;
-            }
-            StringBuilder builder = new StringBuilder();
-            list.stream().map(a -> a.mTable).sorted(new TableCompertor()).forEach(b -> {
+        List<ClassNode> list = aPanel.getClassNOdes();
+        if (list.size() < 1) {
+            JOptionPane.showMessageDialog(null, "没有sql图形！！！！");
+            return;
+        }
+        StringBuilder builder = new StringBuilder();
+        list.stream().map(a -> a.mTable).sorted(new TableCompertor()).forEach(b -> {
 
-                builder.append(SQLCreator.create(b));
-            });
+            builder.append(SQLCreator.create(b));
+        });
 
         StringBuilder sql2exe = new StringBuilder();
-        MYsqlStatementUtil.getsql2exe(builder.toString()).forEach(a -> sql2exe.append(a+";"));
-            SQLeditPanel.getInstance().setsql(sql2exe.toString());
+        MYsqlStatementUtil.getsql2exe(builder.toString()).forEach(a -> sql2exe.append(a + ";"));
+        SQLeditPanel.getInstance().setsql(sql2exe.toString());
 
     }
+
     /**
      * 直接把图形加载到数据库，
+     *
      * @param text 数据库名字
      */
-     private void graph2db(String dbname) {
+    private void graph2db(String dbname) {
         // TODO Auto-generated method stub
 
-         Statement statement=null;
+        Statement statement = null;
         List<ClassNode> list = aPanel.getClassNOdes();
         if (list.size() < 1) {
             JOptionPane.showMessageDialog(null, "没有sql图形！！！！");
@@ -205,8 +205,8 @@ public class ERpanel extends JPanel implements ConnectINFOListener, ActionListen
         list.stream().map(aa -> aa.mTable).sorted(new TableCompertor()).forEach(a -> {
             builder.append(SQLCreator.create(a));
         });
-         Statement finalStatement = statement;
-         MYsqlStatementUtil.getsql2exe(builder.toString()).forEach(a -> {
+        Statement finalStatement = statement;
+        MYsqlStatementUtil.getsql2exe(builder.toString()).forEach(a -> {
 
             try {
 //                System.out.println(a);
@@ -223,7 +223,7 @@ public class ERpanel extends JPanel implements ConnectINFOListener, ActionListen
     }
 
     private void sexesql() {
-       graph2db(ConnectINFO.getInstance().getDatabase().getName());
+        graph2db(ConnectINFO.getInstance().getDatabase().getName());
 
     }
 }

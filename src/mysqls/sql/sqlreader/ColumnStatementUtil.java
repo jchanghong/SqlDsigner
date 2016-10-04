@@ -1,5 +1,5 @@
 /**
- *  实体关系图和sql生产的实现
+ * 实体关系图和sql生产的实现
  */
 package mysqls.sql.sqlreader;
 
@@ -11,18 +11,15 @@ import java.util.regex.Pattern;
  */
 public class ColumnStatementUtil {
 
-	public static boolean isColumnStatement(String statement) {
+    public static boolean isColumnStatement(String statement) {
 
-		return !ColumnStatementUtil.isConstraint(statement);
-	}
+        return !ColumnStatementUtil.isConstraint(statement);
+    }
 
-	public static boolean isConstraint(String statement) {
-		String pString = "\\s*CONSTRAINT\\s+";
-		Pattern pattern = Pattern.compile(pString, Pattern.CASE_INSENSITIVE);
-		if (pattern.matcher(statement).find()) {
-			return true;
-		}
-		return false;
-	}
+    public static boolean isConstraint(String statement) {
+        String pString = "\\s*CONSTRAINT\\s+";
+        Pattern pattern = Pattern.compile(pString, Pattern.CASE_INSENSITIVE);
+        return pattern.matcher(statement).find();
+    }
 
 }

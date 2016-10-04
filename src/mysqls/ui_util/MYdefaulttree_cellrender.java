@@ -12,9 +12,10 @@ import java.awt.*;
  */
 public class MYdefaulttree_cellrender extends DefaultTreeCellRenderer {
     static Font font = new Font("TimesRoman", Font.PLAIN, 16);
-  static   Icon icondb = new ImageIcon(TreeLeft.class.getClassLoader().getResource("database/treedata.png"));
-   static Icon icontable = new ImageIcon(TreeLeft.class.getClassLoader().getResource("database/treetable.png"));
-   static Icon iconcolumn = new ImageIcon(TreeLeft.class.getClassLoader().getResource("database/treec.jpg"));
+    static Icon icondb = new ImageIcon(TreeLeft.class.getClassLoader().getResource("database/treedata.png"));
+    static Icon icontable = new ImageIcon(TreeLeft.class.getClassLoader().getResource("database/treetable.png"));
+    static Icon iconcolumn = new ImageIcon(TreeLeft.class.getClassLoader().getResource("database/treec.jpg"));
+
     /**
      * Configures the renderer based on the passed in components.
      * The value is set from messaging the tree with
@@ -36,8 +37,8 @@ public class MYdefaulttree_cellrender extends DefaultTreeCellRenderer {
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
 
         JLabel jLabel = (JLabel) super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
-        DefaultMutableTreeNode node= (DefaultMutableTreeNode) value;
-        MYtreeNode mYtreeNode= (MYtreeNode) node.getUserObject();
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+        MYtreeNode mYtreeNode = (MYtreeNode) node.getUserObject();
         if (mYtreeNode instanceof MYtreeNodeDB) {
             setIcon(icondb);
         }

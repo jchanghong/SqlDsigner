@@ -8,6 +8,7 @@ import java.awt.*;
  */
 public class UIFont {
     public static Font font = new Font("Default", Font.PLAIN, 20);
+
     public static void setfontR(JComponent jPanel) {
         if (jPanel.getComponents().length == 0) {
             jPanel.setFont(font);

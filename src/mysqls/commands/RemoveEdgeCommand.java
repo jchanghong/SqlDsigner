@@ -9,33 +9,31 @@ import mysqls.graph.Graph;
  * @author Martin P. Robillard
  */
 public class RemoveEdgeCommand extends GraphElementRelatedCommand {
-	/**
-	 * Creates the command.
-	 *
-	 * @param pGraph
-	 *            The target graph.
-	 * @param pEdge
-	 *            The related edge.
-	 */
-	public RemoveEdgeCommand(Graph pGraph, Edge pEdge) {
-		super(pGraph, pEdge);
-	}
+    /**
+     * Creates the command.
+     *
+     * @param pGraph The target graph.
+     * @param pEdge  The related edge.
+     */
+    public RemoveEdgeCommand(Graph pGraph, Edge pEdge) {
+        super(pGraph, pEdge);
+    }
 
-	/**
-	 * Undoes the command and adds/deletes the edge.
-	 */
-	@Override
-	public void undo() {
-		assert aElement instanceof Edge;
-		aGraph.insertEdge((Edge) aElement);
-	}
+    /**
+     * Undoes the command and adds/deletes the edge.
+     */
+    @Override
+    public void undo() {
+        assert aElement instanceof Edge;
+        aGraph.insertEdge((Edge) aElement);
+    }
 
-	/**
-	 * Performs the command and adds/deletes the edge.
-	 */
-	@Override
-	public void execute() {
-		assert aElement instanceof Edge;
-		aGraph.removeEdge((Edge) aElement);
-	}
+    /**
+     * Performs the command and adds/deletes the edge.
+     */
+    @Override
+    public void execute() {
+        assert aElement instanceof Edge;
+        aGraph.removeEdge((Edge) aElement);
+    }
 }

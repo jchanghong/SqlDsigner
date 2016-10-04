@@ -16,8 +16,9 @@ import java.util.stream.Collectors;
 /**
  * Created by 长宏 on 2016/10/1 0001.
  */
-public class ObjectSerchPanel extends JPanel implements ConnectINFOListener{
-    private static ObjectSerchPanel me=null;
+public class ObjectSerchPanel extends JPanel implements ConnectINFOListener {
+    private static ObjectSerchPanel me = null;
+
     public static ObjectSerchPanel getInstance() {
         if (me == null) {
             me = new ObjectSerchPanel();
@@ -29,12 +30,13 @@ public class ObjectSerchPanel extends JPanel implements ConnectINFOListener{
     private JList<MYtreeNode> jList;
     DefaultListModel<MYtreeNode> listModel;
     ListCellRenderer cellRenderer;
+
     private ObjectSerchPanel() {
         setBackground(Color.WHITE);
         ConnectINFO.addLister(this);
 //        setdata();
         if (ConnectINFO.getInstance().getConnection() == null) {
-            JLabel text ;
+            JLabel text;
             Icon icon = new ImageIcon(EmptyPanel.class.getClassLoader().getResource("database/datas.png"));
             JLabel image = new JLabel(icon);
             text = new JLabel("请先链接数据库！");
@@ -50,19 +52,17 @@ public class ObjectSerchPanel extends JPanel implements ConnectINFOListener{
 
     }
 
-    private static String seachtext=null;
+    private static String seachtext = null;
+
     private List<MYtreeNode> dosearch(String string) {
-        seachtext=string;
+        seachtext = string;
         System.out.println(string);
         List<MYtreeNode> list = mYtreeNodeList.stream().filter(ObjectSerchPanel::searchfilster).collect(Collectors.toList());
         return list;
     }
 
     private static boolean searchfilster(MYtreeNode mYtreeNode) {
-        if (mYtreeNode.getName().contains(seachtext)) {
-            return true;
-        }
-        return false;
+        return mYtreeNode.getName().contains(seachtext);
     }
 
 
@@ -107,9 +107,9 @@ public class ObjectSerchPanel extends JPanel implements ConnectINFOListener{
             public void insertUpdate(DocumentEvent e) {
                 listModel.clear();
                 setdata();
-                List<MYtreeNode> list= null;
+                List<MYtreeNode> list = null;
                 list = dosearch(field.getText());
-                list.forEach(a->listModel.addElement(a));
+                list.forEach(a -> listModel.addElement(a));
 
             }
 
@@ -117,9 +117,9 @@ public class ObjectSerchPanel extends JPanel implements ConnectINFOListener{
             public void removeUpdate(DocumentEvent e) {
                 listModel.clear();
                 setdata();
-                List<MYtreeNode> list= null;
+                List<MYtreeNode> list = null;
                 list = dosearch(field.getText());
-                list.forEach(a->listModel.addElement(a));
+                list.forEach(a -> listModel.addElement(a));
             }
 
             @Override

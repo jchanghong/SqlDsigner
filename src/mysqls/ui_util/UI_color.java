@@ -25,7 +25,7 @@ public class UI_color {
     /*字体颜色*/
     public static void setcolorR2(JComponent jPanel) {
         if (jPanel.getComponents().length == 0) {
-           jPanel.setForeground(Color.white);
+            jPanel.setForeground(Color.white);
             return;
         }
         for (Component con : jPanel.getComponents()) {

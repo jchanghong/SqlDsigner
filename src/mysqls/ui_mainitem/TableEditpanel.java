@@ -2,7 +2,6 @@ package mysqls.ui_mainitem;
 
 import mysqls.contanst.ConnectINFO;
 import mysqls.contanst.ConnectINFOListener;
-import mysqls.sql.databaseserver2.MYtreeNodeTable;
 import mysqls.sql.databaseserver2.TreeSQLedit;
 import mysqls.sql.databaseserver2.TreeTabledit;
 import mysqls.ui_frame.EmptyPanel;
@@ -13,22 +12,25 @@ import java.awt.*;
 /**
  * Created by 长宏 on 2016/10/1 0001.
  */
-public class TableEditpanel extends JPanel implements ConnectINFOListener{
-    private static TableEditpanel me=null;
+public class TableEditpanel extends JPanel implements ConnectINFOListener {
+    private static TableEditpanel me = null;
+
     public static TableEditpanel getInstance() {
         if (me == null) {
             me = new TableEditpanel();
         }
         return me;
     }
-    JPanel sqlshow=null;
+
+    JPanel sqlshow = null;
+
     private TableEditpanel() {
         ConnectINFO.addLister(this);
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
-        sqlshow=TreeSQLedit.getui();
+        sqlshow = TreeSQLedit.getui();
         if (ConnectINFO.getInstance().getTable() == null) {
-            JLabel text ;
+            JLabel text;
             Icon icon = new ImageIcon(EmptyPanel.class.getClassLoader().getResource("database/datas.png"));
             JLabel image = new JLabel(icon);
             text = new JLabel("请先选择表！");
@@ -41,7 +43,7 @@ public class TableEditpanel extends JPanel implements ConnectINFOListener{
             return;
 
         } else {
-            TreeTabledit.edittable(ConnectINFO.getInstance().getTable(),this);
+            TreeTabledit.edittable(ConnectINFO.getInstance().getTable(), this);
             add(sqlshow, BorderLayout.SOUTH);
         }
         setOpaque(false);
@@ -55,7 +57,7 @@ public class TableEditpanel extends JPanel implements ConnectINFOListener{
 
             removeAll();
             add(sqlshow, BorderLayout.SOUTH);
-            TreeTabledit.edittable(ConnectINFO.getInstance().getTable(),this);
+            TreeTabledit.edittable(ConnectINFO.getInstance().getTable(), this);
             validate();
             updateUI();
 

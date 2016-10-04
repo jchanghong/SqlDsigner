@@ -120,7 +120,7 @@ public class SQL_edit_right_tishiPanel extends JPanel {
             k.add(v);
         });
 //        jTree.expandRow(0);
-        TreePath path = new TreePath(new Object[]{root,firstk});
+        TreePath path = new TreePath(new Object[]{root, firstk});
         jTree.expandPath(path);
         jTree.setRootVisible(false);
         jTree.addTreeExpansionListener(new TreeExpansionListener() {

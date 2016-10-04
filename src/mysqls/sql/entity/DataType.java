@@ -1,5 +1,5 @@
 /**
- *  实体关系图和sql生产的实现
+ * 实体关系图和sql生产的实现
  */
 package mysqls.sql.entity;
 
@@ -9,6 +9,6 @@ package mysqls.sql.entity;
  */
 public enum DataType {
 
-	INT, DOUBLE, DATETIME, TIMESTAMP, VARCHAR, BLOB, TEXT
+    INT, DOUBLE, DATETIME, TIMESTAMP, VARCHAR, BLOB, TEXT
 
 }

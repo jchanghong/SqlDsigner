@@ -38,30 +38,30 @@ import java.io.Serializable;
 
 
 public class MYtreelist_cell_render
-        implements ListCellRenderer<Object>, Serializable
-{
-  static   DefaultTreeModel treeModel = new DefaultTreeModel(null);
-    static JTree jTree=null;
+        implements ListCellRenderer<Object>, Serializable {
+    static DefaultTreeModel treeModel = new DefaultTreeModel(null);
+    static JTree jTree = null;
+
     static {
         jTree = new JTree(treeModel);
         jTree.setCellRenderer(new MYdefaulttree_cellrender());
 
     }
+
     public Component getListCellRendererComponent(
             JList<?> list,
             Object value,
             int index,
             boolean isSelected,
-            boolean cellHasFocus)
-    {
+            boolean cellHasFocus) {
         if (value instanceof MYtreeNodeDB) {
-            DefaultMutableTreeNode root=new DefaultMutableTreeNode(value);
+            DefaultMutableTreeNode root = new DefaultMutableTreeNode(value);
             treeModel.setRoot(root);
             return jTree;
         }
         if (value instanceof MYtreeNodeTable) {
-            MYtreeNodeTable mYtreeNodeTable= (MYtreeNodeTable) value;
-            DefaultMutableTreeNode root=new DefaultMutableTreeNode(mYtreeNodeTable.getDb());
+            MYtreeNodeTable mYtreeNodeTable = (MYtreeNodeTable) value;
+            DefaultMutableTreeNode root = new DefaultMutableTreeNode(mYtreeNodeTable.getDb());
             DefaultMutableTreeNode defatable = new DefaultMutableTreeNode(mYtreeNodeTable);
             root.add(defatable);
             treeModel.setRoot(root);
@@ -72,9 +72,9 @@ public class MYtreelist_cell_render
         }
         if (value instanceof MYtreeNodeColumn) {
             DefaultMutableTreeNode child = new DefaultMutableTreeNode(value);
-            MYtreeNodeColumn mYtreeNodeTable= (MYtreeNodeColumn) value;
-            DefaultMutableTreeNode root=new DefaultMutableTreeNode(mYtreeNodeTable.getTable().getDb());
-        DefaultMutableTreeNode defatable = new DefaultMutableTreeNode(mYtreeNodeTable.getTable());
+            MYtreeNodeColumn mYtreeNodeTable = (MYtreeNodeColumn) value;
+            DefaultMutableTreeNode root = new DefaultMutableTreeNode(mYtreeNodeTable.getTable().getDb());
+            DefaultMutableTreeNode defatable = new DefaultMutableTreeNode(mYtreeNodeTable.getTable());
             root.add(defatable);
             defatable.add(child);
             treeModel.setRoot(root);

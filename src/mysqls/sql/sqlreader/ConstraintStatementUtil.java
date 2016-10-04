@@ -1,5 +1,5 @@
 /**
- *  实体关系图和sql生产的实现
+ * 实体关系图和sql生产的实现
  */
 package mysqls.sql.sqlreader;
 
@@ -10,57 +10,58 @@ package mysqls.sql.sqlreader;
  */
 public class ConstraintStatementUtil {
 
-	// CONSTRAINT FOREIGN KEY (`CountryCode`) REFERENCES `Country` (`Code`)
-	/**
-	 * @param statement
-	 * @return名字
-	 */
-	public static String getcolumn(String statement) {
-		int s = statement.indexOf('(');
-		int e = statement.indexOf(')');
+    // CONSTRAINT FOREIGN KEY (`CountryCode`) REFERENCES `Country` (`Code`)
 
-		return ConstraintStatementUtil.mytrim(statement.substring(s + 1, e));
-	}
+    /**
+     * @param statement
+     * @return名字
+     */
+    public static String getcolumn(String statement) {
+        int s = statement.indexOf('(');
+        int e = statement.indexOf(')');
 
-	/**
-	 * @param statement
-	 * @return名字
-	 */
-	public static String getfcolumn(String statement) {
+        return ConstraintStatementUtil.mytrim(statement.substring(s + 1, e));
+    }
 
-		int s = statement.lastIndexOf('(');
-		int e = statement.lastIndexOf(')');
+    /**
+     * @param statement
+     * @return名字
+     */
+    public static String getfcolumn(String statement) {
 
-		return ConstraintStatementUtil.mytrim(statement.substring(s + 1, e));
-	}
+        int s = statement.lastIndexOf('(');
+        int e = statement.lastIndexOf(')');
 
-	/**
-	 * @param statement
-	 * @return名字
-	 */
-	public static String getftable(String statement) {
+        return ConstraintStatementUtil.mytrim(statement.substring(s + 1, e));
+    }
 
-		String temp = statement.trim();
-		String temp2 = "REFERENCES";
-		int s = temp.toUpperCase().lastIndexOf(temp2);
-		int e = temp.lastIndexOf('(');
-		return ConstraintStatementUtil.mytrim(temp.substring(s + temp2.length(), e));
-	}
+    /**
+     * @param statement
+     * @return名字
+     */
+    public static String getftable(String statement) {
 
-	/**
-	 * @param name
-	 * @return如果有`符号就去掉，没有就不处理
-	 */
-	public static String mytrim(String name) {
-		StringBuilder builder = new StringBuilder(name.trim());
-		if (builder.charAt(0) == '`') {
+        String temp = statement.trim();
+        String temp2 = "REFERENCES";
+        int s = temp.toUpperCase().lastIndexOf(temp2);
+        int e = temp.lastIndexOf('(');
+        return ConstraintStatementUtil.mytrim(temp.substring(s + temp2.length(), e));
+    }
 
-			builder.setCharAt(0, ' ');
-		}
-		if (builder.charAt(builder.length() - 1) == '`') {
-			builder.setCharAt(builder.length() - 1, ' ');
-		}
-		return builder.toString().trim();
+    /**
+     * @param name
+     * @return如果有`符号就去掉，没有就不处理
+     */
+    public static String mytrim(String name) {
+        StringBuilder builder = new StringBuilder(name.trim());
+        if (builder.charAt(0) == '`') {
 
-	}
+            builder.setCharAt(0, ' ');
+        }
+        if (builder.charAt(builder.length() - 1) == '`') {
+            builder.setCharAt(builder.length() - 1, ' ');
+        }
+        return builder.toString().trim();
+
+    }
 }

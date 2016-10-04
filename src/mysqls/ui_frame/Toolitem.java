@@ -15,12 +15,12 @@ public class Toolitem extends JPanel {
     JPanel maincenter;
 
 
-    public Toolitem(String action, String image,JPanel panel,JPanel mainparent,ToolChangeLister lister) {
+    public Toolitem(String action, String image, JPanel panel, JPanel mainparent, ToolChangeLister lister) {
         super();
-        this.action=action;
-        this.imgae=image;
-        this.actionpanel=panel;
-        this.maincenter=mainparent;
+        this.action = action;
+        this.imgae = image;
+        this.actionpanel = panel;
+        this.maincenter = mainparent;
         setBackground(Color.gray);
         setLayout(new BorderLayout());
         JLabel button = new JLabel();

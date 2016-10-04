@@ -1,9 +1,9 @@
 /**
- *  实体关系图和sql生产的实现
+ * 实体关系图和sql生产的实现
  */
 package mysqls.sql.entity;
 
-import java.awt.Component;
+import java.awt.*;
 import java.beans.PropertyEditorSupport;
 
 /**
@@ -12,24 +12,24 @@ import java.beans.PropertyEditorSupport;
  */
 public class TableColistEditor extends PropertyEditorSupport {
 
-	private EditTable meditTable;
+    private EditTable meditTable;
 
-	public TableColistEditor() {
-		super();
-	}
+    public TableColistEditor() {
+        super();
+    }
 
-	@Override
-	public boolean supportsCustomEditor() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+    @Override
+    public boolean supportsCustomEditor() {
+        // TODO Auto-generated method stub
+        return true;
+    }
 
-	@Override
-	public Component getCustomEditor() {
-		// TODO Auto-generated method stub
-		final Columnlist columnlist = (Columnlist) getValue();
-		meditTable = new EditTable(columnlist.getMtTable());
-		return meditTable;
-	}
+    @Override
+    public Component getCustomEditor() {
+        // TODO Auto-generated method stub
+        final Columnlist columnlist = (Columnlist) getValue();
+        meditTable = new EditTable(columnlist.getMtTable());
+        return meditTable;
+    }
 
 }

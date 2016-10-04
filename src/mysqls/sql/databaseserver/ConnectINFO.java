@@ -1,5 +1,5 @@
 /**
- *  实体关系图和sql生产的实现
+ * 实体关系图和sql生产的实现
  */
 package mysqls.sql.databaseserver;
 
@@ -10,6 +10,6 @@ import java.sql.Connection;
  *
  */
 public class ConnectINFO {
-	public static Connection connection = null;
+    public static Connection connection = null;
 
 }

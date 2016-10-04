@@ -1,7 +1,6 @@
 package mysqls.ui_util;
 
 import org.fife.ui.autocomplete.Completion;
-import org.fife.ui.autocomplete.Util;
 
 import javax.swing.text.JTextComponent;
 import java.util.*;
@@ -11,19 +10,19 @@ import java.util.*;
  */
 public class SQL_complte_serch {
     public static List<Completion> empty = new ArrayList<>();
-    private static List<Completion>  dbs = new ArrayList<>();
+    private static List<Completion> dbs = new ArrayList<>();
     private static List<Completion> tables = new ArrayList<>();
     private static List<Completion> columns = new ArrayList<>();
     private static List<Completion> oprations = new ArrayList<>();
+
     public static List<Completion> find(List<Completion> all, JTextComponent textComponent) {
         sortkey(all);
-        String text=textComponent.getText();
+        String text = textComponent.getText();
         System.out.println(text + text.length());
         if (text.endsWith(";")) {
             return empty;
         }
         List<Completion> retVal = new ArrayList<Completion>();
-
 
 
         return retVal;
@@ -33,7 +32,7 @@ public class SQL_complte_serch {
         if (oprations.size() > 0) {
             return;
         }
-        all.forEach(aa->{
+        all.forEach(aa -> {
             if (isdb(aa)) {
                 dbs.add(aa);
             }
@@ -46,7 +45,7 @@ public class SQL_complte_serch {
             if (iscolumns(aa)) {
                 columns.add(aa);
             }
-                
+
         });
     }
 
@@ -61,15 +60,17 @@ public class SQL_complte_serch {
     private static Set<String> columnsset = new HashSet<>();
 
     static {
-        opsets.addAll(Arrays.asList("select", "delete","drop","update"));
+        opsets.addAll(Arrays.asList("select", "delete", "drop", "update"));
     }
+
     private static boolean isoparetion(Completion aa) {
         return opsets.contains(aa.getReplacementText());
     }
+
     private static boolean istables(Completion aa) {
         return true;
     }
-    
+
 
     private static boolean isdb(Completion aa) {
         return true;

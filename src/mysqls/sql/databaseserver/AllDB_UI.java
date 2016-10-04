@@ -1,5 +1,5 @@
 /**
- *  实体关系图和sql生产的实现
+ * 实体关系图和sql生产的实现
  */
 package mysqls.sql.databaseserver;
 
@@ -9,8 +9,8 @@ package mysqls.sql.databaseserver;
  */
 public class AllDB_UI {
 
-	// public static JFrame getui() {
-	//
-	// }
+    // public static JFrame getui() {
+    //
+    // }
 
 }
