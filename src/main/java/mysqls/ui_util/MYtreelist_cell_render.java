@@ -23,13 +23,13 @@
  *
  */
 
-package javax.swing;
+package mysqls.ui_util;
 
 import mysqls.sql.databaseserver2.MYtreeNodeColumn;
 import mysqls.sql.databaseserver2.MYtreeNodeDB;
 import mysqls.sql.databaseserver2.MYtreeNodeTable;
-import mysqls.ui_util.MYdefaulttree_cellrender;
 
+import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
