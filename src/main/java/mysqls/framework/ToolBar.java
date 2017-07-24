@@ -164,7 +164,7 @@ public class ToolBar extends JPanel {
 
     private void createSelectionTool(ButtonGroup pGroup, ButtonGroup pGroupEx) {
         installTool(ToolBar.createSelectionIcon(),
-                ResourceBundle.getBundle("mysqls.framework.EditorStrings").getString("grabber.tooltip"), null, true,
+                ResourceBundle.getBundle("EditorStrings_framenwork").getString("grabber.tooltip"), null, true,
                 pGroup, pGroupEx);
     }
 
@@ -225,7 +225,7 @@ public class ToolBar extends JPanel {
     }
 
     private void createNodesAndEdgesTools(Graph pGraph, ButtonGroup pGroup, ButtonGroup pGroupEx) {
-        ResourceBundle resources = ResourceBundle.getBundle(pGraph.getClass().getName() + "Strings");
+        ResourceBundle resources = ResourceBundle.getBundle("ClassDiagramGraphStrings");
 
         Node[] nodeTypes = pGraph.getNodePrototypes();
         for (int i = 0; i < nodeTypes.length; i++) {
@@ -282,8 +282,8 @@ public class ToolBar extends JPanel {
 
     private void addCopyToClipboard() {
         URL imageLocation = getClass().getClassLoader().getResource(
-                ResourceBundle.getBundle("mysqls.framework.EditorStrings").getString("toolbar.copyToClipBoard"));
-        String toolTip = ResourceBundle.getBundle("mysqls.framework.EditorStrings")
+                ResourceBundle.getBundle("EditorStrings_framenwork").getString("toolbar.copyToClipBoard"));
+        String toolTip = ResourceBundle.getBundle("EditorStrings_framenwork")
                 .getString("file.copy_to_clipboard.text");
 
         final JButton button = new JButton(new ImageIcon(imageLocation));
@@ -329,9 +329,9 @@ public class ToolBar extends JPanel {
     private void createExpandButton() {
         final JButton expandButton = new JButton(ToolBar.EXPAND);
         expandButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        final String expandString = ResourceBundle.getBundle("mysqls.framework.EditorStrings")
+        final String expandString = ResourceBundle.getBundle("EditorStrings_framenwork")
                 .getString("toolbar.expand");
-        final String collapseString = ResourceBundle.getBundle("mysqls.framework.EditorStrings")
+        final String collapseString = ResourceBundle.getBundle("EditorStrings_framenwork")
                 .getString("toolbar.collapse");
         expandButton.setToolTipText(expandString);
         expandButton.setPreferredSize(new Dimension(ToolBar.BUTTON_SIZE, ToolBar.BUTTON_SIZE));

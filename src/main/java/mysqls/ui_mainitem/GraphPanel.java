@@ -143,7 +143,7 @@ public class GraphPanel extends JPanel {
         });
         String[] options = {"OK"};
         // JOptionPane.showOptionDialog(this, sheet,
-        // ResourceBundle.getBundle("mysqls.framework.EditorStrings").getString("dialog.properties"),
+        // ResourceBundle.getBundle("UMLEditorStrings").getString("dialog.properties"),
         // JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
         // options, null);
         sheet.showDialog();

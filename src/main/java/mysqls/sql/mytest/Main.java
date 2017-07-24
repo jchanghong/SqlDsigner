@@ -36,7 +36,7 @@ public class Main {
         String[] options = {"OK"};
 
         JOptionPane.showOptionDialog(null, MUiUtil.getEditorComponent(Main.bean, descriptor),
-                ResourceBundle.getBundle("mysqls.framework.EditorStrings").getString("dialog.properties"),
+                ResourceBundle.getBundle("UMLEditorStrings").getString("dialog.properties"),
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
     }
 }

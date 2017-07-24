@@ -27,7 +27,7 @@ public class PropertySheets extends JPanel {
     private static Map<Class<?>, Class<?>> editors;
 
     JDialog mDialog;
-    private static ResourceBundle aPropertyNames = ResourceBundle.getBundle("mysqls.graph.GraphElementProperties");
+    private static ResourceBundle aPropertyNames = ResourceBundle.getBundle("GraphElementProperties");
 
     private ArrayList<ChangeListener> aChangeListeners = new ArrayList<>();
 
