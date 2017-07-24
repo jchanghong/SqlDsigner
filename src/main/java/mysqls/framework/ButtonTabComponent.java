@@ -109,7 +109,7 @@ public class ButtonTabComponent extends JPanel {
         public void actionPerformed(ActionEvent pEvent) {
             int i = aPane.indexOfTabComponent(ButtonTabComponent.this);
             if (i != -1) {
-                aMainFrame.close(aJInternalFrame);
+//                aMainFrame.close(aJInternalFrame);
             }
         }
 
