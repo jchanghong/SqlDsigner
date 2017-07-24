@@ -80,19 +80,12 @@ public class MainFrame extends JFrame {
     /**
      * Constructs a blank frame with a desktop pane but no graph windows.
      *
-     * @param pAppClass the fully qualified app class name. It is expected that the
-     *                  resources are appClassName + "Strings" and appClassName +
-     *                  "Version" (the latter for version-specific resources)
      */
-    public MainFrame(Class<?> pAppClass) {
-        String appClassName = pAppClass.getName();
+    public MainFrame() {
         aAppResources = ResourceBundle.getBundle("UMLEditorStrings");
         aAppFactory = new MenuFactory(aAppResources);
         aVersionResources = ResourceBundle.getBundle("UMLEditor" + "Version");
         aEditorResources = ResourceBundle.getBundle("UMLEditorStrings");
-//		MenuFactory factory = new MenuFactory(aEditorResources);
-
-//		aRecentFiles.deserialize(Preferences.userNodeForPackage(UMLEditor.class).get("recent", "").trim());
 
         setTitle(aAppResources.getString("app.name"));
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -112,27 +105,7 @@ public class MainFrame extends JFrame {
             }
         });
 
-//		aTabbedPane = new JTabbedPane();
-//		aTabbedPane.addChangeListener(new ChangeListener() {
-//			@Override
-//			public void stateChanged(ChangeEvent pEven) {
-//				boolean noGraphFrame = noCurrentGraphFrame();
-//				for (JMenuItem menuItem : aDiagramRelevantMenus) {
-//					menuItem.setEnabled(!noGraphFrame);
-//				}
-//			}
-//		});
-//		setContentPane(aTabbedPane);
         getmymainpanel();
-
-//		setJMenuBar(new JMenuBar());
-//
-//		createFileMenu(factory);
-//		createEditMenu(factory);
-//		createViewMenu(factory);
-//		createSQLmnu();// sqlmenu，
-//		createdatabasemenu();// 数据库服务的enu
-//		createHelpMenu(factory);
     }
 
 
