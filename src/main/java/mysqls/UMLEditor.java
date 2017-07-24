@@ -16,9 +16,7 @@ public final class UMLEditor {
     private UMLEditor() {
     }
 
-    /**
-     * @param pArgs Each argument is a file to open upon launch. Can be empty.
-     */
+
     public static void main(String[] pArgs) {
         UMLEditor.checkVersion();// 版本环境检查。
         try {
