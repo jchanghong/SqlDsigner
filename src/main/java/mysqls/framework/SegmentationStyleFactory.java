@@ -1,0 +1,238 @@
+package mysqls.framework;
+
+import mysqls.graph.Node;
+
+import java.awt.geom.Point2D;
+
+/**
+ * A class for creating line segmentation strategies.
+ *
+ * @author Martin P. Robillard
+ */
+public final class SegmentationStyleFactory {
+    private static final int MARGIN = 20;
+    private static final int MIN_SEGMENT = 10;
+
+    private SegmentationStyleFactory() {
+    }
+
+    /*
+     * Creates the cascading structure between strategies. 1. Always check for a
+     * self-edge. Otherwise, implement the main strategy. If it does not work
+     * (returns null), check the alternate strategy. If that fails too, return a
+     * straight line (this should never return null).
+     */
+    private static SegmentationStyle genericCreateStrategy(final SegmentationStyle pMain,
+                                                           final SegmentationStyle pAlternate) {
+        return new SegmentationStyle() {
+            @Override
+            public Point2D[] getPath(Node pStart, Node pEnd) {
+                if (pStart == pEnd) {
+                    return SegmentationStyleFactory.createSelfPath(pStart);
+                }
+                Point2D[] path = pMain.getPath(pStart, pEnd);
+                if (path == null && pAlternate != null) {
+                    path = pAlternate.getPath(pStart, pEnd);
+                }
+                if (path != null) {
+                    return path;
+                } else {
+                    path = new Straight().getPath(pStart, pEnd);
+                    assert path != null;
+                    return path;
+                }
+            }
+        };
+    }
+
+    /**
+     * Creates a strategy to draw straight (unsegmented) lines by choosing the
+     * connection points that induce the shortest path between two nodes (except
+     * in the case of self-paths).
+     *
+     * @return A strategy for creating straight lines.
+     */
+    public static SegmentationStyle createStraightStrategy() {
+        return SegmentationStyleFactory.genericCreateStrategy(new Straight(), null);
+    }
+
+    /**
+     * Creates a strategy that attempts to create horizontal links between nodes
+     * (except in the case of self-edges). If the node geometry does not permit
+     * it, attempts to use the VHV style and, if that still does not work,
+     * resorts to the straight style.
+     *
+     * @return A strategy for creating lines according to the HVH style.
+     */
+    public static SegmentationStyle createHVHStrategy() {
+        return SegmentationStyleFactory.genericCreateStrategy(new HVH(), new VHV());
+    }
+
+    /**
+     * Creates a strategy that attempts to create vertical links between nodes
+     * (except in the case of self-edges). If the node geometry does not permit
+     * it, attempts to use the HVH style and, if that still does not work,
+     * resorts to the straight style.
+     *
+     * @return A strategy for creating lines according to the VHV style.
+     */
+    public static SegmentationStyle createVHVStrategy() {
+        return SegmentationStyleFactory.genericCreateStrategy(new VHV(), new HVH());
+    }
+
+    /*
+     * The idea for creating a self path is to find the top left corner of the
+     * actual figure and walk back N pixels away from it. Assumes that pNode is
+     * composed of rectangles with sides at least N wide.
+     */
+    private static Point2D[] createSelfPath(Node pNode) {
+        Point2D topRight = SegmentationStyleFactory.findTopRightCorner(pNode);
+        double x1 = topRight.getX() - SegmentationStyleFactory.MARGIN;
+        double y1 = topRight.getY();
+        double x2 = x1;
+        double y2 = y1 - SegmentationStyleFactory.MARGIN;
+        double x3 = x2 + SegmentationStyleFactory.MARGIN * 2;
+        double y3 = y2;
+        double x4 = x3;
+        double y4 = topRight.getY() + SegmentationStyleFactory.MARGIN;
+        double x5 = topRight.getX();
+        double y5 = y4;
+
+        return new Point2D[]{new Point2D.Double(x1, y1), new Point2D.Double(x2, y2), new Point2D.Double(x3, y3),
+                new Point2D.Double(x4, y4), new Point2D.Double(x5, y5)};
+    }
+
+    /*
+     * This solution is very complex if we can't assume any knowledge of Node
+     * types and only rely on getConnectionPoints, but it can be made quite
+     * optimal in exchange for an unpretty dependency to specific node types.
+     */
+    private static Point2D findTopRightCorner(Node pNode) {
+        // if( pNode instanceof PackageNode )
+        // {
+        // return ((PackageNode)pNode).getTopRightCorner();
+        // }
+        // else
+        // {
+        return new Point2D.Double(pNode.getBounds().getMaxX(), pNode.getBounds().getMinY());
+        // }
+    }
+
+    static Point2D[] connectionPoints(Node pNode) {
+        return new Point2D[]{pNode.getConnectionPoint(Direction.WEST), pNode.getConnectionPoint(Direction.NORTH),
+                pNode.getConnectionPoint(Direction.EAST), pNode.getConnectionPoint(Direction.SOUTH)};
+    }
+
+    private static class Straight implements SegmentationStyle {
+        @Override
+        public Point2D[] getPath(Node pStart, Node pEnd) {
+            Point2D[] startConnectionPoints = SegmentationStyleFactory.connectionPoints(pStart);
+            Point2D[] endConnectionPoints = SegmentationStyleFactory.connectionPoints(pEnd);
+            Point2D start = startConnectionPoints[0];
+            Point2D end = endConnectionPoints[0];
+            double distance = start.distance(end);
+
+            for (Point2D startPoint : startConnectionPoints) {
+                for (Point2D endPoint : endConnectionPoints) {
+                    double newDistance = startPoint.distance(endPoint);
+                    if (newDistance < distance) {
+                        start = startPoint;
+                        end = endPoint;
+                        distance = newDistance;
+                    }
+                }
+            }
+            return new Point2D[]{start, end};
+        }
+    }
+
+    private static class HVH implements SegmentationStyle {
+        @Override
+        public Point2D[] getPath(Node pStart, Node pEnd) {
+            Point2D start = pStart.getConnectionPoint(Direction.EAST);
+            Point2D end = pEnd.getConnectionPoint(Direction.WEST);
+
+            if (start.getX() + 2 * SegmentationStyleFactory.MIN_SEGMENT <= end.getX()) { // There
+                // is
+                // enough
+                // space
+                // to
+                // create
+                // the
+                // segment,
+                // we
+                // keep
+                // this
+                // order
+            } else if (pEnd.getConnectionPoint(Direction.EAST).getX()
+                    + 2 * SegmentationStyleFactory.MIN_SEGMENT <= pStart.getConnectionPoint(Direction.WEST).getX()) { // The
+                // segment
+                // goes
+                // in
+                // the
+                // other
+                // direction
+                start = pStart.getConnectionPoint(Direction.WEST);
+                end = pEnd.getConnectionPoint(Direction.EAST);
+            } else { // There is not enough space for either direction, return
+                // null.
+                return null;
+            }
+
+            if (Math.abs(start.getY() - end.getY()) <= SegmentationStyleFactory.MIN_SEGMENT) {
+                return new Point2D[]{new Point2D.Double(start.getX(), end.getY()),
+                        new Point2D.Double(end.getX(), end.getY())};
+            } else {
+                return new Point2D[]{new Point2D.Double(start.getX(), start.getY()),
+                        new Point2D.Double((start.getX() + end.getX()) / 2, start.getY()),
+                        new Point2D.Double((start.getX() + end.getX()) / 2, end.getY()),
+                        new Point2D.Double(end.getX(), end.getY())};
+            }
+        }
+    }
+
+    private static class VHV implements SegmentationStyle {
+        @Override
+        public Point2D[] getPath(Node pStart, Node pEnd) {
+            Point2D start = pStart.getConnectionPoint(Direction.SOUTH);
+            Point2D end = pEnd.getConnectionPoint(Direction.NORTH);
+
+            if (start.getY() + 2 * SegmentationStyleFactory.MIN_SEGMENT <= end.getY()) { // There
+                // is
+                // enough
+                // space
+                // to
+                // create
+                // the
+                // segment,
+                // we
+                // keep
+                // this
+                // order
+            } else if (pEnd.getConnectionPoint(Direction.SOUTH).getY()
+                    + 2 * SegmentationStyleFactory.MIN_SEGMENT <= pStart.getConnectionPoint(Direction.NORTH).getY()) { // The
+                // segment
+                // goes
+                // in
+                // the
+                // other
+                // direction
+                start = pStart.getConnectionPoint(Direction.NORTH);
+                end = pEnd.getConnectionPoint(Direction.SOUTH);
+            } else { // There is not enough space for either direction, return
+                // null.
+                return null;
+            }
+
+            if (Math.abs(start.getX() - end.getX()) <= SegmentationStyleFactory.MIN_SEGMENT) {
+                return new Point2D[]{new Point2D.Double(end.getX(), start.getY()),
+                        new Point2D.Double(end.getX(), end.getY())};
+            } else {
+                return new Point2D[]{new Point2D.Double(start.getX(), start.getY()),
+                        new Point2D.Double(start.getX(), (start.getY() + end.getY()) / 2),
+                        new Point2D.Double(end.getX(), (start.getY() + end.getY()) / 2),
+                        new Point2D.Double(end.getX(), end.getY())};
+            }
+        }
+    }
+}
